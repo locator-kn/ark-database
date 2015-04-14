@@ -81,6 +81,7 @@ class Database {
     exportApi(server) {
         server.expose('db', this.db);
         server.expose('getUserById', this.user.getUserById);
+        server.expose('getUsers', this.user.getUsers);
         server.expose('getUserLogin', this.user.getUserLogin);
         server.expose('createUser', this.user.createUser);
         server.expose('updateUser', this.user.updateUser);
