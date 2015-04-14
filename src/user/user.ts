@@ -15,6 +15,16 @@ class User {
     };
 
     /**
+     * Get user from database by specific user id.
+     *
+     * @param userId:string
+     * @param callback
+     */
+    getUsers = (callback) => {
+        this.db.view(this.VIEWS.VIEW_USER_USER, callback);
+    };
+
+    /**
      * Update user information.
      *
      * @param userId
