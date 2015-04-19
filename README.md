@@ -1,4 +1,4 @@
-# bemily-database
+# triple-database
 
 
 ## CouchDB views
@@ -15,10 +15,6 @@ function(doc) {
 	name: doc.name, 
 	surname: doc.surname,
 	mail: doc.mail,
-	major: doc.major,
-	semester: doc.semester,
-	subscribed_groups: doc.subscribed_groups,
-	password: doc.password
 	});
  }
 }
