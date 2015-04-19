@@ -1,5 +1,4 @@
 import User from './user/user';
-import Group from './group/group';
 
 export interface IRegister {
     (server:any, options:any, next:any): void;
@@ -15,20 +14,18 @@ export interface IRegister {
  *      new Database('app');
  *
  *      // iriscouch online
- *      new Database('app','http://emily.iriscouch.com',80);
+ *      new Database('tripl','http://emily.iriscouch.com',80);
  */
 export default
 class Database {
     private db:any;
     private cradle:any;
     private user:any;
-    private group:any;
 
     // defines
     private VIEWS = {
         VIEW_USER_LOGIN: 'user/login',
-        VIEW_USER_USER: 'user/user',
-        VIEW_GROUP_ALL: 'groups/groups'
+        VIEW_USER_USER: 'user/user'
     };
 
     /**
@@ -71,7 +68,6 @@ class Database {
         }
 
         this.user = new User(this.db, this.VIEWS);
-        this.group = new Group(this.db, this.VIEWS);
     };
 
     /**
@@ -85,9 +81,6 @@ class Database {
         server.expose('getUserLogin', this.user.getUserLogin);
         server.expose('createUser', this.user.createUser);
         server.expose('updateUser', this.user.updateUser);
-        server.expose('getGroups', this.group.getGroups);
-        server.expose('getGroupById', this.group.getGroupById);
-        server.expose('createGroup', this.group.createGroup);
     }
 
 
