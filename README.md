@@ -1,4 +1,4 @@
-# triple-database
+# tripl-database
 
 
 ## CouchDB views
