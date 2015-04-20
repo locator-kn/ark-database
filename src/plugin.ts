@@ -90,6 +90,7 @@ class Database {
         server.expose('getTripById', this.trip.getTripById);
         server.expose('updateTrip', this.trip.updateTrip);
         server.expose('createTrip', this.trip.createTrip);
+        server.expose('deleteTrip', this.trip.deleteTrip);
 
     }
 

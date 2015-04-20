@@ -44,4 +44,16 @@ class Trip {
     createTrip = (trip, callback) => {
         this.db.save(trip, callback);
     };
+
+
+    /**
+     * Delete a particular trip by id.
+     *
+     * @param tripId:string
+     * @param rev:string
+     * @param callback
+     */
+    deleteTrip = (tripId:string, rev:string, callback) => {
+        this.db.remove(tripId, rev, callback);
+    }
 }
