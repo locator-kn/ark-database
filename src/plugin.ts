@@ -93,7 +93,13 @@ class Database {
         server.expose('updateTrip', this.trip.updateTrip);
         server.expose('createTrip', this.trip.createTrip);
         server.expose('deleteTrip', this.trip.deleteTrip);
-
+        // location
+        server.expose('getLocationsByUserId', this.trip.getLocationsByUserId);
+        server.expose('getLocationById', this.trip.getLocationById);
+        server.expose('deleteLocationsByUserId', this.trip.deleteLocationsByUserId);
+        server.expose('deleteLocationById', this.trip.deleteLocationById);
+        server.expose('createLocation', this.trip.createLocation);
+        server.expose('updateLocation', this.trip.updateLocation);
     }
 
 
