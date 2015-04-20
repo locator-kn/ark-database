@@ -1,4 +1,5 @@
 import User from './user/user';
+import Trip from './trip/trip'
 
 export interface IRegister {
     (server:any, options:any, next:any): void;
