@@ -21,6 +21,7 @@ class Database {
     private db:any;
     private cradle:any;
     private user:any;
+    private trip:any;
 
     // defines
     private VIEWS = {
@@ -69,6 +70,7 @@ class Database {
         }
 
         this.user = new User(this.db, this.VIEWS);
+        this.trip = new Trip(this.db, this.VIEWS);
     };
 
     /**
@@ -77,11 +79,15 @@ class Database {
      */
     exportApi(server) {
         server.expose('db', this.db);
+        // user
         server.expose('getUserById', this.user.getUserById);
         server.expose('getUsers', this.user.getUsers);
         server.expose('getUserLogin', this.user.getUserLogin);
         server.expose('createUser', this.user.createUser);
         server.expose('updateUser', this.user.updateUser);
+        // trip
+        server.expose('getTrips', this.trip.getTrips);
+
     }
 
 
