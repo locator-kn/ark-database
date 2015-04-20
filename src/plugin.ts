@@ -87,6 +87,7 @@ class Database {
         server.expose('updateUser', this.user.updateUser);
         // trip
         server.expose('getTrips', this.trip.getTrips);
+        server.expose('getTripById', this.trip.getTrips);
 
     }
 
