@@ -34,4 +34,14 @@ class Trip {
     updateTrip = (tripId:string, rev:string, trip, callback) => {
         this.db.save(tripId, rev, trip, callback);
     };
+
+    /**
+     * Create a new trip.
+     *
+     * @param trip:json-object
+     * @param callback
+     */
+    createTrip = (trip, callback) => {
+        this.db.save(trip, callback);
+    };
 }
