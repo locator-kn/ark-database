@@ -25,7 +25,8 @@ class Database {
     // defines
     private VIEWS = {
         VIEW_USER_LOGIN: 'user/login',
-        VIEW_USER_USER: 'user/user'
+        VIEW_USER_USER: 'user/user',
+        VIEW_TRIP_TRIP: 'trip/trip'
     };
 
     /**
