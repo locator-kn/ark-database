@@ -4,4 +4,12 @@ class Trip {
 
     }
 
+    /**
+     * Get trips from database.
+     *
+     * @param callback
+     */
+    getTrips = (callback) => {
+        this.db.view(this.VIEWS.VIEW_TRIP_TRIP, callback);
+    };
 }
