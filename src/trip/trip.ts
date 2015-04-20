@@ -22,4 +22,16 @@ class Trip {
     getTripById = (tripid:string, callback) => {
         this.db.view(this.VIEWS.VIEW_TRIP_TRIP, {key: tripid}, callback);
     };
+
+    /**
+     * Update user information.
+     *
+     * @param userId
+     * @param rev
+     * @param user
+     * @param callback
+     */
+    updateTrip = (tripId:string, rev:string, trip, callback) => {
+        this.db.save(tripId, rev, trip, callback);
+    };
 }
