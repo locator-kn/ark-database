@@ -1,5 +1,6 @@
 import User from './user/user';
 import Trip from './trip/trip'
+import Location from './locations/location';
 
 export interface IRegister {
     (server:any, options:any, next:any): void;
