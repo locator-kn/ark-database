@@ -24,11 +24,11 @@ class Trip {
     };
 
     /**
-     * Update user information.
+     * Update trip information.
      *
-     * @param userId
-     * @param rev
-     * @param user
+     * @param tripId:string
+     * @param rev:string
+     * @param trip:Trip
      * @param callback
      */
     updateTrip = (tripId:string, rev:string, trip, callback) => {
