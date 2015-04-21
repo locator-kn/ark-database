@@ -87,6 +87,7 @@ class Database {
         server.expose('createUser', this.user.createUser);
         server.expose('updateUser', this.user.updateUser);
         server.expose('updateUserPassword', this.user.updateUserPassword);
+        server.expose('deleteUserById', this.user.deleteUserById);
         // trip
         server.expose('getTrips', this.trip.getTrips);
         server.expose('getTripById', this.trip.getTripById);

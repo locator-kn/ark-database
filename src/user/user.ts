@@ -74,7 +74,7 @@ class User {
      * @param userId:string
      * @param callback
      */
-    deleteTripById = (userId:string, callback) => {
+    deleteUserById = (userId:string, callback) => {
         this.db.remove(userId, callback);
     }
 
