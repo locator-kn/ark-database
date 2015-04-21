@@ -67,4 +67,15 @@ class User {
     updateUserPassword = (userId:string, password:string, callback) => {
         this.db.merge(userId, {'password': password}, callback);
     }
+
+    /**
+     * Delete a particular tuser by id.
+     *
+     * @param userId:string
+     * @param callback
+     */
+    deleteTripById = (userId:string, callback) => {
+        this.db.remove(userId, callback);
+    }
+
 }
