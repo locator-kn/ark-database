@@ -12,7 +12,7 @@ export interface IRegister {
  * example calls:
  *
  *      // local database (default)
- *      new Database('app');
+ *      new Database('tripl');
  *
  *      // iriscouch online
  *      new Database('tripl','http://emily.iriscouch.com',80);
@@ -91,7 +91,7 @@ class Database {
         server.expose('getTripById', this.trip.getTripById);
         server.expose('updateTrip', this.trip.updateTrip);
         server.expose('createTrip', this.trip.createTrip);
-        server.expose('deleteTrip', this.trip.deleteTrip);
+        server.expose('deleteTripById', this.trip.deleteTripById);
 
     }
 
