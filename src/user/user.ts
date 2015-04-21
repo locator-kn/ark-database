@@ -56,10 +56,4 @@ class User {
     getUserLogin = (userId:string, callback) => {
         this.db.view(this.VIEWS.VIEW_USER_LOGIN, {key: userId}, callback);
     };
-
-
-    getUser() {
-        return 'getUser called';
-    }
-
 }
