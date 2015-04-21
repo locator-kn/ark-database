@@ -1,7 +1,6 @@
 export default
 class Trip {
-    constructor(private db: any, private VIEWS: any) {
-
+    constructor(private db:any, private VIEWS:any) {
     }
 
     /**
@@ -54,5 +53,5 @@ class Trip {
      */
     deleteTripById = (tripId:string, callback) => {
         this.db.remove(tripId, callback);
-    }
+    };
 }
