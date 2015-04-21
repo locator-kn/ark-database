@@ -50,7 +50,6 @@ class Trip {
      * Delete a particular trip by id.
      *
      * @param tripId:string
-     * @param rev:string
      * @param callback
      */
     deleteTripById = (tripId:string, callback) => {
