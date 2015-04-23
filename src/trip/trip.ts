@@ -54,4 +54,13 @@ class Trip {
     deleteTripById = (tripId:string, callback) => {
         this.db.remove(tripId, callback);
     };
+
+    /**
+     * Get moods from database.
+     *
+     * @param callback
+     */
+    getMoods = (callback) => {
+        this.db.view(this.VIEWS.VIEW_TRIP_MOODS, callback);
+    };
 }
