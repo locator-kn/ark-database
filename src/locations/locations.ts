@@ -45,7 +45,7 @@ class Location {
      * @param callback
      */
     createLocation = (location, callback) => {
-        this.db.save(location, callback);
+        // TODO
     };
 
     /**
