@@ -61,6 +61,6 @@ class Trip {
      * @param callback
      */
     getMoods = (callback) => {
-        this.db.view(this.VIEWS.VIEW_TRIP_MOODS, callback);
+        this.db.view(this.VIEWS.VIEW_TRIP_MOOD, callback);
     };
 }

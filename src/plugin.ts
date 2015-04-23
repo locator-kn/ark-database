@@ -28,7 +28,8 @@ class Database {
     private VIEWS = {
         VIEW_USER_LOGIN: 'user/login',
         VIEW_USER_USER: 'user/user',
-        VIEW_TRIP_TRIP: 'trip/trip'
+        VIEW_TRIP_TRIP: 'trip/trip',
+        VIEW_TRIP_MOOD: 'trip/mood'
     };
 
     /**
@@ -94,6 +95,7 @@ class Database {
         server.expose('updateTrip', this.trip.updateTrip);
         server.expose('createTrip', this.trip.createTrip);
         server.expose('deleteTripById', this.trip.deleteTripById);
+        server.expose('getMoods', this.trip.getMoods);
 
     }
 
