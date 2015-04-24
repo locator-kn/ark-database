@@ -24,6 +24,7 @@ class Database {
     private cradle:any;
     private user:any;
     private trip:any;
+    private location:any;
 
     // defines
     private VIEWS = {
@@ -73,6 +74,7 @@ class Database {
 
         this.user = new User(this.db, this.VIEWS);
         this.trip = new Trip(this.db, this.VIEWS);
+        this.location = new Location(this.db, this.VIEWS);
     };
 
     /**
@@ -94,12 +96,12 @@ class Database {
         server.expose('createTrip', this.trip.createTrip);
         server.expose('deleteTrip', this.trip.deleteTrip);
         // location
-        server.expose('getLocationsByUserId', this.trip.getLocationsByUserId);
-        server.expose('getLocationById', this.trip.getLocationById);
-        server.expose('deleteLocationsByUserId', this.trip.deleteLocationsByUserId);
-        server.expose('deleteLocationById', this.trip.deleteLocationById);
-        server.expose('createLocation', this.trip.createLocation);
-        server.expose('updateLocation', this.trip.updateLocation);
+        server.expose('getLocationsByUserId', this.location.getLocationsByUserId);
+        server.expose('getLocationById', this.location.getLocationById);
+        server.expose('deleteLocationsByUserId', this.location.deleteLocationsByUserId);
+        server.expose('deleteLocationById', this.location.deleteLocationById);
+        server.expose('createLocation', this.location.createLocation);
+        server.expose('updateLocation', this.location.updateLocation);
     }
 
 
