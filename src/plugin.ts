@@ -96,6 +96,7 @@ class Database {
         server.expose('createTrip', this.trip.createTrip);
         server.expose('deleteTripById', this.trip.deleteTripById);
         server.expose('getMoods', this.trip.getMoods);
+        server.expose('createMood', this.trip.createMood);
 
     }
 
