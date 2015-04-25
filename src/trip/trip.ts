@@ -63,4 +63,14 @@ class Trip {
     getMoods = (callback) => {
         this.db.view(this.VIEWS.VIEW_TRIP_MOOD, callback);
     };
+
+    /**
+     * Create a new mood.
+     *
+     * @param mood:json-object
+     * @param callback
+     */
+    createMood = (mood, callback) => {
+        this.db.save(mood, callback);
+    };
 }
