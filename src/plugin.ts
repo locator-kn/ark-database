@@ -23,12 +23,16 @@ class Database {
     private cradle:any;
     private user:any;
     private trip:any;
+    private staticdata:any;
 
     // defines
     private VIEWS = {
         VIEW_USER_LOGIN: 'user/login',
         VIEW_USER_USER: 'user/user',
-        VIEW_TRIP_TRIP: 'trip/trip'
+        VIEW_TRIP_TRIP: 'trip/trip',
+        VIEW_DATA_ACC: 'data/acc',
+        VIEW_DATA_MOOD: 'data/mood',
+        VIEW_DATA_CITY: 'data/city'
     };
 
     /**
@@ -72,6 +76,7 @@ class Database {
 
         this.user = new User(this.db, this.VIEWS);
         this.trip = new Trip(this.db, this.VIEWS);
+        this.staticdata = new StaticData(this.db, this.VIEWS);
     };
 
     /**
