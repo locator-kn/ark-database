@@ -56,6 +56,30 @@ function(doc) {
    }
 }
 ```
+
+### 'data/city'
+View to display all cities - type = 'city'
+
+
+```javascript
+function(doc) {
+ if(doc.type == 'city') {
+   emit(doc._id, doc);
+   }
+}
+```
+
+### 'data/mood'
+View to display all moods - type = 'mood'
+
+
+```javascript
+function(doc) {
+ if(doc.type == 'mood') {
+   emit(doc._id, doc);
+   }
+}
+```
 ## Tests
 
 Tests can be run with `npm test` or `make test`, `make test-cov` and `test-cov-html`.
