@@ -105,14 +105,19 @@ class Database {
         server.expose('getMoods', this.staticdata.getMoods);
         server.expose('createMood', this.staticdata.createMood);
         server.expose('updateMood', this.staticdata.updateMood);
-        server.expose('deleteMood', this.staticdata.deleteMoodById);
+        server.expose('deleteMoodById', this.staticdata.deleteMoodById);
 
         // staticdata city
         server.expose('getCities', this.staticdata.getCities);
         server.expose('createCity', this.staticdata.createCity);
         server.expose('updateCity', this.staticdata.updateCity);
-        server.expose('deleteCity', this.staticdata.deleteCityById);
+        server.expose('deleteCityById', this.staticdata.deleteCityById);
 
+        // staticdata city
+        server.expose('getAccommodations', this.staticdata.getAccommodations);
+        server.expose('createAccommodation', this.staticdata.createAccommodation);
+        server.expose('updateAccommodation', this.staticdata.updateAccommodation);
+        server.expose('deleteAccommodationById', this.staticdata.deleteAccommodationById);
     }
 
 
