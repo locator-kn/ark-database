@@ -52,9 +52,18 @@ class StaticData {
      * @param city:json-object
      * @param callback
      */
-    createCity = (mood, callback) => {
-        this.db.save(mood, callback);
+    createCity = (city, callback) => {
+        this.db.save(city, callback);
     };
 
+    /**
+     * Create a new City.
+     *
+     * @param accommodations:json-object
+     * @param callback
+     */
+    createAccommodations = (acc, callback) => {
+        this.db.save(acc, callback);
+    };
 
 }
