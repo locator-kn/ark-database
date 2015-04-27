@@ -23,6 +23,7 @@ class Database {
     private cradle:any;
     private user:any;
     private trip:any;
+    private staticdata:any;
 
     // defines
     private VIEWS = {
@@ -72,6 +73,7 @@ class Database {
 
         this.user = new User(this.db, this.VIEWS);
         this.trip = new Trip(this.db, this.VIEWS);
+        this.staticdata = new StaticData(this.db, this.VIEWS);
     };
 
     /**
