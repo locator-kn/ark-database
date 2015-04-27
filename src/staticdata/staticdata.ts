@@ -66,4 +66,18 @@ class StaticData {
         this.db.save(acc, callback);
     };
 
+    // UPDATE
+
+    /**
+     * Update mood information.
+     *
+     * @param moodId:string
+     * @param rev:string
+     * @param mood:Mood
+     * @param callback
+     */
+    updateMoodp = (moodId:string, rev:string, mood, callback) => {
+        this.db.save(moodId, rev, mood, callback);
+    };
+
 }
