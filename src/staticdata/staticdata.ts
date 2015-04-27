@@ -14,13 +14,24 @@ class StaticData {
     };
 
     /**
-     * Get city from database.
+     * Get cities from database.
      *
      * @param callback
      */
     getCities = (callback) => {
         this.db.view(this.VIEWS.VIEW_DATA_CITY, callback);
     };
+
+    /**
+     * Get accommodations from database.
+     *
+     * @param callback
+     */
+    getAccommodations = (callback) => {
+        this.db.view(this.VIEWS.VIEW_DATA_ACC, callback);
+    };
+
+
 
 
 }
