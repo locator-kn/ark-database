@@ -1,6 +1,7 @@
 import User from './user/user';
-import Trip from './trip/trip'
-import StaticData from './staticdata/staticdata'
+import Trip from './trip/trip';
+import Location from './location/location';
+import StaticData from './staticdata/staticdata';
 
 export interface IRegister {
     (server:any, options:any, next:any): void;
@@ -24,6 +25,7 @@ class Database {
     private cradle:any;
     private user:any;
     private trip:any;
+    private location:any;
     private staticdata:any;
 
     // defines
@@ -31,9 +33,12 @@ class Database {
         VIEW_USER_LOGIN: 'user/login',
         VIEW_USER_USER: 'user/user',
         VIEW_TRIP_TRIP: 'trip/trip',
+        VIEW_LOCATION_LOCATION: 'location/location',
+        VIEW_LOCATION_USER: 'location/user',
         VIEW_DATA_ACC: 'data/acc',
         VIEW_DATA_MOOD: 'data/mood',
         VIEW_DATA_CITY: 'data/city'
+
     };
 
     /**
@@ -76,6 +81,7 @@ class Database {
 
         this.user = new User(this.db, this.VIEWS);
         this.trip = new Trip(this.db, this.VIEWS);
+        this.location = new Location(this.db, this.VIEWS);
         this.staticdata = new StaticData(this.db, this.VIEWS);
     };
 
@@ -100,6 +106,14 @@ class Database {
         server.expose('updateTrip', this.trip.updateTrip);
         server.expose('createTrip', this.trip.createTrip);
         server.expose('deleteTripById', this.trip.deleteTripById);
+
+        // location
+        server.expose('getLocationsByUserId', this.location.getLocationsByUserId);
+        server.expose('getLocationById', this.location.getLocationById);
+        server.expose('deleteLocationsByUserId', this.location.deleteLocationsByUserId);
+        server.expose('deleteLocationById', this.location.deleteLocationById);
+        server.expose('createLocation', this.location.createLocation);
+        server.expose('updateLocation', this.location.updateLocation);
 
         // staticdata mood
         server.expose('getMoods', this.staticdata.getMoods);
