@@ -44,7 +44,7 @@ class Database {
     constructor(database:string, url?:string, port?:number) {
         // register plugin
         this.register.attributes = {
-            name: 'backend-database',
+            name: 'ark-database',
             version: '0.1.0'
         };
 
