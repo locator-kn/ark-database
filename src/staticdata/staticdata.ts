@@ -62,7 +62,7 @@ class StaticData {
      * @param accommodations:json-object
      * @param callback
      */
-    createAccommodations = (accommodations, callback) => {
+    createAccommodation = (accommodations, callback) => {
         this.db.save(accommodations, callback);
     };
 
@@ -101,7 +101,7 @@ class StaticData {
      * @param accommodations:Accommodations
      * @param callback
      */
-    updateAccommodations = (accommodationsId:string, rev:string, accommodations , callback) => {
+    updateAccommodation = (accommodationsId:string, rev:string, accommodations , callback) => {
         this.db.save(accommodationsId, rev, accommodations , callback);
     };
 
@@ -131,7 +131,7 @@ class StaticData {
      * @param accommodationsId:string
      * @param callback
      */
-    deleteAccommodationsById = (accommodationsId:string, callback) => {
+    deleteAccommodationById = (accommodationsId:string, callback) => {
         this.db.remove(accommodationsId, callback);
     };
 
