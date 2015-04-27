@@ -28,7 +28,8 @@ class Database {
     private VIEWS = {
         VIEW_USER_LOGIN: 'user/login',
         VIEW_USER_USER: 'user/user',
-        VIEW_TRIP_TRIP: 'trip/trip'
+        VIEW_TRIP_TRIP: 'trip/trip',
+        VIEW_TRIP_MOOD: 'trip/mood'
     };
 
     /**
@@ -47,7 +48,6 @@ class Database {
             name: 'backend-database',
             version: '0.1.0'
         };
-
 
         // import database plugin
         this.cradle = require('cradle');
@@ -87,12 +87,16 @@ class Database {
         server.expose('createUser', this.user.createUser);
         server.expose('updateUser', this.user.updateUser);
         server.expose('updateUserPassword', this.user.updateUserPassword);
+        server.expose('deleteUserById', this.user.deleteUserById);
+
         // trip
         server.expose('getTrips', this.trip.getTrips);
         server.expose('getTripById', this.trip.getTripById);
         server.expose('updateTrip', this.trip.updateTrip);
         server.expose('createTrip', this.trip.createTrip);
         server.expose('deleteTripById', this.trip.deleteTripById);
+        server.expose('getMoods', this.trip.getMoods);
+        server.expose('createMood', this.trip.createMood);
 
     }
 

@@ -1,7 +1,6 @@
 export default
 class Trip {
-    constructor(private db: any, private VIEWS: any) {
-
+    constructor(private db:any, private VIEWS:any) {
     }
 
     /**
@@ -50,10 +49,28 @@ class Trip {
      * Delete a particular trip by id.
      *
      * @param tripId:string
-     * @param rev:string
      * @param callback
      */
     deleteTripById = (tripId:string, callback) => {
         this.db.remove(tripId, callback);
-    }
+    };
+
+    /**
+     * Get moods from database.
+     *
+     * @param callback
+     */
+    getMoods = (callback) => {
+        this.db.view(this.VIEWS.VIEW_TRIP_MOOD, callback);
+    };
+
+    /**
+     * Create a new mood.
+     *
+     * @param mood:json-object
+     * @param callback
+     */
+    createMood = (mood, callback) => {
+        this.db.save(mood, callback);
+    };
 }
