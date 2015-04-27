@@ -31,7 +31,8 @@ class Database {
         VIEW_USER_LOGIN: 'user/login',
         VIEW_USER_USER: 'user/user',
         VIEW_TRIP_TRIP: 'trip/trip',
-        VIEW_LOCATION_LOCATION: 'location/location'
+        VIEW_LOCATION_LOCATION: 'location/location',
+        VIEW_LOCATION_USER: 'location/user'
     };
 
     /**
