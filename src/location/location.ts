@@ -18,7 +18,7 @@ class Location {
      * @param callback
      */
     getLocationById = (locationid:string, callback) => {
-        //TODO
+        this.db.view(this.VIEWS.VIEWS_LOCATION_LOCATION, {key: locationid}, callback);
     };
 
     /**
@@ -27,7 +27,7 @@ class Location {
      * @param callback
      */
     deleteLocationsByUserId = (userid:string, callback) => {
-        //TODO
+        //
     };
 
     /**
@@ -36,7 +36,7 @@ class Location {
      * @param callback
      */
     deleteLocationById = (locationid:string, callback) => {
-        //TODO
+        this.db.remove(locationid, callback);
     };
 
     /**
@@ -54,7 +54,7 @@ class Location {
      * @param rev
      * @param callback
      */
-    updateLocation = (userid:string, locationid:string, rev:string, callback) => {
-        //TODO
+    updateLocation = (locationid:string,rev:string, location, callback) => {
+        this.db.save(locationid, rev, location, callback);
     };
 }
