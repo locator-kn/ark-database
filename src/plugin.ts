@@ -1,6 +1,7 @@
 import User from './user/user';
-import Trip from './trip/trip'
+import Trip from './trip/trip';
 import Location from './location/location';
+import StaticData from './staticdata/staticdata';
 
 export interface IRegister {
     (server:any, options:any, next:any): void;
@@ -25,6 +26,7 @@ class Database {
     private user:any;
     private trip:any;
     private location:any;
+    private staticdata:any;
 
     // defines
     private VIEWS = {
@@ -32,7 +34,11 @@ class Database {
         VIEW_USER_USER: 'user/user',
         VIEW_TRIP_TRIP: 'trip/trip',
         VIEW_LOCATION_LOCATION: 'location/location',
-        VIEW_LOCATION_USER: 'location/user'
+        VIEW_LOCATION_USER: 'location/user',
+        VIEW_DATA_ACC: 'data/acc',
+        VIEW_DATA_MOOD: 'data/mood',
+        VIEW_DATA_CITY: 'data/city'
+
     };
 
     /**
@@ -51,7 +57,6 @@ class Database {
             name: 'ark-database',
             version: '0.1.0'
         };
-
 
         // import database plugin
         this.cradle = require('cradle');
@@ -77,6 +82,7 @@ class Database {
         this.user = new User(this.db, this.VIEWS);
         this.trip = new Trip(this.db, this.VIEWS);
         this.location = new Location(this.db, this.VIEWS);
+        this.staticdata = new StaticData(this.db, this.VIEWS);
     };
 
     /**
@@ -92,6 +98,8 @@ class Database {
         server.expose('createUser', this.user.createUser);
         server.expose('updateUser', this.user.updateUser);
         server.expose('updateUserPassword', this.user.updateUserPassword);
+        server.expose('deleteUserById', this.user.deleteUserById);
+
         // trip
         server.expose('getTrips', this.trip.getTrips);
         server.expose('getTripById', this.trip.getTripById);
@@ -107,9 +115,23 @@ class Database {
         server.expose('createLocation', this.location.createLocation);
         server.expose('updateLocation', this.location.updateLocation);
 
+        // staticdata mood
+        server.expose('getMoods', this.staticdata.getMoods);
+        server.expose('createMood', this.staticdata.createMood);
+        server.expose('updateMood', this.staticdata.updateMood);
+        server.expose('deleteMoodById', this.staticdata.deleteMoodById);
 
+        // staticdata city
+        server.expose('getCities', this.staticdata.getCities);
+        server.expose('createCity', this.staticdata.createCity);
+        server.expose('updateCity', this.staticdata.updateCity);
+        server.expose('deleteCityById', this.staticdata.deleteCityById);
 
-
+        // staticdata city
+        server.expose('getAccommodations', this.staticdata.getAccommodations);
+        server.expose('createAccommodation', this.staticdata.createAccommodation);
+        server.expose('updateAccommodation', this.staticdata.updateAccommodation);
+        server.expose('deleteAccommodationById', this.staticdata.deleteAccommodationById);
     }
 
 

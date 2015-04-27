@@ -1,7 +1,6 @@
 export default
 class User {
-    constructor(private db: any, private VIEWS: any) {
-
+    constructor(private db:any, private VIEWS:any) {
     }
 
     /**
@@ -66,5 +65,16 @@ class User {
      */
     updateUserPassword = (userId:string, password:string, callback) => {
         this.db.merge(userId, {'password': password}, callback);
-    }
+    };
+
+    /**
+     * Delete a particular tuser by id.
+     *
+     * @param userId:string
+     * @param callback
+     */
+    deleteUserById = (userId:string, callback) => {
+        this.db.remove(userId, callback);
+    };
+
 }
