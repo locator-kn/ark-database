@@ -13,4 +13,14 @@ class StaticData {
         this.db.view(this.VIEWS.VIEW_DATA_MOODS, callback);
     };
 
+    /**
+     * Get city from database.
+     *
+     * @param callback
+     */
+    getCities = (callback) => {
+        this.db.view(this.VIEWS.VIEW_DATA_CITY, callback);
+    };
+
+
 }
