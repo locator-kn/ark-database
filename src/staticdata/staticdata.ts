@@ -4,6 +4,8 @@ class StaticData {
 
     }
 
+    // GET
+
     /**
      * Get moods from database.
      *
@@ -29,6 +31,19 @@ class StaticData {
      */
     getAccommodations = (callback) => {
         this.db.view(this.VIEWS.VIEW_DATA_ACC, callback);
+    };
+
+
+    // CREATE
+
+    /**
+     * Create a new Mood.
+     *
+     * @param mood:json-object
+     * @param callback
+     */
+    createMood = (mood, callback) => {
+        this.db.save(mood, callback);
     };
 
 
