@@ -29,7 +29,10 @@ class Database {
     private VIEWS = {
         VIEW_USER_LOGIN: 'user/login',
         VIEW_USER_USER: 'user/user',
-        VIEW_TRIP_TRIP: 'trip/trip'
+        VIEW_TRIP_TRIP: 'trip/trip',
+        VIEW_DATA_ACC: 'data/acc',
+        VIEW_DATA_MOOD: 'data/mood',
+        VIEW_DATA_city: 'data/city'
     };
 
     /**
