@@ -93,7 +93,6 @@ class StaticData {
     };
 
 
-
     /**
      * Update accommodations information.
      *
@@ -105,4 +104,15 @@ class StaticData {
     updateAccommodations = (accommodationsId:string, rev:string, accommodations , callback) => {
         this.db.save(accommodationsId, rev, accommodations , callback);
     };
+
+    /**
+     * Delete a particular mood by id.
+     *
+     * @param moodId:string
+     * @param callback
+     */
+    deleteMoodById = (moodId:string, callback) => {
+        this.db.remove(moodId, callback);
+    }
+
 }
