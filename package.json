@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/tripl-kn/backend-database.git"
+    "url": "git://github.com/locator-kn/ark-database.git"
   },
   "peerDependencies": {
     "hapi": ">=8.x.x"
