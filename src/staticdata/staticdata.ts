@@ -46,7 +46,15 @@ class StaticData {
         this.db.save(mood, callback);
     };
 
-
+    /**
+     * Create a new City.
+     *
+     * @param city:json-object
+     * @param callback
+     */
+    createCity = (mood, callback) => {
+        this.db.save(mood, callback);
+    };
 
 
 }
