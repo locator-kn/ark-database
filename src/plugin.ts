@@ -101,11 +101,18 @@ class Database {
         server.expose('createTrip', this.trip.createTrip);
         server.expose('deleteTripById', this.trip.deleteTripById);
 
-        // staticdata moods
+        // staticdata mood
         server.expose('getMoods', this.staticdata.getMoods);
         server.expose('createMood', this.staticdata.createMood);
         server.expose('updateMood', this.staticdata.updateMood);
         server.expose('deleteMood', this.staticdata.deleteMoodById);
+
+        // staticdata city
+        server.expose('getCities', this.staticdata.getCities);
+        server.expose('createCity', this.staticdata.createCity);
+        server.expose('updateCity', this.staticdata.updateCity);
+        server.expose('deleteCity', this.staticdata.deleteCityById);
+
     }
 
 
