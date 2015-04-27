@@ -1,5 +1,6 @@
 import User from './user/user';
 import Trip from './trip/trip'
+import StaticData from './staticdata/staticdata'
 
 export interface IRegister {
     (server:any, options:any, next:any): void;
@@ -100,6 +101,11 @@ class Database {
         server.expose('createTrip', this.trip.createTrip);
         server.expose('deleteTripById', this.trip.deleteTripById);
 
+        // staticdata moods
+        server.expose('getMoods', this.staticdata.getMoods);
+        server.expose('createMood', this.staticdata.createMood);
+        server.expose('updateMood', this.staticdata.updateMood);
+        server.expose('deleteMood', this.staticdata.deleteMoodById);
     }
 
 
