@@ -1,5 +1,5 @@
 {
-  "name": "backend-database",
+  "name": "ark-database",
   "version": "0.1.0",
   "description": "Wrapper for database access",
   "main": "index.js",
