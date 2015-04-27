@@ -44,7 +44,7 @@ class Location {
      * @param location
      * @param callback
      */
-    createLocation = (location, callback) => {
+    createLocation = (userid:string, location, callback) => {
         this.db.save(location, callback);
     };
 
@@ -54,7 +54,7 @@ class Location {
      * @param rev
      * @param callback
      */
-    updateLocation = (locationid:string, rev:string, callback) => {
+    updateLocation = (userid:string, locationid:string, rev:string, callback) => {
         //TODO
     };
 }
