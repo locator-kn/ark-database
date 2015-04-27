@@ -27,7 +27,9 @@ class Location {
      * @param callback
      */
     deleteLocationsByUserId = (userid:string, callback) => {
-        //TODO: needs to be implemented later
+        callback({
+         error: 'not implemented yet!'
+        });
     };
 
     /**
