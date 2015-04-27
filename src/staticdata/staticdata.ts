@@ -113,6 +113,17 @@ class StaticData {
      */
     deleteMoodById = (moodId:string, callback) => {
         this.db.remove(moodId, callback);
+    };
+
+    /**
+     * Delete a particular city by id.
+     *
+     * @param cityId:string
+     * @param callback
+     */
+    deleteCityById = (cityId:string, callback) => {
+        this.db.remove(cityId, callback);
     }
+
 
 }
