@@ -9,7 +9,7 @@ class Location {
      * @param callback
      */
     getLocationsByUserId = (userid:string, callback) => {
-        //TODO
+        this.db.view(this.VIEWS.VIEW_LOCATION_USER, {key: userid},  callback);
     };
 
     /**
