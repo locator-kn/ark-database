@@ -92,4 +92,17 @@ class StaticData {
         this.db.save(cityId, rev, city, callback);
     };
 
+
+
+    /**
+     * Update accommodations information.
+     *
+     * @param accId:string
+     * @param rev:string
+     * @param accommodations:Accommodations
+     * @param callback
+     */
+    updateAccommodations = (accId:string, rev:string, accommodations , callback) => {
+        this.db.save(accId, rev, accommodations , callback);
+    };
 }
