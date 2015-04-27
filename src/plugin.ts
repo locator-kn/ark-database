@@ -13,7 +13,7 @@ export interface IRegister {
  * example calls:
  *
  *      // local database (default)
- *      new Database('app');
+ *      new Database('tripl');
  *
  *      // iriscouch online
  *      new Database('tripl','http://emily.iriscouch.com',80);
@@ -46,7 +46,7 @@ class Database {
     constructor(database:string, url?:string, port?:number) {
         // register plugin
         this.register.attributes = {
-            name: 'backend-database',
+            name: 'ark-database',
             version: '0.1.0'
         };
 
@@ -89,12 +89,14 @@ class Database {
         server.expose('getUserLogin', this.user.getUserLogin);
         server.expose('createUser', this.user.createUser);
         server.expose('updateUser', this.user.updateUser);
+        server.expose('updateUserPassword', this.user.updateUserPassword);
         // trip
         server.expose('getTrips', this.trip.getTrips);
         server.expose('getTripById', this.trip.getTripById);
         server.expose('updateTrip', this.trip.updateTrip);
         server.expose('createTrip', this.trip.createTrip);
-        server.expose('deleteTrip', this.trip.deleteTrip);
+        server.expose('deleteTripById', this.trip.deleteTripById);
+
         // location
         server.expose('getLocationsByUserId', this.location.getLocationsByUserId);
         server.expose('getLocationById', this.location.getLocationById);
@@ -102,6 +104,10 @@ class Database {
         server.expose('deleteLocationById', this.location.deleteLocationById);
         server.expose('createLocation', this.location.createLocation);
         server.expose('updateLocation', this.location.updateLocation);
+
+
+
+
     }
 
 

@@ -27,9 +27,9 @@ class User {
     /**
      * Update user information.
      *
-     * @param userId
-     * @param rev
-     * @param user
+     * @param userId:string
+     * @param rev:string
+     * @param user:IUser
      * @param callback
      */
     updateUser = (userId:string, rev:string, user, callback) => {
@@ -39,7 +39,7 @@ class User {
     /**
      * Create a new user.
      *
-     * @param user:json-object
+     * @param user:IUser
      * @param callback
      */
     createUser = (user, callback) => {
@@ -50,16 +50,21 @@ class User {
     /**
      * Get json object with login data of specific user id.
      *
-     * @param userId
+     * @param userId:string
      * @param callback
      */
     getUserLogin = (userId:string, callback) => {
         this.db.view(this.VIEWS.VIEW_USER_LOGIN, {key: userId}, callback);
     };
 
-
-    getUser() {
-        return 'getUser called';
+    /**
+     * Update only password attribute and leave the others untouched.
+     *
+     * @param userId:string
+     * @param password:string
+     * @param callback
+     */
+    updateUserPassword = (userId:string, password:string, callback) => {
+        this.db.merge(userId, {'password': password}, callback);
     }
-
 }

@@ -33,6 +33,17 @@ function(doc) {
 ```
 
 
+### 'trip/trip'
+View to display all trips - type = 'trip'
+
+
+```javascript
+function(doc) {
+ if(doc.type == 'trip') {
+   emit(doc._id, doc);
+   }
+}
+```
 ## Tests
 
 Tests can be run with `npm test` or `make test`, `make test-cov` and `test-cov-html`.

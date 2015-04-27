@@ -53,7 +53,7 @@ class Trip {
      * @param rev:string
      * @param callback
      */
-    deleteTrip = (tripId:string, rev:string, callback) => {
-        this.db.remove(tripId, rev, callback);
+    deleteTripById = (tripId:string, callback) => {
+        this.db.remove(tripId, callback);
     }
 }
