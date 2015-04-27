@@ -44,6 +44,18 @@ function(doc) {
    }
 }
 ```
+
+### 'data/acc'
+View to display all Accommodation - type = 'acc'
+
+
+```javascript
+function(doc) {
+ if(doc.type == 'acc') {
+   emit(doc._id, doc);
+   }
+}
+```
 ## Tests
 
 Tests can be run with `npm test` or `make test`, `make test-cov` and `test-cov-html`.
