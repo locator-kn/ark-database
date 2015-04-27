@@ -123,7 +123,16 @@ class StaticData {
      */
     deleteCityById = (cityId:string, callback) => {
         this.db.remove(cityId, callback);
-    }
+    };
 
+    /**
+     * Delete a particular accommodations by id.
+     *
+     * @param accommodationsId:string
+     * @param callback
+     */
+    deleteAccommodationsById = (accommodationsId:string, callback) => {
+        this.db.remove(accommodationsId, callback);
+    };
 
 }
