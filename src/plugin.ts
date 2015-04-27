@@ -23,13 +23,16 @@ class Database {
     private cradle:any;
     private user:any;
     private trip:any;
+    private staticdata:any;
 
     // defines
     private VIEWS = {
         VIEW_USER_LOGIN: 'user/login',
         VIEW_USER_USER: 'user/user',
         VIEW_TRIP_TRIP: 'trip/trip',
-        VIEW_TRIP_MOOD: 'trip/mood'
+        VIEW_DATA_ACC: 'data/acc',
+        VIEW_DATA_MOOD: 'data/mood',
+        VIEW_DATA_CITY: 'data/city'
     };
 
     /**
@@ -45,7 +48,7 @@ class Database {
     constructor(database:string, url?:string, port?:number) {
         // register plugin
         this.register.attributes = {
-            name: 'backend-database',
+            name: 'ark-database',
             version: '0.1.0'
         };
 
@@ -72,6 +75,7 @@ class Database {
 
         this.user = new User(this.db, this.VIEWS);
         this.trip = new Trip(this.db, this.VIEWS);
+        this.staticdata = new StaticData(this.db, this.VIEWS);
     };
 
     /**
@@ -95,8 +99,6 @@ class Database {
         server.expose('updateTrip', this.trip.updateTrip);
         server.expose('createTrip', this.trip.createTrip);
         server.expose('deleteTripById', this.trip.deleteTripById);
-        server.expose('getMoods', this.trip.getMoods);
-        server.expose('createMood', this.trip.createMood);
 
     }
 
