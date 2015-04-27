@@ -32,7 +32,7 @@ class Database {
         VIEW_TRIP_TRIP: 'trip/trip',
         VIEW_DATA_ACC: 'data/acc',
         VIEW_DATA_MOOD: 'data/mood',
-        VIEW_DATA_city: 'data/city'
+        VIEW_DATA_CITY: 'data/city'
     };
 
     /**

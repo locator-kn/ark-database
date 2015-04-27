@@ -10,7 +10,7 @@ class StaticData {
      * @param callback
      */
     getMoods = (callback) => {
-        this.db.view(this.VIEWS.VIEW_DATA_MOODS, callback);
+        this.db.view(this.VIEWS.VIEW_DATA_MOOD, callback);
     };
 
     /**
