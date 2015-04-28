@@ -44,7 +44,8 @@ class Database {
     // define Lists
     private LISTS = {
         LIST_USER_ALL: 'user/listall/user',
-    }
+        LIST_LOCATION_USER: 'location/listall/user'
+    };
 
     /**
      * Constructor to create a database instance
@@ -86,7 +87,7 @@ class Database {
 
         this.user = new User(this.db, this.VIEWS, this.LISTS);
         this.trip = new Trip(this.db, this.VIEWS);
-        this.location = new Location(this.db, this.VIEWS);
+        this.location = new Location(this.db, this.VIEWS, this.LISTS);
         this.staticdata = new StaticData(this.db, this.VIEWS);
     };
 
