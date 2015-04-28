@@ -1,6 +1,6 @@
 export default
 class User {
-    constructor(private db:any, private VIEWS:any) {
+    constructor(private db:any, private VIEWS:any, private LISTS:any) {
     }
 
     /**
@@ -20,7 +20,7 @@ class User {
      * @param callback
      */
     getUsers = (callback) => {
-        this.db.view(this.VIEWS.VIEW_USER_USER, callback);
+        this.db.list(this.LISTS.LIST_USER_ALL, callback);
     };
 
     /**
