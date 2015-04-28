@@ -28,7 +28,7 @@ class Database {
     private location:any;
     private staticdata:any;
 
-    // defines
+    // define Views
     private VIEWS = {
         VIEW_USER_LOGIN: 'user/login',
         VIEW_USER_USER: 'user/user',
@@ -40,6 +40,11 @@ class Database {
         VIEW_DATA_CITY: 'data/city'
 
     };
+
+    // define Lists
+    private LISTS = {
+        LIST_USER_ALL: 'user/listall/user',
+    }
 
     /**
      * Constructor to create a database instance
@@ -79,7 +84,7 @@ class Database {
             throw new Error('Error: database does not exist!');
         }
 
-        this.user = new User(this.db, this.VIEWS);
+        this.user = new User(this.db, this.VIEWS, this.LISTS);
         this.trip = new Trip(this.db, this.VIEWS);
         this.location = new Location(this.db, this.VIEWS);
         this.staticdata = new StaticData(this.db, this.VIEWS);
