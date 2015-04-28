@@ -34,17 +34,17 @@ class Database {
         VIEW_USER_USER: 'user/user',
         VIEW_TRIP_TRIP: 'trip/trip',
         VIEW_LOCATION_LOCATION: 'location/location',
-        VIEW_LOCATION_USER: 'location/user',
-        VIEW_DATA_ACC: 'data/acc',
-        VIEW_DATA_MOOD: 'data/mood',
-        VIEW_DATA_CITY: 'data/city'
+        VIEW_LOCATION_USER: 'location/user'
 
     };
 
     // define Lists
     private LISTS = {
         LIST_USER_ALL: 'user/listall/user',
-        LIST_LOCATION_USER: 'location/listall/user'
+        LIST_LOCATION_USER: 'location/listall/user',
+        LIST_DATA_MOOD: 'data/listall/moods',
+        LIST_DATA_ACC: 'data/listall/accommodation',
+        LIST_DATA_CITY: 'data/listall/cities'
     };
 
     /**
@@ -88,7 +88,7 @@ class Database {
         this.user = new User(this.db, this.VIEWS, this.LISTS);
         this.trip = new Trip(this.db, this.VIEWS);
         this.location = new Location(this.db, this.VIEWS, this.LISTS);
-        this.staticdata = new StaticData(this.db, this.VIEWS);
+        this.staticdata = new StaticData(this.db, this.VIEWS, this.LISTS);
     };
 
     /**

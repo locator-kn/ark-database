@@ -1,6 +1,6 @@
 export default
 class StaticData {
-    constructor(private db: any, private VIEWS: any) {
+    constructor(private db: any, private VIEWS: any, private LISTS: any) {
 
     }
 
@@ -12,7 +12,7 @@ class StaticData {
      * @param callback
      */
     getMoods = (callback) => {
-        this.db.view(this.VIEWS.VIEW_DATA_MOOD, callback);
+        this.db.list(this.LISTS.LIST_DATA_MOOD, callback);
     };
 
     /**
@@ -21,7 +21,7 @@ class StaticData {
      * @param callback
      */
     getCities = (callback) => {
-        this.db.view(this.VIEWS.VIEW_DATA_CITY, callback);
+        this.db.list(this.LISTS.LIST_DATA_CITY, callback);
     };
 
     /**
@@ -30,7 +30,7 @@ class StaticData {
      * @param callback
      */
     getAccommodations = (callback) => {
-        this.db.view(this.VIEWS.VIEW_DATA_ACC, callback);
+        this.db.list(this.LISTS.LIST_DATA_ACC, callback);
     };
 
 
