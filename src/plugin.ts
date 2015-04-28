@@ -43,7 +43,7 @@ class Database {
         LIST_USER_ALL: 'user/listall/user',
         LIST_LOCATION_USER: 'location/listall/user',
         LIST_DATA_MOOD: 'data/listall/moods',
-        LIST_DATA_ACC: 'data/listall/accommodation',
+        LIST_DATA_ACC: 'data/listall/accommodations',
         LIST_DATA_CITY: 'data/listall/cities'
     };
 
