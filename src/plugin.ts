@@ -44,7 +44,8 @@ class Database {
         LIST_LOCATION_USER: 'location/listall/user',
         LIST_DATA_MOOD: 'data/listall/moods',
         LIST_DATA_ACC: 'data/listall/accommodations',
-        LIST_DATA_CITY: 'data/listall/cities'
+        LIST_DATA_CITY: 'data/listall/cities',
+        LIST_TRIP_ALL: 'trip/listall/trip'
     };
 
     /**
@@ -86,7 +87,7 @@ class Database {
         }
 
         this.user = new User(this.db, this.VIEWS, this.LISTS);
-        this.trip = new Trip(this.db, this.VIEWS);
+        this.trip = new Trip(this.db, this.VIEWS, this.LISTS);
         this.location = new Location(this.db, this.VIEWS, this.LISTS);
         this.staticdata = new StaticData(this.db, this.VIEWS, this.LISTS);
     };
