@@ -1,6 +1,6 @@
 export default
 class Trip {
-    constructor(private db:any, private VIEWS:any) {
+    constructor(private db:any, private VIEWS:any, private LISTS:any) {
     }
 
     /**
@@ -9,7 +9,7 @@ class Trip {
      * @param callback
      */
     getTrips = (callback) => {
-        this.db.view(this.VIEWS.VIEW_TRIP_TRIP, callback);
+        this.db.list(this.LISTS.LIST_TRIP_ALL, callback);
     };
 
     /**
@@ -19,7 +19,7 @@ class Trip {
      * @param callback
      */
     getTripById = (tripid:string, callback) => {
-        this.db.view(this.VIEWS.VIEW_TRIP_TRIP, {key: tripid}, callback);
+        this.db.list(this.LISTS.LIST_TRIP_ALL, {key: tripid}, callback);
     };
 
     /**
