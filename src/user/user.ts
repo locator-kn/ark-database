@@ -16,7 +16,6 @@ class User {
     /**
      * Get user from database by specific user id.
      *
-     * @param userId:string
      * @param callback
      */
     getUsers = (callback) => {
