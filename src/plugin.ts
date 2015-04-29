@@ -88,7 +88,7 @@ class Database {
 
         this.user = new User(this.db, this.VIEWS, this.LISTS);
         this.trip = new Trip(this.db, this.VIEWS, this.LISTS);
-        this.location = new Location(this.db, this.VIEWS, this.LISTS);
+        this.location = new Location(this.db, this.LISTS);
         this.staticdata = new StaticData(this.db, this.LISTS);
     };
 
