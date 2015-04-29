@@ -43,6 +43,7 @@ class Location {
 
     /**
      * Creates a new location and adds it to the location pool of a user.
+     * @param userid
      * @param location
      * @param callback
      */
@@ -54,6 +55,7 @@ class Location {
      * Updates a location of a user.
      * @param locationid
      * @param rev
+     * @param location
      * @param callback
      */
     updateLocation = (locationid:string,rev:string, location, callback) => {
