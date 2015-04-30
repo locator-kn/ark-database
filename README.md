@@ -80,6 +80,17 @@ function(doc) {
    }
 }
 ```
+
+
+## Server
+
+### open port on server
+
+**Server stop**: *"ps -U couchdb -o pid= | xargs kill -9"* -> because "sudo /etc/init.d/couchdb stop" stop doesn't work!
+
+**Changes**: *"etc/couchdb/local.ini"* -> change **bind_address = 0.0.0.0** instead of 127.0.0.1
+
+**Server start**: *"sudo /etc/init.d/couchdb start"*
 ## Tests
 
 Tests can be run with `npm test` or `make test`, `make test-cov` and `test-cov-html`.
