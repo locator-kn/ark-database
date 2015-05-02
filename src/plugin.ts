@@ -45,7 +45,8 @@ class Database {
         LIST_DATA_MOOD: 'data/listall/moods',
         LIST_DATA_ACC: 'data/listall/accommodations',
         LIST_DATA_CITY: 'data/listall/cities',
-        LIST_TRIP_ALL: 'trip/listall/trip'
+        LIST_TRIP_ALL: 'trip/listall/trip',
+        LIST_TRIP_CITY: 'trip/listall/city'
     };
 
     /**
@@ -117,6 +118,7 @@ class Database {
         // trip
         server.expose('getTrips', this.trip.getTrips);
         server.expose('getTripById', this.trip.getTripById);
+        server.expose('getTripsByCity', this.trip.getTripsByCity);
         server.expose('updateTrip', this.trip.updateTrip);
         server.expose('createTrip', this.trip.createTrip);
         server.expose('deleteTripById', this.trip.deleteTripById);
