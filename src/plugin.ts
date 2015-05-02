@@ -58,7 +58,7 @@ class Database {
      * @param port
      *      port to connect to the storage location
      */
-    constructor(database:string, url?:string, port?:number) {
+    constructor(database:string, private env: any, url?:string, port?:number) {
         // register plugin
         this.register.attributes = {
             name: 'ark-database',
@@ -69,10 +69,17 @@ class Database {
         this.cradle = require('cradle');
 
         // use specific setup options if committed
-        if (url && port) {
+        if (this.env) {
+            if(!this.env['COUCH_USERNAME'] || !this.env['COUCH_USERNAME']) {
+                throw new Error('database: please set up credentials');
+            }
             this.cradle.setup({
-                host: url,
-                port: port
+                host: url || 'localhost',
+                port: port || 5984,
+                auth: {
+                    username: this.env['COUCH_USERNAME'],
+                    password: this.env['COUCH_PASSWORD']
+                }
             });
         }
         this.openDatabase(database);
