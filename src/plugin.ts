@@ -54,16 +54,18 @@ class Database {
      *
      * @param database:string
      *      represents the name of the database
+     *
+     * @param env:any
+     *      env is an object with secrets (password etc)
      * @param url:string
      *      url to the storage location of the database
      * @param port
      *      port to connect to the storage location
      */
-    constructor(database:string, private env: any, url?:string, port?:number) {
+    constructor(private database:string, private env: any, url?:string, port?:number) {
         // register plugin
         this.register.attributes = {
-            name: 'ark-database',
-            version: '0.1.0'
+            pkg: require('./../../package.json')
         };
 
         // import database plugin
@@ -90,9 +92,12 @@ class Database {
     private openDatabase = (database:string)=> {
         this.db = new (this.cradle.Connection)().database(database);
         // check if database exists
-        if (!this.db) {
-            throw new Error('Error: database does not exist!');
-        }
+        this.db.exists((err, exists) => {
+            if (err) {
+                throw new Error('Error: ' + this.database + ' does not exist!');
+            }
+            console.log('Database', this.database, 'exists');
+        });
 
         this.user = new User(this.db, this.VIEWS, this.LISTS);
         this.trip = new Trip(this.db, this.LISTS);
