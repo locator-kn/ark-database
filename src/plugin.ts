@@ -61,8 +61,7 @@ class Database {
     constructor(private database:string, private env: any, url?:string, port?:number) {
         // register plugin
         this.register.attributes = {
-            name: 'ark-database',
-            version: '0.1.0'
+            pkg: require('./../../package.json')
         };
 
         // import database plugin
