@@ -53,6 +53,9 @@ class Database {
      *
      * @param database:string
      *      represents the name of the database
+     *
+     * @param env:any
+     *      env is an object with secrets (password etc)
      * @param url:string
      *      url to the storage location of the database
      * @param port
