@@ -46,7 +46,8 @@ class Database {
         LIST_DATA_ACC: 'data/listall/accommodations',
         LIST_DATA_CITY: 'data/listall/cities',
         LIST_TRIP_ALL: 'trip/listall/trip',
-        LIST_TRIP_CITY: 'trip/listall/city'
+        LIST_TRIP_CITY: 'trip/listall/city',
+        LIST_TRIP_CITY_QUERY: "trip/listall/city_query"
     };
 
     /**
@@ -124,6 +125,7 @@ class Database {
         server.expose('getTrips', this.trip.getTrips);
         server.expose('getTripById', this.trip.getTripById);
         server.expose('getTripsByCity', this.trip.getTripsByCity);
+        server.expose('getTripsByCityQuery', this.trip.getTripsByCityQuery);
         server.expose('updateTrip', this.trip.updateTrip);
         server.expose('createTrip', this.trip.createTrip);
         server.expose('deleteTripById', this.trip.deleteTripById);
