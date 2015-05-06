@@ -2,6 +2,7 @@ import User from './user/user';
 import Trip from './trip/trip';
 import Location from './location/location';
 import StaticData from './staticdata/staticdata';
+import Attachment from './attachemt/attachment';
 
 export interface IRegister {
     (server:any, options:any, next:any): void;
@@ -27,6 +28,7 @@ class Database {
     private trip:any;
     private location:any;
     private staticdata:any;
+    private attachment:any;
 
     // define Views
     private VIEWS = {
@@ -104,6 +106,7 @@ class Database {
         this.trip = new Trip(this.db, this.LISTS);
         this.location = new Location(this.db, this.VIEWS, this.LISTS);
         this.staticdata = new StaticData(this.db, this.LISTS);
+        this.attachment = new Attachment(this.db, this.LISTS, this.VIEWS);
     };
 
     /**
@@ -155,6 +158,9 @@ class Database {
         server.expose('createAccommodation', this.staticdata.createAccommodation);
         server.expose('updateAccommodation', this.staticdata.updateAccommodation);
         server.expose('deleteAccommodationById', this.staticdata.deleteAccommodationById);
+
+        // attachments
+        server.expose('getPicture', this.attachment.getPicture);
     }
 
 
