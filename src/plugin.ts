@@ -42,12 +42,12 @@ class Database {
     private LISTS = {
         LIST_USER_ALL: 'user/listall/user',
         LIST_LOCATION_USER: 'location/listall/user',
+        LIST_TRIP_SEARCH: 'trip/searchlist/search',
         LIST_DATA_MOOD: 'data/listall/moods',
         LIST_DATA_ACC: 'data/listall/accommodations',
         LIST_DATA_CITY: 'data/listall/cities',
         LIST_TRIP_ALL: 'trip/listall/trip',
-        LIST_TRIP_CITY: 'trip/listall/city',
-        LIST_TRIP_CITY_QUERY: "trip/listall/city_query"
+        LIST_TRIP_CITY: 'trip/listall/city'
     };
 
     /**
@@ -125,7 +125,7 @@ class Database {
         server.expose('getTrips', this.trip.getTrips);
         server.expose('getTripById', this.trip.getTripById);
         server.expose('getTripsByCity', this.trip.getTripsByCity);
-        server.expose('getTripsByCityQuery', this.trip.getTripsByCityQuery);
+        server.expose('searchTripsByQuery', this.trip.searchTripsByQuery);
         server.expose('updateTrip', this.trip.updateTrip);
         server.expose('createTrip', this.trip.createTrip);
         server.expose('deleteTripById', this.trip.deleteTripById);
@@ -150,7 +150,7 @@ class Database {
         server.expose('updateCity', this.staticdata.updateCity);
         server.expose('deleteCityById', this.staticdata.deleteCityById);
 
-        // staticdata city
+        // staticdata accomodations
         server.expose('getAccommodations', this.staticdata.getAccommodations);
         server.expose('createAccommodation', this.staticdata.createAccommodation);
         server.expose('updateAccommodation', this.staticdata.updateAccommodation);
