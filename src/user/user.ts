@@ -10,7 +10,7 @@ class User {
      * @param callback
      */
     getUserById = (userId:string, callback) => {
-        this.db.list(this.VIEWS.LIST_USER_ALL, {key: userId}, callback);
+        this.db.list(this.LISTS.LIST_USER_ALL, {key: userId}, callback);
     };
 
     /**
