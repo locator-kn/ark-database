@@ -2,7 +2,7 @@ import User from './user/user';
 import Trip from './trip/trip';
 import Location from './location/location';
 import StaticData from './staticdata/staticdata';
-import Attachment from './attachemt/attachment';
+import Attachment from './attachment/attachment';
 
 export interface IRegister {
     (server:any, options:any, next:any): void;
@@ -159,7 +159,7 @@ class Database {
         server.expose('updateAccommodation', this.staticdata.updateAccommodation);
         server.expose('deleteAccommodationById', this.staticdata.deleteAccommodationById);
 
-        // attachments
+        // attachment
         server.expose('getPicture', this.attachment.getPicture);
     }
 
