@@ -1,6 +1,6 @@
 export default
 class User {
-    constructor(private db:any, private VIEWS:any, private LISTS:any) {
+    constructor(private db:any, private LISTS:any) {
     }
 
     /**
