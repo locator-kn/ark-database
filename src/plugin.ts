@@ -30,16 +30,6 @@ class Database {
     private staticdata:any;
     private setup:any;
 
-    // define Views
-    private VIEWS = {
-        VIEW_USER_LOGIN: 'user/login',
-        VIEW_USER_USER: 'user/user',
-        VIEW_TRIP_TRIP: 'trip/trip',
-        VIEW_LOCATION_LOCATION: 'location/location',
-        VIEW_LOCATION_USER: 'location/user'
-
-    };
-
     // define Lists
     private LISTS = {
         LIST_USER_ALL: 'user/listall/user',
