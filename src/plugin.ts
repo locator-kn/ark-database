@@ -115,6 +115,9 @@ class Database {
      */
     exportApi(server) {
         server.expose('db', this.db);
+
+        // setup
+        server.expose('createView', this.setup.createView);
         // user
         server.expose('getUserById', this.user.getUserById);
         server.expose('getUsers', this.user.getUsers);
