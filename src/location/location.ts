@@ -18,7 +18,7 @@ class Location {
      * @param callback
      */
     getLocationById = (locationid:string, callback) => {
-        this.db.view(this.LISTS.LIST_LOCATION_LOCATION, {key: locationid}, callback);
+        this.db.list(this.LISTS.LIST_LOCATION_LOCATION, {key: locationid}, callback);
     };
 
     /**
