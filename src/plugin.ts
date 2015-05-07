@@ -2,6 +2,7 @@ import User from './user/user';
 import Trip from './trip/trip';
 import Location from './location/location';
 import StaticData from './staticdata/staticdata';
+import Setup from './setup/setup';
 
 export interface IRegister {
     (server:any, options:any, next:any): void;
@@ -27,6 +28,7 @@ class Database {
     private trip:any;
     private location:any;
     private staticdata:any;
+    private setup:any;
 
     // define Views
     private VIEWS = {
@@ -42,7 +44,7 @@ class Database {
     private LISTS = {
         LIST_USER_ALL: 'user/listall/user',
         LIST_LOCATION_USER: 'location/listall/user',
-        LIST_TRIP_SEARCH: 'trip/searchlist/search',
+        LIST_SEARCH_TRIP: 'search/searchlist/city',
         LIST_DATA_MOOD: 'data/listall/moods',
         LIST_DATA_ACC: 'data/listall/accommodations',
         LIST_DATA_CITY: 'data/listall/cities',
@@ -104,6 +106,7 @@ class Database {
         this.trip = new Trip(this.db, this.LISTS);
         this.location = new Location(this.db, this.VIEWS, this.LISTS);
         this.staticdata = new StaticData(this.db, this.LISTS);
+        this.setup= new Setup(this.db);
     };
 
     /**
