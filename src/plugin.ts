@@ -43,6 +43,7 @@ class Database {
     // define Lists
     private LISTS = {
         LIST_USER_ALL: 'user/listall/user',
+        LIST_USER_LOGIN: 'user/listall/login',
         LIST_LOCATION_USER: 'location/listall/user',
         LIST_SEARCH_TRIP: 'search/searchlist/city',
         LIST_DATA_MOOD: 'data/listall/moods',
