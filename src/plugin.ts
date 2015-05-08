@@ -101,7 +101,7 @@ class Database {
         this.location = new Location(this.db, this.LISTS);
         this.staticdata = new StaticData(this.db, this.LISTS);
         this.setup= new Setup(this.db);
-        this.attachment = new Attachment(this.db, this.LISTS, this.VIEWS);
+        this.attachment = new Attachment(this.db, this.LISTS);
     };
 
     /**
