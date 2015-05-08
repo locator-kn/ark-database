@@ -46,6 +46,10 @@ class Database {
         LIST_TRIP_CITY: 'trip/listall/city'
     };
 
+    private VIEWS = {
+        USER_LOGIN: 'user/login'
+    };
+
     /**
      * Constructor to create a database instance
      *
@@ -96,7 +100,7 @@ class Database {
             console.log('Database', this.database, 'exists');
         });
 
-        this.user = new User(this.db, this.LISTS);
+        this.user = new User(this.db, this.LISTS, this.VIEWS);
         this.trip = new Trip(this.db, this.LISTS);
         this.location = new Location(this.db, this.LISTS);
         this.staticdata = new StaticData(this.db, this.LISTS);
