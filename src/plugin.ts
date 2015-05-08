@@ -2,6 +2,7 @@ import User from './user/user';
 import Trip from './trip/trip';
 import Location from './location/location';
 import StaticData from './staticdata/staticdata';
+import Attachment from './attachment/attachment';
 
 export interface IRegister {
     (server:any, options:any, next:any): void;
@@ -27,6 +28,7 @@ class Database {
     private trip:any;
     private location:any;
     private staticdata:any;
+    private attachment:any;
 
     // define Views
     private VIEWS = {
@@ -46,7 +48,9 @@ class Database {
         LIST_DATA_ACC: 'data/listall/accommodations',
         LIST_DATA_CITY: 'data/listall/cities',
         LIST_TRIP_ALL: 'trip/listall/trip',
-        LIST_USER_LOGIN: 'trip/listall/login'
+        LIST_USER_LOGIN: 'trip/listall/login',
+        LIST_TRIP_CITY: 'trip/listall/city',
+        LIST_TRIP_CITY_QUERY: "trip/listall/city_query"
     };
 
     /**
@@ -103,6 +107,7 @@ class Database {
         this.trip = new Trip(this.db, this.LISTS);
         this.location = new Location(this.db, this.VIEWS, this.LISTS);
         this.staticdata = new StaticData(this.db, this.LISTS);
+        this.attachment = new Attachment(this.db, this.LISTS, this.VIEWS);
     };
 
     /**
@@ -123,6 +128,8 @@ class Database {
         // trip
         server.expose('getTrips', this.trip.getTrips);
         server.expose('getTripById', this.trip.getTripById);
+        server.expose('getTripsByCity', this.trip.getTripsByCity);
+        server.expose('getTripsByCityQuery', this.trip.getTripsByCityQuery);
         server.expose('updateTrip', this.trip.updateTrip);
         server.expose('createTrip', this.trip.createTrip);
         server.expose('deleteTripById', this.trip.deleteTripById);
@@ -152,6 +159,9 @@ class Database {
         server.expose('createAccommodation', this.staticdata.createAccommodation);
         server.expose('updateAccommodation', this.staticdata.updateAccommodation);
         server.expose('deleteAccommodationById', this.staticdata.deleteAccommodationById);
+
+        // attachment
+        server.expose('getPicture', this.attachment.getPicture);
     }
 
 

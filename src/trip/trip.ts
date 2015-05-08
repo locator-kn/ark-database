@@ -23,6 +23,26 @@ class Trip {
     };
 
     /**
+     * Get trip from database by specific city name.
+     *
+     * @param city:string
+     * @param callback
+     */
+    getTripsByCity = (city:string, callback) => {
+        this.db.list(this.LISTS.LIST_TRIP_CITY, {key: city}, callback);
+    };
+
+    /**
+     * Get trip from database by query.
+     *
+     * @param query
+     * @param callback
+     */
+    getTripsByCityQuery = (query, callback) => {
+            this.db.list(this.LISTS.LIST_TRIP_CITY_QUERY, query, callback);
+    };
+
+    /**
      * Update trip information.
      *
      * @param tripId:string
