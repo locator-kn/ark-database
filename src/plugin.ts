@@ -2,6 +2,7 @@ import User from './user/user';
 import Trip from './trip/trip';
 import Location from './location/location';
 import StaticData from './staticdata/staticdata';
+import Setup from './setup/setup';
 import Attachment from './attachment/attachment';
 
 export interface IRegister {
@@ -28,29 +29,21 @@ class Database {
     private trip:any;
     private location:any;
     private staticdata:any;
+    private setup:any;
     private attachment:any;
-
-    // define Views
-    private VIEWS = {
-        VIEW_USER_LOGIN: 'user/login',
-        VIEW_USER_USER: 'user/user',
-        VIEW_TRIP_TRIP: 'trip/trip',
-        VIEW_LOCATION_LOCATION: 'location/location',
-        VIEW_LOCATION_USER: 'location/user'
-
-    };
 
     // define Lists
     private LISTS = {
         LIST_USER_ALL: 'user/listall/user',
+        LIST_USER_LOGIN: 'user/listall/login',
         LIST_LOCATION_USER: 'location/listall/user',
+        LIST_LOCATION_LOCATION: 'location/listall/location',
+        LIST_SEARCH_TRIP: 'search/searchlist/city',
         LIST_DATA_MOOD: 'data/listall/moods',
         LIST_DATA_ACC: 'data/listall/accommodations',
         LIST_DATA_CITY: 'data/listall/cities',
         LIST_TRIP_ALL: 'trip/listall/trip',
-        LIST_USER_LOGIN: 'trip/listall/login',
-        LIST_TRIP_CITY: 'trip/listall/city',
-        LIST_TRIP_CITY_QUERY: "trip/listall/city_query"
+        LIST_TRIP_CITY: 'trip/listall/city'
     };
 
     /**
@@ -103,11 +96,12 @@ class Database {
             console.log('Database', this.database, 'exists');
         });
 
-        this.user = new User(this.db, this.VIEWS, this.LISTS);
+        this.user = new User(this.db, this.LISTS);
         this.trip = new Trip(this.db, this.LISTS);
-        this.location = new Location(this.db, this.VIEWS, this.LISTS);
+        this.location = new Location(this.db, this.LISTS);
         this.staticdata = new StaticData(this.db, this.LISTS);
-        this.attachment = new Attachment(this.db, this.LISTS, this.VIEWS);
+        this.setup= new Setup(this.db);
+        this.attachment = new Attachment(this.db, this.LISTS);
     };
 
     /**
@@ -116,6 +110,9 @@ class Database {
      */
     exportApi(server) {
         server.expose('db', this.db);
+
+        // setup
+        server.expose('createView', this.setup.createView);
         // user
         server.expose('getUserById', this.user.getUserById);
         server.expose('getUsers', this.user.getUsers);
@@ -129,7 +126,7 @@ class Database {
         server.expose('getTrips', this.trip.getTrips);
         server.expose('getTripById', this.trip.getTripById);
         server.expose('getTripsByCity', this.trip.getTripsByCity);
-        server.expose('getTripsByCityQuery', this.trip.getTripsByCityQuery);
+        server.expose('searchTripsByQuery', this.trip.searchTripsByQuery);
         server.expose('updateTrip', this.trip.updateTrip);
         server.expose('createTrip', this.trip.createTrip);
         server.expose('deleteTripById', this.trip.deleteTripById);
@@ -154,7 +151,7 @@ class Database {
         server.expose('updateCity', this.staticdata.updateCity);
         server.expose('deleteCityById', this.staticdata.deleteCityById);
 
-        // staticdata city
+        // staticdata accomodations
         server.expose('getAccommodations', this.staticdata.getAccommodations);
         server.expose('createAccommodation', this.staticdata.createAccommodation);
         server.expose('updateAccommodation', this.staticdata.updateAccommodation);

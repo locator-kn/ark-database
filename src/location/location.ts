@@ -1,6 +1,6 @@
 export default
 class Location {
-    constructor(private db:any, private VIEWS:any, private LISTS:any) {
+    constructor(private db:any, private LISTS:any) {
     }
 
     /**
@@ -18,7 +18,7 @@ class Location {
      * @param callback
      */
     getLocationById = (locationid:string, callback) => {
-        this.db.view(this.VIEWS.VIEW_LOCATION_LOCATION, {key: locationid}, callback);
+        this.db.list(this.LISTS.LIST_LOCATION_LOCATION, {key: locationid}, callback);
     };
 
     /**
