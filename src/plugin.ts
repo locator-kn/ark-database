@@ -45,7 +45,8 @@ class Database {
         LIST_DATA_MOOD: 'data/listall/moods',
         LIST_DATA_ACC: 'data/listall/accommodations',
         LIST_DATA_CITY: 'data/listall/cities',
-        LIST_TRIP_ALL: 'trip/listall/trip'
+        LIST_TRIP_ALL: 'trip/listall/trip',
+        LIST_USER_LOGIN: 'trip/listall/login'
     };
 
     /**
