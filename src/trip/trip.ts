@@ -38,8 +38,8 @@ class Trip {
      * @param query
      * @param callback
      */
-    getTripsByCityQuery = (query, callback) => {
-            this.db.list(this.LISTS.LIST_TRIP_CITY_QUERY, query, callback);
+    searchTripsByQuery = (query, callback) => {
+            this.db.list(this.LISTS.LIST_SEARCH_TRIP, query, callback);
     };
 
     /**

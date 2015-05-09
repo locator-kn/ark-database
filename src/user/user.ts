@@ -1,6 +1,6 @@
 export default
 class User {
-    constructor(private db:any, private VIEWS:any, private LISTS:any) {
+    constructor(private db:any, private LISTS:any, private VIEWS:any) {
     }
 
     /**
@@ -52,7 +52,7 @@ class User {
      * @param callback
      */
     getUserLogin = (userId:string, callback) => {
-        this.db.view(this.VIEWS.VIEW_USER_LOGIN, {key: userId}, callback);
+        this.db.view(this.VIEWS.USER_LOGIN, {key: userId}, callback);
     };
 
     /**

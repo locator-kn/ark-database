@@ -2,8 +2,7 @@ export default
 class Attachment {
     Readable:any;
     stream:any;
-
-    constructor(private db:any, private VIEWS:any, private LISTS:any) {
+    constructor(private db:any, private LISTS:any) {
         this.stream = require('stream');
         this.Readable = this.stream.Readable ||
             require('readable-stream').Readable;
