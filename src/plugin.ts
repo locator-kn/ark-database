@@ -161,6 +161,7 @@ class Database {
 
         // attachment
         server.expose('getPicture', this.attachment.getPicture);
+        server.expose('savePicture',this.attachment.savePicture);
     }
 
 
