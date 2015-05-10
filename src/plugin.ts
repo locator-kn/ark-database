@@ -2,7 +2,6 @@ import User from './user/user';
 import Trip from './trip/trip';
 import Location from './location/location';
 import StaticData from './staticdata/staticdata';
-import Setup from './setup/setup';
 import Attachment from './attachment/attachment';
 import Util from './util/util'
 
@@ -30,7 +29,6 @@ class Database {
     private trip:any;
     private location:any;
     private staticdata:any;
-    private setup:any;
     private attachment:any;
     private util:any;
 
@@ -106,7 +104,6 @@ class Database {
         this.trip = new Trip(this.db, this.LISTS);
         this.location = new Location(this.db, this.LISTS);
         this.staticdata = new StaticData(this.db, this.LISTS);
-        this.setup = new Setup(this.db);
         this.attachment = new Attachment(this.db, this.LISTS);
         this.util = new Util(this.db);
     };
@@ -118,8 +115,6 @@ class Database {
     exportApi(server) {
         server.expose('db', this.db);
 
-        // setup
-        server.expose('createView', this.setup.createView);
         // user
         server.expose('getUserById', this.user.getUserById);
         server.expose('getUsers', this.user.getUsers);
@@ -170,6 +165,7 @@ class Database {
 
         // utility methods
         server.expose('updateDocument', this.util.updateDocument);
+        server.expose('createView', this.util.createView);
     }
 
 
