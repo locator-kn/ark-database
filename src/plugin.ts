@@ -146,19 +146,19 @@ class Database {
         server.expose('createLocation', this.location.createLocation);
         server.expose('updateLocation', this.location.updateLocation);
 
-        // staticdata mood
+        // static data mood
         server.expose('getMoods', this.staticdata.getMoods);
         server.expose('createMood', this.staticdata.createMood);
         server.expose('updateMood', this.staticdata.updateMood);
         server.expose('deleteMoodById', this.staticdata.deleteMoodById);
 
-        // staticdata city
+        // static data city
         server.expose('getCities', this.staticdata.getCities);
         server.expose('createCity', this.staticdata.createCity);
         server.expose('updateCity', this.staticdata.updateCity);
         server.expose('deleteCityById', this.staticdata.deleteCityById);
 
-        // staticdata accomodations
+        // static data accommodations
         server.expose('getAccommodations', this.staticdata.getAccommodations);
         server.expose('createAccommodation', this.staticdata.createAccommodation);
         server.expose('updateAccommodation', this.staticdata.updateAccommodation);
