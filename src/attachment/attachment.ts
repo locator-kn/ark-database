@@ -2,10 +2,13 @@ export default
 class Attachment {
     Readable:any;
     stream:any;
+    boom:any;
+
     constructor(private db:any, private LISTS:any) {
         this.stream = require('stream');
         this.Readable = this.stream.Readable ||
             require('readable-stream').Readable;
+        this.boom = require('boom');
     }
 
     /**
@@ -37,9 +40,11 @@ class Attachment {
         };
 
 
-        // get revision from database
-        this.db.head(documentId, (err, data) => {
-
+        // get revision from database with HEAD
+        this.db.head(documentId, (err, data, response) => {
+            if (response != 200) {
+                return callback(this.boom.create(response, 'document was not found'));
+            }
             if (err) {
                 return callback(err);
             }
@@ -49,6 +54,7 @@ class Attachment {
                 _rev: data.etag.split('"')[1]
             };
 
+            // create read stream and pipe it
             var writeStream = this.db.saveAttachment(idData, attachmentData, callback);
 
             readStream.pipe(writeStream);

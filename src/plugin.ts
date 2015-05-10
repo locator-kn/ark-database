@@ -63,7 +63,7 @@ class Database {
      * @param port
      *      port to connect to the storage location
      */
-    constructor(private database:string, private env: any, url?:string, port?:number) {
+    constructor(private database:string, private env:any, url?:string, port?:number) {
         // register plugin
         this.register.attributes = {
             pkg: require('./../../package.json')
@@ -74,7 +74,7 @@ class Database {
 
         // use specific setup options if committed
         if (this.env) {
-            if(!this.env['COUCH_USERNAME'] || !this.env['COUCH_USERNAME']) {
+            if (!this.env['COUCH_USERNAME'] || !this.env['COUCH_USERNAME']) {
                 throw new Error('database: please set up credentials');
             }
             this.cradle.setup({
@@ -104,7 +104,7 @@ class Database {
         this.trip = new Trip(this.db, this.LISTS);
         this.location = new Location(this.db, this.LISTS);
         this.staticdata = new StaticData(this.db, this.LISTS);
-        this.setup= new Setup(this.db);
+        this.setup = new Setup(this.db);
         this.attachment = new Attachment(this.db, this.LISTS);
     };
 
@@ -163,7 +163,7 @@ class Database {
 
         // attachment
         server.expose('getPicture', this.attachment.getPicture);
-        server.expose('savePicture',this.attachment.savePicture);
+        server.expose('savePicture', this.attachment.savePicture);
     }
 
 
