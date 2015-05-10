@@ -1,7 +1,5 @@
 export default
 class Util {
-
-
     constructor(private db:any) {
     }
 

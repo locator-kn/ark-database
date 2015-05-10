@@ -108,7 +108,7 @@ class Database {
         this.staticdata = new StaticData(this.db, this.LISTS);
         this.setup = new Setup(this.db);
         this.attachment = new Attachment(this.db, this.LISTS);
-        this.util = new Util(this.db, this.LISTS);
+        this.util = new Util(this.db);
     };
 
     /**
