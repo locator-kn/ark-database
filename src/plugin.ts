@@ -4,6 +4,7 @@ import Location from './location/location';
 import StaticData from './staticdata/staticdata';
 import Setup from './setup/setup';
 import Attachment from './attachment/attachment';
+import Util from './util/util'
 
 export interface IRegister {
     (server:any, options:any, next:any): void;
@@ -31,6 +32,7 @@ class Database {
     private staticdata:any;
     private setup:any;
     private attachment:any;
+    private util:any;
 
     // define Lists
     private LISTS = {
@@ -106,6 +108,7 @@ class Database {
         this.staticdata = new StaticData(this.db, this.LISTS);
         this.setup = new Setup(this.db);
         this.attachment = new Attachment(this.db, this.LISTS);
+        this.util = new Util(this.db, this.LISTS);
     };
 
     /**
@@ -164,6 +167,9 @@ class Database {
         // attachment
         server.expose('getPicture', this.attachment.getPicture);
         server.expose('savePicture', this.attachment.savePicture);
+
+        // utility methods
+        server.expose('updateDocument', this.util.updateDocument);
     }
 
 
