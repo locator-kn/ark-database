@@ -2,7 +2,7 @@ export default
 class Util {
 
 
-    constructor(private db:any, private LISTS:any) {
+    constructor(private db:any) {
     }
 
     /**
