@@ -54,11 +54,9 @@ class User {
      * @param userId:string
      * @param callback
      */
-    getUserLogin = (userId:string, callback = (e, r) => {}) => {
+    getUserLogin = (userId:string) => {
         var promise = new Promise((resolve, reject) => {
             this.db.list(this.LISTS.LIST_USER_LOGIN, {key: userId}, (err, result) => {
-                callback(err, result[0]);
-
                 // reject also if there is no match in the database
                 if(err || !result[0]) {
                     return reject(err);
