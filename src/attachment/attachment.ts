@@ -1,3 +1,6 @@
+declare
+var Promise:any;
+
 export default
 class Attachment {
     Readable:any;
@@ -26,40 +29,48 @@ class Attachment {
     };
 
     /**
-     *
+     * Saves an attachment and returns a Promise
      * @param documentId
      * @param filename
      * @param readStream
      * @param callback
      */
-    savePicture = (documentId:string, filename:string, readStream:any, callback) => {
+    savePicture = (documentId:string, filename:string, readStream:any) => {
 
         var attachmentData = {
             name: filename,
             'Content-Type': 'multipart/form-data'
         };
 
+        return new Promise((resolve, reject) => {
 
-        // get revision from database with HEAD
-        this.db.head(documentId, (err, data, response) => {
-            if (response != 200) {
-                return callback(this.boom.create(response, 'document was not found'));
-            }
-            if (err) {
-                return callback(err);
-            }
+            // get revision from database with HEAD
+            this.db.head(documentId, (err, data, response) => {
+                if (response != 200) {
+                    return reject(this.boom.create(response, 'document was not found'));
+                }
+                if (err) {
+                    return reject(err);
+                }
 
-            var idData = {
-                _id: documentId,
-                _rev: data.etag.split('"')[1]
-            };
+                var idData = {
+                    _id: documentId,
+                    _rev: data.etag.split('"')[1] // remove quotes to get revision
+                };
 
-            // create read stream and pipe it
-            var writeStream = this.db.saveAttachment(idData, attachmentData, callback);
+                // create read stream and pipe it
+                var writeStream = this.db.saveAttachment(idData, attachmentData
+                    , (err, result) => {
+                        if (err) {
+                            return reject(err);
+                        }
+                        resolve(result)
+                    }
+                );
 
-            readStream.pipe(writeStream);
+                readStream.pipe(writeStream);
+            });
         });
-
 
     }
 }
