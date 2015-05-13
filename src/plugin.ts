@@ -45,7 +45,8 @@ class Database {
         LIST_DATA_ACC: 'data/listall/accommodations',
         LIST_DATA_CITY: 'data/listall/cities',
         LIST_TRIP_ALL: 'trip/listall/trip',
-        LIST_TRIP_CITY: 'trip/listall/city'
+        LIST_TRIP_CITY: 'trip/listall/city',
+        LIST_MAIL_REGISTRATION: 'mail/listall/registration'
     };
 
     private VIEWS = {
