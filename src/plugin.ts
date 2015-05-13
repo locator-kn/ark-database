@@ -172,7 +172,7 @@ class Database {
         server.expose('createView', this.util.createView);
 
         // mail
-        server.export('getRegistrationMail', this.mail.getRegistrationMail);
+        server.expose('getRegistrationMail', this.mail.getRegistrationMail);
     }
 
 
