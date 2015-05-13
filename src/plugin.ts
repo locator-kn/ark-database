@@ -166,6 +166,7 @@ class Database {
         // utility methods
         server.expose('updateDocument', this.util.updateDocument);
         server.expose('createView', this.util.createView);
+        server.expose('entryExist', this.util.entryExist);
     }
 
 
