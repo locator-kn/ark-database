@@ -1,3 +1,6 @@
+
+declare var Promise: any;
+
 export default
 class User {
     constructor(private db:any, private LISTS:any, private VIEWS:any) {
@@ -51,8 +54,18 @@ class User {
      * @param userId:string
      * @param callback
      */
-    getUserLogin = (userId:string, callback) => {
-        this.db.view(this.VIEWS.USER_LOGIN, {key: userId}, callback);
+    getUserLogin = (userId:string) => {
+        var promise = new Promise((resolve, reject) => {
+            this.db.list(this.LISTS.LIST_USER_LOGIN, {key: userId}, (err, result) => {
+                // reject also if there is no match in the database
+                if(err || !result[0]) {
+                    return reject(err);
+                }
+                resolve(result[0]);
+            });
+        });
+
+        return promise;
     };
 
     /**
