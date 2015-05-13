@@ -4,7 +4,7 @@ import Location from './location/location';
 import StaticData from './staticdata/staticdata';
 import Attachment from './attachment/attachment';
 import Util from './util/util'
-import MAIL from './mail/mail'
+import Mail from './mail/mail'
 
 export interface IRegister {
     (server:any, options:any, next:any): void;
