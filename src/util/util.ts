@@ -62,7 +62,7 @@ class Util {
             // check if the document exist (or attachment), by sending a lightweight HEAD request
             this.db.query(options, (err, data, response) => {
                 if (response != 200) {
-                    return reject(this.boom.create(response, 'document was not found'));
+                    return reject(this.boom.create(response, 'entry in database was not found'));
                 }
                 if (err) {
                     return reject(err);
