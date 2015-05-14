@@ -4,6 +4,7 @@ import Location from './location/location';
 import StaticData from './staticdata/staticdata';
 import Attachment from './attachment/attachment';
 import Util from './util/util'
+import Mail from './mail/mail'
 
 export interface IRegister {
     (server:any, options:any, next:any): void;
@@ -31,6 +32,7 @@ class Database {
     private staticdata:any;
     private attachment:any;
     private util:any;
+    private mail:any;
 
     // define Lists
     private LISTS = {
@@ -43,7 +45,8 @@ class Database {
         LIST_DATA_ACC: 'data/listall/accommodations',
         LIST_DATA_CITY: 'data/listall/cities',
         LIST_TRIP_ALL: 'trip/listall/trip',
-        LIST_TRIP_CITY: 'trip/listall/city'
+        LIST_TRIP_CITY: 'trip/listall/city',
+        LIST_MAIL_REGISTRATION: 'mail/listall/registration'
     };
 
     private VIEWS = {
@@ -106,6 +109,7 @@ class Database {
         this.staticdata = new StaticData(this.db, this.LISTS);
         this.attachment = new Attachment(this.db, this.LISTS);
         this.util = new Util(this.db);
+        this.mail = new Mail(this.db, this.LISTS);
     };
 
     /**
@@ -166,6 +170,9 @@ class Database {
         // utility methods
         server.expose('updateDocument', this.util.updateDocument);
         server.expose('createView', this.util.createView);
+
+        // mail
+        server.expose('getRegistrationMail', this.mail.getRegistrationMail);
     }
 
 
