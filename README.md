@@ -95,7 +95,7 @@ function(doc) {
 ### load input from other database in local db
 
 ```
- curl -H 'Content-Type: application/json' -X POST http://localhost:5984/_replicate -d ' {"source": "http://locator-kn.iriscouch.com:5984/app", "target": "http://localhost:5984/app", "create_target": true, "continuous": true} '
+ curl -H 'Content-Type: application/json' -X POST http://localhost:5984/_replicate -d ' {"source": "http://locator.in.htwg-konstanz.de:5984/app", "target": "http://localhost:5984/app", "create_target": true, "continuous": true} '
 ```
 
 
