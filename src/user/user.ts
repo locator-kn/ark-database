@@ -1,9 +1,13 @@
-
-declare var Promise: any;
+declare
+var Promise:any;
 
 export default
 class User {
+    private boom;
+    any;
+
     constructor(private db:any, private LISTS:any, private VIEWS:any) {
+        this.boom = require('boom');
     }
 
     /**
@@ -13,7 +17,16 @@ class User {
      * @param callback
      */
     getUserById = (userId:string, callback) => {
-        this.db.list(this.LISTS.LIST_USER_ALL, {key: userId}, callback);
+        this.db.list(this.LISTS.LIST_USER_ALL, {key: userId}, (err, result) => {
+            if (err) {
+                return callback(err);
+            }
+            if (!result.length) {
+                return callback(this.boom.create(404, 'user not found'))
+            }
+            // return first entry from array
+            return callback(null, result[0]);
+        });
     };
 
     /**
@@ -58,7 +71,7 @@ class User {
         var promise = new Promise((resolve, reject) => {
             this.db.list(this.LISTS.LIST_USER_LOGIN, {key: userId}, (err, result) => {
                 // reject also if there is no match in the database
-                if(err || !result[0]) {
+                if (err || !result[0]) {
                     return reject(err);
                 }
                 resolve(result[0]);
