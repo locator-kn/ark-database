@@ -3,8 +3,7 @@ var Promise:any;
 
 export default
 class User {
-    private boom;
-    any;
+    private boom:any;
 
     constructor(private db:any, private LISTS:any, private VIEWS:any) {
         this.boom = require('boom');
