@@ -155,7 +155,7 @@ class Database {
 
         // static data city
         server.expose('getCities', this.staticdata.getCities);
-        server.expose ('getCitiesWithTrips', this.staticdata.getCitiesWithTrips);
+        server.expose('getCitiesWithTrips', this.staticdata.getCitiesWithTrips);
         server.expose('createCity', this.staticdata.createCity);
         server.expose('updateCity', this.staticdata.updateCity);
         server.expose('deleteCityById', this.staticdata.deleteCityById);
