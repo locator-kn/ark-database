@@ -29,6 +29,15 @@ class User {
     };
 
     /**
+     * get user by UUID
+     * @param callback
+     */
+    getUserByUUID = (uuid:string, callback) => {
+        this.db.list(this.LISTS.LIST_USER_UUID, {key: uuid},callback);
+    };
+
+
+    /**
      * Get user from database by specific user id.
      *
      * @param callback
