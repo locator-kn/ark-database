@@ -45,6 +45,7 @@ class Database {
         LIST_DATA_MOOD: 'data/listall/moods',
         LIST_DATA_ACC: 'data/listall/accommodations',
         LIST_DATA_CITY: 'data/listall/cities',
+        LIST_DATA_CITY_TRIPS: 'data/listall/cities_trips',
         LIST_TRIP_ALL: 'trip/listall/trip',
         LIST_TRIP_CITY: 'trip/listall/city',
         LIST_MAIL_REGISTRATION: 'mail/listall/registration'
@@ -155,6 +156,7 @@ class Database {
 
         // static data city
         server.expose('getCities', this.staticdata.getCities);
+        server.expose('getCitiesWithTrips', this.staticdata.getCitiesWithTrips);
         server.expose('createCity', this.staticdata.createCity);
         server.expose('updateCity', this.staticdata.updateCity);
         server.expose('deleteCityById', this.staticdata.deleteCityById);

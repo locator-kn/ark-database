@@ -8,6 +8,6 @@ class Mail {
      * @param callback
      */
     getRegistrationMail = (callback) => {
-        this.db.list(this.LISTS.LIST_MAIL_REGISTRATION,  callback);
+        this.db.list(this.LISTS.LIST_MAIL_REGISTRATION, callback);
     }
 }

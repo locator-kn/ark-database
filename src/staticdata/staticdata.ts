@@ -1,6 +1,6 @@
 export default
 class StaticData {
-    constructor(private db: any, private LISTS: any) {
+    constructor(private db:any, private LISTS:any) {
 
     }
 
@@ -22,6 +22,14 @@ class StaticData {
      */
     getCities = (callback) => {
         this.db.list(this.LISTS.LIST_DATA_CITY, callback);
+    };
+
+    /**
+     * Get cities with trips
+     * @param callback
+     */
+    getCitiesWithTrips = (callback) => {
+        this.db.list(this.LISTS.LIST_DATA_CITY_TRIPS, {reduce: true}, callback);
     };
 
     /**
@@ -101,8 +109,8 @@ class StaticData {
      * @param accommodations:Accommodations
      * @param callback
      */
-    updateAccommodation = (accommodationsId:string, rev:string, accommodations , callback) => {
-        this.db.save(accommodationsId, rev, accommodations , callback);
+    updateAccommodation = (accommodationsId:string, rev:string, accommodations, callback) => {
+        this.db.save(accommodationsId, rev, accommodations, callback);
     };
 
     /**

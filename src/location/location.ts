@@ -9,7 +9,7 @@ class Location {
      * @param callback
      */
     getLocationsByUserId = (userid:string, callback) => {
-        this.db.list(this.LISTS.LIST_LOCATION_USER, {key: userid},  callback);
+        this.db.list(this.LISTS.LIST_LOCATION_USER, {key: userid}, callback);
     };
 
     /**
@@ -28,7 +28,7 @@ class Location {
      */
     deleteLocationsByUserId = (userid:string, callback) => {
         callback({
-         error: 'not implemented yet!'
+            error: 'not implemented yet!'
         });
     };
 
@@ -58,7 +58,7 @@ class Location {
      * @param location
      * @param callback
      */
-    updateLocation = (locationid:string,rev:string, location, callback) => {
+    updateLocation = (locationid:string, rev:string, location, callback) => {
         this.db.save(locationid, rev, location, callback);
     };
 }

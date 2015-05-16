@@ -33,7 +33,7 @@ class User {
      * @param callback
      */
     getUserByUUID = (uuid:string, callback) => {
-        this.db.list(this.LISTS.LIST_USER_UUID, {key: uuid},callback);
+        this.db.list(this.LISTS.LIST_USER_UUID, {key: uuid}, callback);
     };
 
 

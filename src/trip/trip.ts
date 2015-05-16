@@ -39,7 +39,7 @@ class Trip {
      * @param callback
      */
     searchTripsByQuery = (query, callback) => {
-            this.db.list(this.LISTS.LIST_SEARCH_TRIP, query, callback);
+        this.db.list(this.LISTS.LIST_SEARCH_TRIP, query, callback);
     };
 
     /**
