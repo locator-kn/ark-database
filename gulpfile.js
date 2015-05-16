@@ -14,12 +14,12 @@ var tsProjectTripl = ts.createProject({
     typescript: typescript15
 });
 
-gulp.task('ts', function() {
+gulp.task('ts', function () {
     var tsResult = gulp.src('src/**/*.ts')
         .pipe(sourcemaps.init())
         .pipe(ts(tsProjectTripl));
 
-    tsResult._events.error[0] = function(error) {
+    tsResult._events.error[0] = function (error) {
         notifier.notify({
             'title': 'Compilation error',
             'message': error.__safety.toString(),
@@ -32,6 +32,6 @@ gulp.task('ts', function() {
     ]);
 });
 
-gulp.task('default', ['ts'], function() {
+gulp.task('default', ['ts'], function () {
 
 });

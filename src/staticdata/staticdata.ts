@@ -29,7 +29,7 @@ class StaticData {
      * @param callback
      */
     getCitiesWithTrips = (callback) => {
-        this.db.list(this.LISTS.LIST_DATA_CITY_TRIPS, {reduce: true},callback);
+        this.db.list(this.LISTS.LIST_DATA_CITY_TRIPS, {reduce: true}, callback);
     };
 
     /**

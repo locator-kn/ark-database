@@ -1,5 +1,5 @@
-
-declare var Promise: any;
+declare
+var Promise:any;
 
 export default
 class User {
@@ -21,7 +21,7 @@ class User {
      * @param callback
      */
     getUserByUUID = (uuid:string, callback) => {
-        this.db.list(this.LISTS.LIST_USER_UUID, {key: uuid},callback);
+        this.db.list(this.LISTS.LIST_USER_UUID, {key: uuid}, callback);
     };
 
 
@@ -67,7 +67,7 @@ class User {
         var promise = new Promise((resolve, reject) => {
             this.db.list(this.LISTS.LIST_USER_LOGIN, {key: userId}, (err, result) => {
                 // reject also if there is no match in the database
-                if(err || !result[0]) {
+                if (err || !result[0]) {
                     return reject(err);
                 }
                 resolve(result[0]);
