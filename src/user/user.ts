@@ -16,24 +16,38 @@ class User {
      * @param callback
      */
     getUserById = (userId:string, callback) => {
-        this.db.list(this.LISTS.LIST_USER_ALL, {key: userId}, (err, result) => {
-            if (err) {
-                return callback(err);
-            }
-            if (!result.length) {
-                return callback(this.boom.create(404, 'user not found'))
-            }
-            // return first entry from array
-            return callback(null, result[0]);
-        });
+        this.getObjectOf(userId, this.LISTS.LIST_USER_ALL, callback);
     };
 
     /**
      * get user by UUID
+     * @param uuid
      * @param callback
      */
     getUserByUUID = (uuid:string, callback) => {
-        this.db.list(this.LISTS.LIST_USER_UUID, {key: uuid}, callback);
+        this.getObjectOf(uuid, this.LISTS.LIST_USER_UUID, callback);
+    };
+
+    /**
+     * function to get only a object instead of an array.
+     *
+     * @param keyValue
+     * @param listName
+     * @param callback
+     *
+     * TODO: extract function to use it in other functions
+     */
+    getObjectOf = (keyValue, listName, callback) => {
+        this.db.list(listName, {key: keyValue}, (err, result) => {
+            if (err) {
+                return callback(err);
+            }
+            if (!result.length) {
+                return callback(this.boom.create(404, 'Database entry not found'))
+            }
+            // return first entry from array
+            return callback(null, result[0]);
+        });
     };
 
 
