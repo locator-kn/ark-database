@@ -15,7 +15,7 @@ class Mail {
                 return callback(err);
             }
             if (!result.length) {
-                return callback(this.boom.create(404, 'user not found'))
+                return callback(this.boom.create(404, 'Database entry not found'))
             }
             // return first entry from array
             return callback(null, result[0]);
