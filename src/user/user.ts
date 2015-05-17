@@ -30,10 +30,20 @@ class User {
 
     /**
      * get user by UUID
+     * @param uuid
      * @param callback
      */
     getUserByUUID = (uuid:string, callback) => {
-        this.db.list(this.LISTS.LIST_USER_UUID, {key: uuid}, callback);
+        this.db.list(this.LISTS.LIST_USER_UUID, {key: uuid}, (err, result) => {
+            if (err) {
+                return callback(err);
+            }
+            if (!result.length) {
+                return callback(this.boom.create(404, 'user not found'))
+            }
+            // return first entry from array
+            return callback(null, result[0]);
+        });
     };
 
 
