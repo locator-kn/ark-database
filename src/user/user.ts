@@ -34,6 +34,8 @@ class User {
      * @param keyValue
      * @param listName
      * @param callback
+     *
+     * TODO: extract function to use it in other functions
      */
     getObjectOf = (keyValue, listName, callback) => {
         this.db.list(listName, {key: keyValue}, (err, result) => {
