@@ -5,7 +5,7 @@ import StaticData from './staticdata/staticdata';
 import Attachment from './attachment/attachment';
 import Util from './util/util'
 import Mail from './mail/mail'
-
+import {setUpDesignDocuments} from './util/setup'
 export interface IRegister {
     (server:any, options:any, next:any): void;
     attributes?: any;
@@ -189,7 +189,26 @@ class Database {
     };
 
     private _register(server, options) {
-        // Register
+
+
+        server.route({
+            method: 'POST',
+            path: '/database/setup',
+            config: {
+                auth: false,
+                handler: (request, reply) => {
+
+                    setUpDesignDocuments(this.db, (err, result) => {
+                        if (err) {
+                            reply(err)
+                        }
+                        reply({"message": result})
+                    });
+                },
+                description: 'Setup all views and lists for couchdb',
+                tags: ['api', 'database']
+            }
+        });
         return 'register';
     }
 
