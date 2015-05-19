@@ -11,8 +11,6 @@ export function setUpDesignDocuments(database:any, callback:any) {
     database.save(designMail.title, designMail.content);
 
     callback(null, "Views created")
-
-
 }
 
 // user design document
@@ -89,7 +87,7 @@ var designTrip = {
                 "map": "function(doc) {\n if(doc.type == 'trip') {\n   emit(doc._id, doc);\n   }\n}"
             },
             "city": {
-                "map": "function(doc) {\n if(doc.type == 'trip') {\n   emit(doc.city, doc);\n   }\n}"
+                "map": "function(doc) {\n if(doc.type == 'trip' && doc.active == true) {\n   emit(doc.city, doc);\n   }\n}"
             }
         },
         "lists": {
