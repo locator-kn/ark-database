@@ -10,6 +10,8 @@ export function setUpDesignDocuments(database:any, callback:any) {
 
     database.save(trip.title, trip.content);
 
+    database.save(designMail.title, designMail.content);
+
     callback(null, "Views created")
 
 
@@ -109,6 +111,21 @@ var trip = {
             },
             "search": {
                 "map": "function(doc) {\n if(doc.type == 'trip') {\n   emit([doc.city, doc.category], doc);\n   }\n}"
+            }
+        },
+        "lists": {
+            "listall": "function (head, req) { var row; var result = []; while (row = getRow()) { result.push(row.value); } send(JSON.stringify(result)); }"
+        }
+    }
+};
+
+var designMail = {
+    title: "_design/mail",
+    content: {
+        "language": "javascript",
+        "views": {
+            "registration": {
+                "map": "function(doc) {\n if(doc.type== 'mail_registration') {\n   emit(doc._id, doc);\n   }\n}"
             }
         },
         "lists": {
