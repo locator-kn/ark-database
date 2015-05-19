@@ -28,6 +28,9 @@ var designUser = {
             },
             "user": {
                 "map": "function(doc) {\n if(doc.type == 'user') {\n   emit(doc._id, doc);\n }\n}"
+            },
+            "uuid": {
+                "map": "function(doc) {\n if(doc.type == 'user') {\n   emit(doc.uuid, doc);\n }\n}"
             }
         },
         "lists": {
