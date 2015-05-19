@@ -25,7 +25,7 @@ var designUser = {
                 "map": "function(doc) {\n if(doc.type == 'user') {\n   emit(doc._id, {\n\tname: doc.name,\n    password: doc.password, \n   strategy: doc.strategy, \nmail: doc.mail\n   });\n }\n}"
             },
             "user": {
-                "map": "function(doc) {\n if(doc.type == 'user') {\n   emit(doc._id, {\n    _rev: doc._rev,\n    picture: doc.picture,\n    name: doc.name, \n    surname: doc.surname,\n    mail: doc.mail,\n    });\n }\n}"
+                "map": "function(doc) {\n if(doc.type == 'user') {\n   emit(doc._id, doc);\n }\n}"
             }
         },
         "lists": {
