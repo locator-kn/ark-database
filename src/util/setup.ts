@@ -109,9 +109,6 @@ var trip = {
             },
             "search": {
                 "map": "function(doc) {\n if(doc.type == 'trip') {\n   emit([doc.city, doc.category], doc);\n   }\n}"
-            },
-            "search01": {
-                "map": "function(doc) {\n if(doc.type == 'trip') {\nvar a = 0;\n\tdoc.category.forEach(function(entry) {\nemit([doc.city, doc.category[a]], doc);\na++;\n});\n   \n   }\n}"
             }
         },
         "lists": {
