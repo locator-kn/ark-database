@@ -6,8 +6,6 @@ export function setUpDesignDocuments(database:any, callback:any) {
 
     database.save(designLocation.title, designLocation.content);
 
-    database.save(designStaticdata.title, designStaticdata.content);
-
     database.save(designTrip.title, designTrip.content);
 
     database.save(designMail.title, designMail.content);
@@ -74,21 +72,6 @@ var designLocation = {
             },
             "user": {
                 "map": "function(doc) {\n if (doc.type == 'location') {\n  emit(doc.userid, doc);\n }\n}"
-            }
-        },
-        "lists": {
-            "listall": "function (head, req) { var row; var result = []; while (row = getRow()) { result.push(row.value); } send(JSON.stringify(result)); }"
-        }
-    }
-};
-
-var designStaticdata = {
-    title: "_design/static",
-    content: {
-        "language": "javascript",
-        "views": {
-            "moods": {
-                "map": "function(doc) {\n if(doc.type== 'mood') {\n   emit(doc._id, doc);\n   }\n}"
             }
         },
         "lists": {
