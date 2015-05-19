@@ -20,7 +20,7 @@ var designUser = {
         "language": "javascript",
         "views": {
             "login": {
-                "map": "function(doc) {\n if(doc.type == 'user') {\n   emit(doc._id, {\n\tname: doc.name,\n    password: doc.password, \n   strategy: doc.strategy, \nmail: doc.mail\n   });\n }\n}"
+                "map": "function(doc) {\n if(doc.type == 'user') {\n   emit(doc.mail, {\n\tname: doc.name,\n        password: doc.password, \n        strategy: doc.strategy, \n        mail: doc.mail,\n\t_id: doc._id\n   });\n }\n}"
             },
             "user": {
                 "map": "function(doc) {\n if(doc.type == 'user') {\n   emit(doc._id, doc);\n }\n}"
