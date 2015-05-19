@@ -25,7 +25,7 @@ class Attachment {
         return new this.Readable().wrap(this.db.getAttachment(documentid, filename, (err) => {
             //TODO: log error with good
             if (err) {
-                Console.log(err)
+                console.log(err)
             }
         }));
 
