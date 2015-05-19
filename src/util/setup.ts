@@ -4,11 +4,11 @@ export function setUpDesignDocuments(database:any, callback:any) {
 
     database.save(designData.title, designData.content);
 
-    database.save(location.title, location.content);
+    database.save(designLocation.title, designLocation.content);
 
-    database.save(staticdata.title, staticdata.content);
+    database.save(designStaticdata.title, designStaticdata.content);
 
-    database.save(trip.title, trip.content);
+    database.save(designTrip.title, designTrip.content);
 
     database.save(designMail.title, designMail.content);
 
@@ -61,7 +61,7 @@ var designData = {
     }
 };
 
-var location = {
+var designLocation = {
     title: "_design/location",
     content: {
         "language": "javascript",
@@ -79,7 +79,7 @@ var location = {
     }
 };
 
-var staticdata = {
+var designStaticdata = {
     title: "_design/static",
     content: {
         "language": "javascript",
@@ -94,7 +94,7 @@ var staticdata = {
     }
 };
 
-var trip = {
+var designTrip = {
     title: "_design/trip",
     content: {
         "language": "javascript",
