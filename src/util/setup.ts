@@ -6,7 +6,7 @@ export function setUpDesignDocuments(database:any, callback:any) {
 
     database.save(location.title, location.content);
 
-    database.save(static.title, static.content);
+    database.save(staticdata.title, staticdata.content);
 
     database.save(trip.title, trip.content);
 
@@ -77,7 +77,7 @@ var location = {
     }
 };
 
-var static = {
+var staticdata = {
     title: "_design/static",
     content: {
         "language": "javascript",
