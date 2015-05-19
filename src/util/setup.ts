@@ -90,10 +90,6 @@ var designTrip = {
             },
             "city": {
                 "map": "function(doc) {\n if(doc.type == 'trip') {\n   emit(doc.city, doc);\n   }\n}"
-            },
-            "citybyid": {
-                "map": "function(doc) {\n if(doc.type == 'trip') {\n   emit(doc.city, doc._id);\n   }\n}",
-                "reduce": "function(keys, values) {\n                         var voucherTypes = [];\n                         values.forEach(function(v) {\n                             voucherTypes = voucherTypes.concat(v);\n                         });\n                         return voucherTypes;\n                     }"
             }
         },
         "lists": {
