@@ -168,6 +168,12 @@ class Database {
         server.expose('updateAccommodation', this.staticdata.updateAccommodation);
         server.expose('deleteAccommodationById', this.staticdata.deleteAccommodationById);
 
+        // static data accommodations equipment
+        server.expose('getAccommodationsEquipment', this.staticdata.getAccommodationsEquipment);
+        server.expose('createAccommodationEquipment', this.staticdata.createAccommodationEquipment);
+        server.expose('updateAccommodationEquipment', this.staticdata.updateAccommodationEquipment);
+        server.expose('deleteAccommodationEquipmentById', this.staticdata.deleteAccommodationEquipmentById);
+
         // attachment
         server.expose('getPicture', this.attachment.getPicture);
         server.expose('savePicture', this.attachment.savePicture);
