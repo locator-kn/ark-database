@@ -52,6 +52,9 @@ var designData = {
             "cities_trips": {
                 "map": "function(doc) {\n if(doc.type== 'trip') {\n   emit([doc.city], 1);\n   }\n}",
                 "reduce": "function(keys, values, rereduce) {\nvar obj = keys[0][0][0];\n  var a = {id: obj.id, title: obj.title, total: sum(values),  place_id: obj.place_id};\nreturn a;\n}"
+            },
+            "accommodations_equipment": {
+                "map": "function(doc) {\n if(doc.type== 'accommodation_equipment') {\n   emit(doc._id, doc);\n   }\n}"
             }
         },
         "lists": {
