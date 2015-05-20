@@ -75,13 +75,23 @@ class StaticData {
     };
 
     /**
-     * Create a new City.
+     * Create a new accommodation.
      *
      * @param accommodations:json-object
      * @param callback
      */
     createAccommodation = (accommodations, callback) => {
         this.db.save(accommodations, callback);
+    };
+
+    /**
+     * Create a new accommodation equipment.
+     *
+     * @param accommodationsEquipment:json-object
+     * @param callback
+     */
+    createAccommodationEquipment = (accommodationsEquipment, callback) => {
+        this.db.save(accommodationsEquipment, callback);
     };
 
     // UPDATE
