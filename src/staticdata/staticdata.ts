@@ -42,6 +42,16 @@ class StaticData {
     };
 
 
+    /**
+     * Get accommodations equipment from database.
+     *
+     * @param callback
+     */
+    getAccommodationsEquipment = (callback) => {
+        this.db.list(this.LISTS.LIST_DATA_ACC_EQUIPMENT, callback);
+    };
+
+
     // CREATE
 
     /**
