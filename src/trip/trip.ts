@@ -6,6 +6,7 @@ class Trip {
     /**
      * Get trips from database.
      *
+     * @param paginationOptions
      * @param callback
      */
     getTrips = (paginationOptions, callback) => {
