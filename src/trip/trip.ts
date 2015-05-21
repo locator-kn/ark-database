@@ -6,10 +6,11 @@ class Trip {
     /**
      * Get trips from database.
      *
+     * @param paginationOptions
      * @param callback
      */
-    getTrips = (callback) => {
-        this.db.list(this.LISTS.LIST_TRIP_ALL, callback);
+    getTrips = (paginationOptions, callback) => {
+        this.db.list(this.LISTS.LIST_TRIP_ALL, paginationOptions, callback);
     };
 
     /**
