@@ -57,8 +57,7 @@ class Attachment {
                 };
 
                 // create read stream and pipe it
-                var writeStream = this.db.saveAttachment(idData, attachmentData
-                    , (err, result) => {
+                var writeStream = this.db.saveAttachment(idData, attachmentData, (err, result) => {
                         if (err) {
                             return reject(err);
                         }
