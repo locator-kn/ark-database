@@ -44,6 +44,7 @@ class Database {
         LIST_SEARCH_TRIP: 'search/searchlist/city',
         LIST_DATA_MOOD: 'data/listall/moods',
         LIST_DATA_ACC: 'data/listall/accommodations',
+        LIST_DATA_ACC_EQUIPMENT: 'data/listall/accommodations_equipment',
         LIST_DATA_CITY: 'data/listall/cities',
         LIST_DATA_CITY_TRIPS: 'data/listall/cities_trips',
         LIST_TRIP_ALL: 'trip/listall/trip',
@@ -167,6 +168,12 @@ class Database {
         server.expose('createAccommodation', this.staticdata.createAccommodation);
         server.expose('updateAccommodation', this.staticdata.updateAccommodation);
         server.expose('deleteAccommodationById', this.staticdata.deleteAccommodationById);
+
+        // static data accommodations equipment
+        server.expose('getAccommodationsEquipment', this.staticdata.getAccommodationsEquipment);
+        server.expose('createAccommodationEquipment', this.staticdata.createAccommodationEquipment);
+        server.expose('updateAccommodationEquipment', this.staticdata.updateAccommodationEquipment);
+        server.expose('deleteAccommodationEquipmentById', this.staticdata.deleteAccommodationEquipmentById);
 
         // attachment
         server.expose('getPicture', this.attachment.getPicture);
