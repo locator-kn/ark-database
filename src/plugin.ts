@@ -48,7 +48,8 @@ class Database {
         LIST_DATA_CITY_TRIPS: 'data/listall/cities_trips',
         LIST_TRIP_ALL: 'trip/listall/trip',
         LIST_TRIP_CITY: 'trip/listall/city',
-        LIST_MAIL_REGISTRATION: 'mail/listall/registration'
+        LIST_MAIL_REGISTRATION: 'mail/listall/registration',
+        LIST_CHAT_CONVERSATIONS: 'chat/listall/conversations'
     };
 
     private VIEWS = {
