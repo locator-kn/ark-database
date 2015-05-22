@@ -20,5 +20,22 @@ class Mail {
             // return first entry from array
             return callback(null, result[0]);
         });
+    };
+
+    /**
+     * get text and subject etc. from database for password forgotten mail
+     * @param callback
+     */
+    getPasswordForgottenMail = (callback) => {
+        this.db.list(this.LISTS.LIST_MAIL_PASSWORD_FORGOTTEN, (err, result) => {
+            if (err) {
+                return callback(err);
+            }
+            if (!result.length) {
+                return callback(this.boom.create(404, 'Database entry not found'))
+            }
+            // return first entry from array
+            return callback(null, result[0]);
+        });
     }
 }
