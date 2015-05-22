@@ -36,6 +36,9 @@ class Database {
     private mail:any;
     private chat:any;
 
+
+
+
     // define Lists
     private LISTS = {
         LIST_USER_ALL: 'user/listall/user',
@@ -52,7 +55,7 @@ class Database {
         LIST_TRIP_ALL: 'trip/listall/trip',
         LIST_TRIP_CITY: 'trip/listall/city',
         LIST_MAIL_REGISTRATION: 'mail/listall/registration',
-        LIST_CHAT_CONVERSATIONS: 'chat/listall/conversations'
+        LIST_CHAT_CONVERSATIONS: 'chat/listallByUserId/conversations'
     };
 
     private VIEWS = {
