@@ -195,6 +195,7 @@ class Database {
 
         // chat
         server.expose('getConversationsByUserId', this.chat.getConversationsByUserId);
+        server.expose('createConversation', this.chat.createConversation);
     }
 
 

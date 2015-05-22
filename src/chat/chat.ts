@@ -11,4 +11,14 @@ class Chat {
     getConversationsByUserId = (userid:string, callback) => {
         this.db.list(this.LISTS.LIST_CHAT_CONVERSATIONS, {userId: userid}, callback);
     };
+
+    /**
+     * Create a new user.
+     *
+     * @param conversation:any
+     * @param callback
+     */
+    createConversation = (conversation, callback) => {
+        this.db.save(conversation, callback);
+    };
 }
