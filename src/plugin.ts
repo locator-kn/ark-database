@@ -5,6 +5,7 @@ import StaticData from './staticdata/staticdata';
 import Attachment from './attachment/attachment';
 import Util from './util/util'
 import Mail from './mail/mail'
+import Chat from './chat/chat'
 
 export interface IRegister {
     (server:any, options:any, next:any): void;
@@ -33,6 +34,7 @@ class Database {
     private attachment:any;
     private util:any;
     private mail:any;
+    private chat:any;
 
     // define Lists
     private LISTS = {
@@ -114,6 +116,7 @@ class Database {
         this.attachment = new Attachment(this.db, this.LISTS);
         this.util = new Util(this.db);
         this.mail = new Mail(this.db, this.LISTS);
+        this.chat = new Chat(this.db, this.LISTS);
     };
 
     /**
@@ -186,6 +189,9 @@ class Database {
 
         // mail
         server.expose('getRegistrationMail', this.mail.getRegistrationMail);
+
+        // chat
+        server.expose('getConversationsByUserId', this.chat.getConversationsByUserId);
     }
 
 
