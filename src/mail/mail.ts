@@ -11,14 +11,7 @@ class Mail {
      */
     getRegistrationMail = (callback) => {
         this.db.list(this.LISTS.LIST_MAIL_REGISTRATION, (err, result) => {
-            if (err) {
-                return callback(err);
-            }
-            if (!result.length) {
-                return callback(this.boom.create(404, 'Database entry not found'))
-            }
-            // return first entry from array
-            return callback(null, result[0]);
+            this.checkForSingleValue(err, result, callback);
         });
     };
 
@@ -28,14 +21,27 @@ class Mail {
      */
     getPasswordForgottenMail = (callback) => {
         this.db.list(this.LISTS.LIST_MAIL_PASSWORD_FORGOTTEN, (err, result) => {
-            if (err) {
-                return callback(err);
-            }
-            if (!result.length) {
-                return callback(this.boom.create(404, 'Database entry not found'))
-            }
-            // return first entry from array
-            return callback(null, result[0]);
+           this.checkForSingleValue(err, result, callback);
         });
-    }
+    };
+
+    /**
+     * Check if result a singlee value.
+     *
+     * @param err
+     * @param result
+     * @param callback
+     * @returns {any}
+     */
+    checkForSingleValue = (err, result, callback) => {
+        if (err) {
+            return callback(err);
+        }
+        if (!result.length) {
+            return callback(this.boom.create(404, 'Database entry not found'))
+        }
+        // return first entry from array
+        return callback(null, result[0]);
+    };
 }
+
