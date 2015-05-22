@@ -186,6 +186,7 @@ class Database {
 
         // mail
         server.expose('getRegistrationMail', this.mail.getRegistrationMail);
+        server.expose('getPasswordForgottenMail', this.mail.getPasswordForgottenMail);
     }
 
 
