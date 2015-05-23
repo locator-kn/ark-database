@@ -52,7 +52,7 @@ class Trip {
      * @param callback
      */
     updateTrip = (tripId:string, rev:string, trip, callback) => {
-        this.db.save(tripId, rev, trip, callback);
+        this.db.merge(tripId, rev, trip, callback);
     };
 
     /**
