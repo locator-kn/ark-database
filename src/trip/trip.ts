@@ -6,10 +6,11 @@ class Trip {
     /**
      * Get trips from database.
      *
+     * @param paginationOptions
      * @param callback
      */
-    getTrips = (callback) => {
-        this.db.list(this.LISTS.LIST_TRIP_ALL, callback);
+    getTrips = (paginationOptions, callback) => {
+        this.db.list(this.LISTS.LIST_TRIP_ALL, paginationOptions, callback);
     };
 
     /**
@@ -50,8 +51,8 @@ class Trip {
      * @param trip:Trip
      * @param callback
      */
-    updateTrip = (tripId:string, rev:string, trip, callback) => {
-        this.db.save(tripId, rev, trip, callback);
+    updateTrip = (tripId:string, trip, callback) => {
+        this.db.merge(tripId, trip, callback);
     };
 
     /**

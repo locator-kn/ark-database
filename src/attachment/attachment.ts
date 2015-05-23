@@ -10,7 +10,7 @@ class Attachment {
     constructor(private db:any, private LISTS:any) {
         this.stream = require('stream');
         this.Readable = this.stream.Readable ||
-        require('readable-stream').Readable;
+            require('readable-stream').Readable;
         this.boom = require('boom');
     }
 
@@ -23,7 +23,10 @@ class Attachment {
     getPicture = (documentid:string, filename:string, callback) => {
 
         return new this.Readable().wrap(this.db.getAttachment(documentid, filename, (err) => {
-            // TODO: log error
+            //TODO: log error with good
+            if (err) {
+                console.log(err)
+            }
         }));
 
     };
@@ -35,12 +38,7 @@ class Attachment {
      * @param readStream
      * @param callback
      */
-    savePicture = (documentId:string, filename:string, readStream:any) => {
-
-        var attachmentData = {
-            name: filename,
-            'Content-Type': 'multipart/form-data'
-        };
+    savePicture = (documentId:string, attachmentData:any, readStream:any) => {
 
         return new Promise((resolve, reject) => {
 
@@ -59,8 +57,7 @@ class Attachment {
                 };
 
                 // create read stream and pipe it
-                var writeStream = this.db.saveAttachment(idData, attachmentData
-                    , (err, result) => {
+                var writeStream = this.db.saveAttachment(idData, attachmentData, (err, result) => {
                         if (err) {
                             return reject(err);
                         }

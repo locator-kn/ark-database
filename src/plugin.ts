@@ -5,6 +5,8 @@ import StaticData from './staticdata/staticdata';
 import Attachment from './attachment/attachment';
 import Util from './util/util'
 import Mail from './mail/mail'
+import Chat from './chat/chat'
+
 import {setUpDesignDocuments} from './util/setup'
 export interface IRegister {
     (server:any, options:any, next:any): void;
@@ -33,6 +35,7 @@ class Database {
     private attachment:any;
     private util:any;
     private mail:any;
+    private chat:any;
 
     // define Lists
     private LISTS = {
@@ -44,11 +47,13 @@ class Database {
         LIST_SEARCH_TRIP: 'search/searchlist/city',
         LIST_DATA_MOOD: 'data/listall/moods',
         LIST_DATA_ACC: 'data/listall/accommodations',
+        LIST_DATA_ACC_EQUIPMENT: 'data/listall/accommodations_equipment',
         LIST_DATA_CITY: 'data/listall/cities',
         LIST_DATA_CITY_TRIPS: 'data/listall/cities_trips',
         LIST_TRIP_ALL: 'trip/listall/trip',
         LIST_TRIP_CITY: 'trip/listall/city',
-        LIST_MAIL_REGISTRATION: 'mail/listall/registration'
+        LIST_MAIL_REGISTRATION: 'mail/listall/registration',
+        LIST_CHAT_CONVERSATIONS: 'chat/listallByUserId/conversations'
     };
 
     private VIEWS = {
@@ -112,6 +117,7 @@ class Database {
         this.attachment = new Attachment(this.db, this.LISTS);
         this.util = new Util(this.db);
         this.mail = new Mail(this.db, this.LISTS);
+        this.chat = new Chat(this.db, this.LISTS);
     };
 
     /**
@@ -167,6 +173,12 @@ class Database {
         server.expose('updateAccommodation', this.staticdata.updateAccommodation);
         server.expose('deleteAccommodationById', this.staticdata.deleteAccommodationById);
 
+        // static data accommodations equipment
+        server.expose('getAccommodationsEquipment', this.staticdata.getAccommodationsEquipment);
+        server.expose('createAccommodationEquipment', this.staticdata.createAccommodationEquipment);
+        server.expose('updateAccommodationEquipment', this.staticdata.updateAccommodationEquipment);
+        server.expose('deleteAccommodationEquipmentById', this.staticdata.deleteAccommodationEquipmentById);
+
         // attachment
         server.expose('getPicture', this.attachment.getPicture);
         server.expose('savePicture', this.attachment.savePicture);
@@ -178,6 +190,10 @@ class Database {
 
         // mail
         server.expose('getRegistrationMail', this.mail.getRegistrationMail);
+
+        // chat
+        server.expose('getConversationsByUserId', this.chat.getConversationsByUserId);
+        server.expose('createConversation', this.chat.createConversation);
     }
 
 
