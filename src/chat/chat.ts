@@ -35,7 +35,7 @@ class Chat {
             }
             callback(err, data);
         });
-    }
+    };
 
     /**
      * Get conversation by conversationId
