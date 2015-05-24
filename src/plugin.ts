@@ -53,7 +53,8 @@ class Database {
         LIST_TRIP_ALL: 'trip/listall/trip',
         LIST_TRIP_CITY: 'trip/listall/city',
         LIST_MAIL_REGISTRATION: 'mail/listall/registration',
-        LIST_CHAT_CONVERSATIONS: 'chat/listallByUserId/conversations'
+        LIST_CHAT_CONVERSATIONS: 'chat/listallByUserId/conversationsByUserid',
+        LIST_CHAT_CONVERSATIONBYID: 'chat/listall/conversationsById'
     };
 
     private VIEWS = {
