@@ -37,8 +37,6 @@ class Database {
     private chat:any;
 
 
-
-
     // define Lists
     private LISTS = {
         LIST_USER_ALL: 'user/listall/user',
@@ -196,6 +194,7 @@ class Database {
         // chat
         server.expose('getConversationsByUserId', this.chat.getConversationsByUserId);
         server.expose('createConversation', this.chat.createConversation);
+        server.expose('getConversationById', this.chat.getConversationById);
     }
 
 
