@@ -36,4 +36,14 @@ class Chat {
             callback(err, data);
         });
     }
+
+    /**
+     * Get conversation by conversationId
+     *
+     * @param conversationId:string
+     * @param callback
+     */
+    getMessagesByConversionId = (conversationId:string, callback) => {
+        this.db.list(this.LISTS.LIST_CHAT_MESSAGESBYCONVERSATIONID, {key: conversationId}, callback);
+    }
 }
