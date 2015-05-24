@@ -29,6 +29,11 @@ class Chat {
      * @param callback
      */
     getConversationById = (conversationId:string, callback) => {
-        this.db.list(this.LISTS.LIST_CHAT_CONVERSATIONBYID, {id: conversationId}, callback);
+        this.db.list(this.LISTS.LIST_CHAT_CONVERSATIONBYID, {key: conversationId}, (err, data) => {
+            if(!err && data.length) {
+                return callback(err, data[0]);
+            }
+            callback(err, data);
+        });
     }
 }
