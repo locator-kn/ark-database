@@ -64,12 +64,11 @@ class User {
      * Update user information.
      *
      * @param userId:string
-     * @param rev:string
      * @param user:IUser
      * @param callback
      */
-    updateUser = (userId:string, rev:string, user, callback) => {
-        this.db.save(userId, rev, user, callback);
+    updateUser = (userId:string, user, callback) => {
+        this.db.merge(userId, user, callback);
     };
 
     /**
