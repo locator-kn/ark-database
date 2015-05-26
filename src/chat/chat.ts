@@ -45,5 +45,15 @@ class Chat {
      */
     getMessagesByConversionId = (conversationId:string, callback) => {
         this.db.list(this.LISTS.LIST_CHAT_MESSAGESBYCONVERSATIONID, {key: conversationId}, callback);
-    }
+    };
+
+    /**
+     * Save new message
+     *
+     * @param conversationId:string
+     * @param callback
+     */
+    saveMessage = (messageObj, callback) => {
+        this.db.save( messageObj, callback);
+    };
 }
