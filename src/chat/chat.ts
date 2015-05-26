@@ -38,7 +38,7 @@ class Chat {
     };
 
     /**
-     * Get conversation by conversationId
+     * Get messages by conversationId
      *
      * @param conversationId:string
      * @param callback
