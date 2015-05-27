@@ -21,4 +21,39 @@ class Chat {
     createConversation = (conversation, callback) => {
         this.db.save(conversation, callback);
     };
+
+    /**
+     * Get conversation by conversationId
+     *
+     * @param conversationId:string
+     * @param callback
+     */
+    getConversationById = (conversationId:string, callback) => {
+        this.db.list(this.LISTS.LIST_CHAT_CONVERSATIONBYID, {key: conversationId}, (err, data) => {
+            if(!err && data.length) {
+                return callback(err, data[0]);
+            }
+            callback(err, data);
+        });
+    };
+
+    /**
+     * Get messages by conversationId
+     *
+     * @param conversationId:string
+     * @param callback
+     */
+    getMessagesByConversionId = (conversationId:string, callback) => {
+        this.db.list(this.LISTS.LIST_CHAT_MESSAGESBYCONVERSATIONID, {key: conversationId}, callback);
+    };
+
+    /**
+     * Save new message
+     *
+     * @param conversationId:string
+     * @param callback
+     */
+    saveMessage = (messageObj, callback) => {
+        this.db.save( messageObj, callback);
+    };
 }

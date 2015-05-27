@@ -35,7 +35,7 @@ class Database {
     private util:any;
     private mail:any;
     private chat:any;
-
+    
     // define Lists
     private LISTS = {
         LIST_USER_ALL: 'user/listall/user',
@@ -54,6 +54,9 @@ class Database {
         LIST_MAIL_REGISTRATION: 'mail/listall/registration',
         LIST_MAIL_PASSWORD_FORGOTTEN: 'mail/listall/password_forgotten',
         LIST_CHAT_CONVERSATIONS: 'chat/listallByUserId/conversations'
+        LIST_CHAT_CONVERSATIONS: 'chat/listallByUserId/conversationsByUserId',
+        LIST_CHAT_CONVERSATIONBYID: 'chat/listall/conversationsById',
+        LIST_CHAT_MESSAGESBYCONVERSATIONID: 'chat/listall/messagesByConversationId'
     };
 
     private VIEWS = {
@@ -195,6 +198,9 @@ class Database {
         // chat
         server.expose('getConversationsByUserId', this.chat.getConversationsByUserId);
         server.expose('createConversation', this.chat.createConversation);
+        server.expose('getConversationById', this.chat.getConversationById);
+        server.expose('getMessagesByConversionId', this.chat.getMessagesByConversionId);
+        server.expose('saveMessage', this.chat.saveMessage);
     }
 
 
