@@ -1,6 +1,7 @@
 export default
 class Mail {
     boom:any;
+
     constructor(private db:any, private LISTS:any) {
         this.boom = require('boom')
     }
@@ -21,7 +22,7 @@ class Mail {
      */
     getPasswordForgottenMail = (callback) => {
         this.db.list(this.LISTS.LIST_MAIL_PASSWORD_FORGOTTEN, (err, result) => {
-           this.checkForSingleValue(err, result, callback);
+            this.checkForSingleValue(err, result, callback);
         });
     };
 
