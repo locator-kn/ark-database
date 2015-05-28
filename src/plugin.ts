@@ -35,7 +35,7 @@ class Database {
     private util:any;
     private mail:any;
     private chat:any;
-    
+
     // define Lists
     private LISTS = {
         LIST_USER_ALL: 'user/listall/user',

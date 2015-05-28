@@ -30,7 +30,7 @@ class Chat {
      */
     getConversationById = (conversationId:string, callback) => {
         this.db.list(this.LISTS.LIST_CHAT_CONVERSATIONBYID, {key: conversationId}, (err, data) => {
-            if(!err && data.length) {
+            if (!err && data.length) {
                 return callback(err, data[0]);
             }
             callback(err, data);
@@ -54,6 +54,6 @@ class Chat {
      * @param callback
      */
     saveMessage = (messageObj, callback) => {
-        this.db.save( messageObj, callback);
+        this.db.save(messageObj, callback);
     };
 }
