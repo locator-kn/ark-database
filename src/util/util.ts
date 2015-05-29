@@ -45,7 +45,7 @@ class Util {
      */
     appendFieldvalue = (documentid:string, field:string, valueToAppend:any, callback) => {
         console.log(documentid, field, valueToAppend);
-        callback(null,'test success')
+        callback(null, 'test success')
     };
 
     /**
@@ -82,5 +82,26 @@ class Util {
                 return resolve(true);
             });
         });
-    }
+    };
+
+    /**
+     * function to get only one object instead of an array.
+     *
+     * @param keyValue
+     * @param listName
+     * @param callback
+     *
+     */
+    getObjectOf = (keyValue, listName, callback) => {
+        this.db.list(listName, {key: keyValue}, (err, result) => {
+            if (err) {
+                return callback(err);
+            }
+            if (!result.length) {
+                return callback(this.boom.create(404, 'Database entry not found'))
+            }
+            // return first entry from array
+            return callback(null, result[0]);
+        });
+    };
 }
