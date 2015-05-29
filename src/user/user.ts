@@ -68,8 +68,8 @@ class User {
      * @param user:IUser
      * @param callback
      */
-    updateUser = (userId:string, rev:string, user, callback) => {
-        this.db.save(userId, rev, user, callback);
+    updateUser = (userId:string, user:any, callback) => {
+        this.db.merge(userId, user, callback);
     };
 
     /**
@@ -111,7 +111,8 @@ class User {
      * @param callback
      */
     updateUserPassword = (userId:string, password:string, callback) => {
-        this.db.merge(userId, {'password': password}, callback);
+        // redirect to update method
+        this.updateUser(userId, {'password': password}, callback);
     };
 
     /**
