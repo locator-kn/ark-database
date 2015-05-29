@@ -116,6 +116,18 @@ class User {
     };
 
     /**
+     * Update the mail field of a user. Basically redirects to updateUser with the 'mail' as only field
+     *
+     * @param userId
+     * @param mail
+     * @param callback
+     */
+    updateUserMail = (userId:string, mail:string, callback) => {
+        // redirect to update method
+        this.updateUser(userId, {'mail': mail}, callback);
+    };
+
+    /**
      * Delete a particular tuser by id.
      *
      * @param userId:string
