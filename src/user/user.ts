@@ -73,7 +73,13 @@ class User {
      * @param callback
      */
     updateUser = (userId:string, user:any, callback) => {
-        this.db.merge(userId, user, callback);
+        this.util.updateDocument(userId, user)
+            .then((result) => {
+                callback(null, result);
+            })
+            .catch((err) => {
+                callback(err);
+            });
     };
 
     /**
@@ -120,7 +126,7 @@ class User {
     };
 
     /**
-     * Update the mail field of a user. Basically redirects to updateUser with the 'mail' as only field
+     * Update the mail field of a user. The mail will be added to the existing mail
      *
      * @param userId
      * @param mail
