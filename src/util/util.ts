@@ -38,6 +38,17 @@ class Util {
     };
 
     /**
+     *
+     * @param documentid
+     * @param field
+     * @param valueToAppend
+     */
+    appendFieldvalue = (documentid:string, field:string, valueToAppend:any, callback) => {
+        console.log(documentid, field, valueToAppend);
+        callback(null,'test success')
+    };
+
+    /**
      * Utiliy method for checking if a entry in the database exist.
      * If an attachment name is emitted, this method is going to check if this file
      * exists in the database.
@@ -45,7 +56,7 @@ class Util {
      * @param attachmentName (optional)
      * @returns a resolved promise, if the entry exit, rejected promise otherwise.
      */
-    entryExist = (documentid:string, attachmentName:string)=> {
+    entryExist = (documentid:string, attachmentName:string) => {
 
         var queryName = '/' + documentid;
 
