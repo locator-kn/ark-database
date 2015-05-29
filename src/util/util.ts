@@ -38,7 +38,7 @@ class Util {
     };
 
     /**
-     *
+     * Appends value to already existing value in a document.
      * @param documentid
      * @param field
      * @param valueToAppend
@@ -53,7 +53,10 @@ class Util {
                 return callback(this.boom.create('field in document not found', 404))
             }
 
-            this.updateDocument(documentid, {field: fieldValue.concat(valueToAppend)})
+            var toUpdate= {};
+            toUpdate[field] = fieldValue.concat(valueToAppend);
+
+            this.updateDocument(documentid,toUpdate)
                 .then((result) => {
                     callback(null, result);
                 })
