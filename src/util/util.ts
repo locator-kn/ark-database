@@ -53,16 +53,10 @@ class Util {
                 return callback(this.boom.create('field in document not found', 404))
             }
 
-            var toUpdate= {};
+            var toUpdate = {};
             toUpdate[field] = fieldValue.concat(valueToAppend);
 
-            this.updateDocument(documentid,toUpdate)
-                .then((result) => {
-                    callback(null, result);
-                })
-                .catch((err) => {
-                    callback(err)
-                })
+            this.db.merge(documentid, toUpdate, callback);
         });
     };
 
