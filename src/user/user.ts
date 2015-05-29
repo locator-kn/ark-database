@@ -51,13 +51,7 @@ class User {
      * @param callback
      */
     updateUser = (userId:string, user:any, callback) => {
-        this.util.updateDocument(userId, user)
-            .then((result) => {
-                return callback(null, result);
-            })
-            .catch((err) => {
-                return callback(err);
-            });
+        this.db.merge(userId, user, callback)
     };
 
     /**
