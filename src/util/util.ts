@@ -58,7 +58,7 @@ class Util {
                     callback(null, result);
                 })
                 .catch((err) => {
-                    callback(this.boom.create(err))
+                    callback(err)
                 })
         });
     };
