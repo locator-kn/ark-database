@@ -21,7 +21,7 @@ class Util {
                 if (err) {
                     return reject(err);
                 }
-                resolve(result);
+                return resolve(result);
             })
         });
     };
@@ -34,7 +34,7 @@ class Util {
      */
     createView = (name:string, views, callback) => {
         this.db.save(name, views);
-        callback(null, 'View created!');
+        return callback(null, 'View created!');
     };
 
     /**
@@ -42,8 +42,8 @@ class Util {
      * If an attachment name is emitted, this method is going to check if this file
      * exists in the database.
      * @param documentid
-     * @param attachmentName
-     * @returns {any}
+     * @param attachmentName (optional)
+     * @returns a resolved promise, if the entry exit, rejected promise otherwise.
      */
     entryExist = (documentid:string, attachmentName:string)=> {
 
