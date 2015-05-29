@@ -44,8 +44,23 @@ class Util {
      * @param valueToAppend
      */
     appendFieldvalue = (documentid:string, field:string, valueToAppend:any, callback) => {
-        console.log(documentid, field, valueToAppend);
-        callback(null, 'test success')
+        this.db.get(documentid, (err, result) => {
+            if (err) {
+                return callback(err)
+            }
+            var fieldValue = result.field;
+            if (!fieldValue) {
+                return callback(this.boom.create('field in document not found', 404))
+            }
+
+            this.updateDocument(documentid, {field: fieldValue.concat(valueToAppend)})
+                .then((result) => {
+                    callback(null, result);
+                })
+                .catch((err) => {
+                    callback(this.boom.create(err))
+                })
+        });
     };
 
     /**

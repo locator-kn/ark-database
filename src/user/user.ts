@@ -53,10 +53,10 @@ class User {
     updateUser = (userId:string, user:any, callback) => {
         this.util.updateDocument(userId, user)
             .then((result) => {
-                callback(null, result);
+                return callback(null, result);
             })
             .catch((err) => {
-                callback(err);
+                return callback(err);
             });
     };
 
