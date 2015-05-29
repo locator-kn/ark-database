@@ -1,12 +1,16 @@
 declare
 var Promise:any;
 
+import Util from './../util/util';
+
 export default
 class User {
     private boom:any;
+    private util:any;
 
     constructor(private db:any, private LISTS:any, private VIEWS:any) {
         this.boom = require('boom');
+        this.util = new Util(db);
     }
 
     /**
@@ -122,9 +126,9 @@ class User {
      * @param mail
      * @param callback
      */
-    updateUserMail = (userId:string, mail:string, callback) => {
-        // redirect to update method
-        this.updateUser(userId, {'mail': mail}, callback);
+    updateUserMail = (userId:string, mail:any, callback) => {
+        // append new mail to field of user
+        this.util.appendFieldvalue(userId, 'mail', mail, callback);
     };
 
     /**
