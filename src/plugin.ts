@@ -6,8 +6,8 @@ import Attachment from './attachment/attachment';
 import Util from './util/util'
 import Mail from './mail/mail'
 import Chat from './chat/chat'
-
 import {setUpDesignDocuments} from './util/setup'
+
 export interface IRegister {
     (server:any, options:any, next:any): void;
     attributes?: any;
@@ -53,7 +53,9 @@ class Database {
         LIST_TRIP_ALL: 'trip/listall/trip',
         LIST_TRIP_CITY: 'trip/listall/city',
         LIST_MAIL_REGISTRATION: 'mail/listall/registration',
-        LIST_CHAT_CONVERSATIONS: 'chat/listallByUserId/conversations'
+        LIST_CHAT_CONVERSATIONS: 'chat/listallByUserId/conversationsByUserId',
+        LIST_CHAT_CONVERSATIONBYID: 'chat/listall/conversationsById',
+        LIST_CHAT_MESSAGESBYCONVERSATIONID: 'chat/listall/messagesByConversationId'
     };
 
     private VIEWS = {
@@ -194,6 +196,9 @@ class Database {
         // chat
         server.expose('getConversationsByUserId', this.chat.getConversationsByUserId);
         server.expose('createConversation', this.chat.createConversation);
+        server.expose('getConversationById', this.chat.getConversationById);
+        server.expose('getMessagesByConversionId', this.chat.getMessagesByConversionId);
+        server.expose('saveMessage', this.chat.saveMessage);
     }
 
 
