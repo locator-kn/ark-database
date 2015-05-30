@@ -43,17 +43,18 @@ class Attachment {
         return new Promise((resolve, reject) => {
 
             // get revision from database with HEAD
-            this.db.head(documentId, (err, data, response) => {
-                if (response != 200) {
-                    return reject(this.boom.create(response, 'document was not found'));
+            this.db.head(documentId, (err, headers, res) =>  {
+                if (res === 404 || !headers['etag']) {
+                    return reject(this.boom.create({ reason: 'not_found' }));
                 }
+
                 if (err) {
                     return reject(err);
                 }
 
                 var idData = {
                     _id: documentId,
-                    _rev: data.etag.split('"')[1] // remove quotes to get revision
+                    _rev: headers['etag'].slice(1, -1)// remove quotes to get revision
                 };
 
                 // create read stream and pipe it
