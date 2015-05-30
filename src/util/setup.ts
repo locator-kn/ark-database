@@ -131,17 +131,31 @@ var designData = {
 var designLocation = {
     title: "_design/location",
     content: {
-        "language": "javascript",
-        "views": {
-            "location": {
-                "map": "function(doc) {\n if (doc.type == 'location') {\n  emit(doc._id, doc);\n }\n}"
+        views: {
+            location: {
+                "map": function (doc) {
+                    if (doc.type == 'location') {
+                        emit(doc._id, doc);
+                    }
+                }
             },
-            "user": {
-                "map": "function(doc) {\n if (doc.type == 'location') {\n  emit(doc.userid, doc);\n }\n}"
+            user: {
+                "map": function (doc) {
+                    if (doc.type == 'location') {
+                        emit(doc.userid, doc);
+                    }
+                }
             }
         },
-        "lists": {
-            "listall": "function (head, req) { var row; var result = []; while (row = getRow()) { result.push(row.value); } send(JSON.stringify(result)); }"
+        lists: {
+            listall: function (head, req) {
+                var row;
+                var result = [];
+                while (row = getRow()) {
+                    result.push(row.value);
+                }
+                send(JSON.stringify(result));
+            }
         }
     }
 };
@@ -149,20 +163,38 @@ var designLocation = {
 var designTrip = {
     title: "_design/trip",
     content: {
-        "language": "javascript",
-        "views": {
-            "trip": {
-                "map": "function(doc) {\n if(doc.type == 'trip') {\n   emit(doc._id, doc);\n   }\n}"
+        views: {
+            trip: {
+                "map": function (doc) {
+                    if (doc.type == 'trip') {
+                        emit(doc._id, doc);
+                    }
+                }
             },
-            "city": {
-                "map": "function(doc) {\n if(doc.type == 'trip' && doc.active == true) {\n   emit(doc.city, doc);\n   }\n}"
+            city: {
+                "map": function (doc) {
+                    if (doc.type == 'trip' && doc.active == true) {
+                        emit(doc.city, doc);
+                    }
+                }
             },
-            "preTripById": {
-                "map": "function(doc) {\n if(doc.type == 'preTrip') {\n   emit(doc._id, doc);\n   }\n}"
+            preTripById: {
+                "map": function (doc) {
+                    if (doc.type == 'preTrip') {
+                        emit(doc._id, doc);
+                    }
+                }
             }
         },
-        "lists": {
-            "listall": "function (head, req) { var row; var result = []; while (row = getRow()) { result.push(row.value); } send(JSON.stringify(result)); }"
+        lists: {
+            listall: function (head, req) {
+                var row;
+                var result = [];
+                while (row = getRow()) {
+                    result.push(row.value);
+                }
+                send(JSON.stringify(result));
+            }
         }
     }
 };
@@ -170,14 +202,24 @@ var designTrip = {
 var designMail = {
     title: "_design/mail",
     content: {
-        "language": "javascript",
-        "views": {
-            "registration": {
-                "map": "function(doc) {\n if(doc.type== 'mail_registration') {\n   emit(doc._id, doc);\n   }\n}"
+        views: {
+            registration: {
+                "map": function (doc) {
+                    if (doc.type == 'mail_registration') {
+                        emit(doc._id, doc);
+                    }
+                }
             }
         },
-        "lists": {
-            "listall": "function (head, req) { var row; var result = []; while (row = getRow()) { result.push(row.value); } send(JSON.stringify(result)); }"
+        lists: {
+            listall: function (head, req) {
+                var row;
+                var result = [];
+                while (row = getRow()) {
+                    result.push(row.value);
+                }
+                send(JSON.stringify(result));
+            }
         }
     }
 };
