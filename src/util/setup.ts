@@ -1,5 +1,11 @@
+// describe the shape of libraries not written in TypeScript
 declare
 var emit:any;
+declare
+var getRow:any;
+declare
+var send:any;
+
 
 export function setUpDesignDocuments(database:any, callback:any) {
 
@@ -42,11 +48,22 @@ var designUser = {
                 }
             },
             uuid: {
-                "map": "function(doc) {\n if(doc.type == 'user') {\n   emit(doc.uuid, doc);\n }\n}"
+                "map": function (doc) {
+                    if (doc.type == 'user') {
+                        emit(doc.uuid, doc);
+                    }
+                }
             }
         },
-        "lists": {
-            "listall": "function (head, req) { var row; var result = []; while (row = getRow()) { result.push(row.value); } send(JSON.stringify(result)); }"
+        lists: {
+            listall: function (head, req) {
+                var row;
+                var result = [];
+                while (row = getRow()) {
+                    result.push(row.value);
+                }
+                send(JSON.stringify(result));
+            }
         }
     }
 };
