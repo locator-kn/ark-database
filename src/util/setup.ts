@@ -1,3 +1,6 @@
+declare
+var emit:any;
+
 export function setUpDesignDocuments(database:any, callback:any) {
 
     database.save(designUser.title, designUser.content);
@@ -17,15 +20,28 @@ export function setUpDesignDocuments(database:any, callback:any) {
 var designUser = {
     title: "_design/user",
     content: {
-        "language": "javascript",
-        "views": {
-            "login": {
-                "map": "function(doc) {\n if(doc.type == 'user') {\n   emit(doc.mail, {\n\tname: doc.name,\n        password: doc.password, \n        strategy: doc.strategy, \n        mail: doc.mail,\n\t_id: doc._id\n   });\n }\n}"
+        views: {
+            login: {
+                "map": function (doc) {
+                    if (doc.type == 'user') {
+                        emit(doc.mail, {
+                            name: doc.name,
+                            password: doc.password,
+                            strategy: doc.strategy,
+                            mail: doc.mail,
+                            _id: doc._id
+                        });
+                    }
+                }
             },
-            "user": {
-                "map": "function(doc) {\n if(doc.type == 'user') {\n   emit(doc._id, doc);\n }\n}"
+            user: {
+                "map": function (doc) {
+                    if (doc.type == 'user') {
+                        emit(doc._id, doc);
+                    }
+                }
             },
-            "uuid": {
+            uuid: {
                 "map": "function(doc) {\n if(doc.type == 'user') {\n   emit(doc.uuid, doc);\n }\n}"
             }
         },
