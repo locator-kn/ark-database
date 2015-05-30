@@ -107,12 +107,23 @@ var designData = {
                     return a;
                 }
             },
-            "accommodations_equipment": {
-                "map": "function(doc) {\n if(doc.type== 'accommodation_equipment') {\n   emit(doc._id, doc);\n   }\n}"
+            accommodations_equipment: {
+                "map": function (doc) {
+                    if (doc.type == 'accommodation_equipment') {
+                        emit(doc._id, doc);
+                    }
+                }
             }
         },
-        "lists": {
-            "listall": "function (head, req) { var row; var result = []; while (row = getRow()) { result.push(row.value); } send(JSON.stringify(result)); }"
+        lists: {
+            listall: function (head, req) {
+                var row;
+                var result = [];
+                while (row = getRow()) {
+                    result.push(row.value);
+                }
+                send(JSON.stringify(result));
+            }
         }
     }
 };
