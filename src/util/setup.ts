@@ -209,6 +209,13 @@ var designMail = {
                         emit(doc._id, doc);
                     }
                 }
+            },
+            forgotten: {
+                "map": function (doc) {
+                    if (doc.type == 'mail_forgotten') {
+                        emit(doc._id, doc);
+                    }
+                }
             }
         },
         lists: {
