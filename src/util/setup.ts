@@ -5,6 +5,8 @@ declare
 var getRow:any;
 declare
 var send:any;
+declare
+var sum:any;
 
 
 export function setUpDesignDocuments(database:any, callback:any) {
@@ -71,20 +73,39 @@ var designUser = {
 var designData = {
     title: "_design/data",
     content: {
-        "language": "javascript",
-        "views": {
-            "moods": {
-                "map": "function(doc) {\n if(doc.type== 'mood') {\n   emit(doc._id, doc);\n   }\n}"
+        views: {
+            moods: {
+                "map": function (doc) {
+                    if (doc.type == 'mood') {
+                        emit(doc._id, doc);
+                    }
+                }
             },
-            "cities": {
-                "map": "function(doc) {\n if(doc.type== 'city') {\n   emit(doc._id, doc);\n   }\n}"
+            cities: {
+                "map": function (doc) {
+                    if (doc.type == 'city') {
+                        emit(doc._id, doc);
+                    }
+                }
             },
-            "accommodations": {
-                "map": "function(doc) {\n if(doc.type== 'accommodation') {\n   emit(doc._id, doc);\n   }\n}"
+            accommodations: {
+                "map": function (doc) {
+                    if (doc.type == 'accommodation') {
+                        emit(doc._id, doc);
+                    }
+                }
             },
-            "cities_trips": {
-                "map": "function(doc) {\n if(doc.type== 'trip') {\n   emit([doc.city], 1);\n   }\n}",
-                "reduce": "function(keys, values, rereduce) {\nvar obj = keys[0][0][0];\n  var a = {id: obj.id, title: obj.title, total: sum(values),  place_id: obj.place_id};\nreturn a;\n}"
+            cities_trips: {
+                "map": function (doc) {
+                    if (doc.type == 'trip') {
+                        emit([doc.city], 1);
+                    }
+                },
+                "reduce": function (keys, values, rereduce) {
+                    var obj = keys[0][0][0];
+                    var a = {id: obj.id, title: obj.title, total: sum(values), place_id: obj.place_id};
+                    return a;
+                }
             },
             "accommodations_equipment": {
                 "map": "function(doc) {\n if(doc.type== 'accommodation_equipment') {\n   emit(doc._id, doc);\n   }\n}"
