@@ -43,9 +43,9 @@ class Attachment {
         return new Promise((resolve, reject) => {
 
             // get revision from database with HEAD
-            this.db.head(documentId, (err, headers, res) =>  {
+            this.db.head(documentId, (err, headers, res) => {
                 if (res === 404 || !headers['etag']) {
-                    return reject(this.boom.create({ reason: 'not_found' }));
+                    return reject(this.boom.create(404, "user not found"));
                 }
 
                 if (err) {
