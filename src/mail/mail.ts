@@ -27,7 +27,7 @@ class Mail {
     };
 
     /**
-     * Check if result a singlee value.
+     * Check if result a single value.
      *
      * @param err
      * @param result
