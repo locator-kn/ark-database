@@ -8,7 +8,7 @@ class User {
     private boom:any;
     private util:any;
 
-    constructor(private db:any, private LISTS:any, private VIEWS:any) {
+    constructor(private db:any, private LISTS:any) {
         this.boom = require('boom');
         this.util = new Util(db);
     }
