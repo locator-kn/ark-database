@@ -71,7 +71,7 @@ class User {
      * @param callback
      */
     getUserLogin = (userId:string) => {
-        var promise = new Promise((resolve, reject) => {
+        return new Promise((resolve, reject) => {
             this.db.list(this.LISTS.LIST_USER_LOGIN, {key: userId}, (err, result) => {
                 // reject also if there is no match in the database
                 if (err || !result[0]) {
@@ -80,8 +80,6 @@ class User {
                 resolve(result[0]);
             });
         });
-
-        return promise;
     };
 
     /**
