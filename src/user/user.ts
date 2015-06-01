@@ -46,7 +46,6 @@ class User {
      * Update user information.
      *
      * @param userId:string
-     * @param rev:string
      * @param user:IUser
      * @param callback
      */
