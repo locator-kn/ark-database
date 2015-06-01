@@ -1,12 +1,16 @@
 declare
 var Promise:any;
 
+import Util from './../util/util';
+
 export default
 class User {
     private boom:any;
+    private util:any;
 
     constructor(private db:any, private LISTS:any, private VIEWS:any) {
         this.boom = require('boom');
+        this.util = new Util(db);
     }
 
     /**
@@ -16,7 +20,7 @@ class User {
      * @param callback
      */
     getUserById = (userId:string, callback) => {
-        this.getObjectOf(userId, this.LISTS.LIST_USER_ALL, callback);
+        this.util.getObjectOf(userId, this.LISTS.LIST_USER_ALL, callback);
     };
 
     /**
@@ -25,29 +29,7 @@ class User {
      * @param callback
      */
     getUserByUUID = (uuid:string, callback) => {
-        this.getObjectOf(uuid, this.LISTS.LIST_USER_UUID, callback);
-    };
-
-    /**
-     * function to get only a object instead of an array.
-     *
-     * @param keyValue
-     * @param listName
-     * @param callback
-     *
-     * TODO: extract function to use it in other functions
-     */
-    getObjectOf = (keyValue, listName, callback) => {
-        this.db.list(listName, {key: keyValue}, (err, result) => {
-            if (err) {
-                return callback(err);
-            }
-            if (!result.length) {
-                return callback(this.boom.create(404, 'Database entry not found'))
-            }
-            // return first entry from array
-            return callback(null, result[0]);
-        });
+        this.util.getObjectOf(uuid, this.LISTS.LIST_USER_UUID, callback);
     };
 
 
@@ -67,8 +49,8 @@ class User {
      * @param user:IUser
      * @param callback
      */
-    updateUser = (userId:string, user, callback) => {
-        this.db.merge(userId, user, callback);
+    updateUser = (userId:string, user:any, callback) => {
+        this.db.merge(userId, user, callback)
     };
 
     /**
@@ -110,7 +92,20 @@ class User {
      * @param callback
      */
     updateUserPassword = (userId:string, password:string, callback) => {
-        this.db.merge(userId, {'password': password}, callback);
+        // redirect to update method
+        this.updateUser(userId, {'password': password}, callback);
+    };
+
+    /**
+     * Update the mail field of a user. The mail will be added to the existing mail
+     *
+     * @param userId
+     * @param mail
+     * @param callback
+     */
+    updateUserMail = (userId:string, mail:any, callback) => {
+        // append new mail to field of user
+        this.util.appendFieldvalue(userId, 'mail', mail, callback);
     };
 
     /**
