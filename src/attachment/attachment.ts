@@ -7,7 +7,7 @@ class Attachment {
     stream:any;
     boom:any;
 
-    constructor(private db:any, private LISTS:any) {
+    constructor(private db:any) {
         this.stream = require('stream');
         this.Readable = this.stream.Readable || require('readable-stream').Readable;
         this.boom = require('boom');
