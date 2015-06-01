@@ -61,7 +61,7 @@ class Chat {
     /**
      * Save new message
      *
-     * @param conversationId:string
+     * @param messageObj
      * @param callback
      */
     saveMessage = (messageObj, callback) => {

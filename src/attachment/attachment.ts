@@ -16,7 +16,7 @@ class Attachment {
     /**
      * Returns the picture (attachment) with that name to that corresponding document
      * @param documentid
-     * @param userid
+     * @param filename
      * @param callback
      */
     getPicture = (documentid:string, filename:string, callback) => {
@@ -33,9 +33,8 @@ class Attachment {
     /**
      * Saves an attachment and returns a Promise
      * @param documentId
-     * @param filename
+     * @param attachmentData
      * @param readStream
-     * @param callback
      */
     savePicture = (documentId:string, attachmentData:any, readStream:any) => {
 

@@ -68,7 +68,6 @@ class User {
      * Get json object with login data of specific user id.
      *
      * @param userId:string
-     * @param callback
      */
     getUserLogin = (userId:string) => {
         return new Promise((resolve, reject) => {
