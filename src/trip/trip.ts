@@ -47,7 +47,6 @@ class Trip {
      * Update trip information.
      *
      * @param tripId:string
-     * @param rev:string
      * @param trip:Trip
      * @param callback
      */

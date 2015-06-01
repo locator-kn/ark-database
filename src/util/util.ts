@@ -13,7 +13,6 @@ class Util {
      * Update one or more field of a document and returns a promise
      * @param documentid
      * @param object
-     * @param callback
      */
     updateDocument = (documentid:string, object:any) => {
         return new Promise((resolve, reject) => {
@@ -21,7 +20,7 @@ class Util {
                 if (err) {
                     return reject(err);
                 }
-                resolve(result);
+                return resolve(result);
             })
         });
     };
@@ -34,7 +33,31 @@ class Util {
      */
     createView = (name:string, views, callback) => {
         this.db.save(name, views);
-        callback(null, 'View created!');
+        return callback(null, 'View created!');
+    };
+
+    /**
+     * Appends value to already existing value in a document.
+     * @param documentid
+     * @param field
+     * @param valueToAppend
+     * @param callback
+     */
+    appendFieldvalue = (documentid:string, field:string, valueToAppend:any, callback) => {
+        this.db.get(documentid, (err, result) => {
+            if (err) {
+                return callback(err)
+            }
+            var fieldValue = result.field;
+            if (!fieldValue) {
+                return callback(this.boom.create('field in document not found', 404))
+            }
+
+            var toUpdate = {};
+            toUpdate[field] = fieldValue.concat(valueToAppend);
+
+            this.db.merge(documentid, toUpdate, callback);
+        });
     };
 
     /**
@@ -42,10 +65,10 @@ class Util {
      * If an attachment name is emitted, this method is going to check if this file
      * exists in the database.
      * @param documentid
-     * @param attachmentName
-     * @returns {any}
+     * @param attachmentName (optional)
+     * @returns a resolved promise, if the entry exit, rejected promise otherwise.
      */
-    entryExist = (documentid:string, attachmentName:string)=> {
+    entryExist = (documentid:string, attachmentName:string) => {
 
         var queryName = '/' + documentid;
 
@@ -71,5 +94,26 @@ class Util {
                 return resolve(true);
             });
         });
-    }
+    };
+
+    /**
+     * function to get only one object instead of an array.
+     *
+     * @param keyValue
+     * @param listName
+     * @param callback
+     *
+     */
+    getObjectOf = (keyValue, listName, callback) => {
+        this.db.list(listName, {key: keyValue}, (err, result) => {
+            if (err) {
+                return callback(err);
+            }
+            if (!result.length) {
+                return callback(this.boom.create(404, 'Database entry not found'))
+            }
+            // return first entry from array
+            return callback(null, result[0]);
+        });
+    };
 }

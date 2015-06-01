@@ -1,6 +1,6 @@
 {
   "name": "ark-database",
-  "version": "6.2.0",
+  "version": "6.5.0",
   "description": "Wrapper for database access for locator-kn ark",
   "main": "index.js",
   "scripts": {

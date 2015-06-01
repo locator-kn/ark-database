@@ -53,13 +53,11 @@ class Database {
         LIST_TRIP_ALL: 'trip/listall/trip',
         LIST_TRIP_CITY: 'trip/listall/city',
         LIST_MAIL_REGISTRATION: 'mail/listall/registration',
+        LIST_MAIL_PASSWORD_FORGOTTEN: 'mail/listall/password_forgotten',
         LIST_CHAT_CONVERSATIONS: 'chat/listallByUserId/conversationsByUserId',
         LIST_CHAT_CONVERSATIONBYID: 'chat/listall/conversationsById',
-        LIST_CHAT_MESSAGESBYCONVERSATIONID: 'chat/listall/messagesByConversationId'
-    };
-
-    private VIEWS = {
-        USER_LOGIN: 'user/login'
+        LIST_CHAT_MESSAGESBYCONVERSATIONID: 'chat/listall/messagesByConversationId',
+        LIST_CHAT_CONVERSATIONS_BY_TWO_USER: 'chat/getExistingConversationByUsers/conversationsByUserId'
     };
 
     /**
@@ -112,11 +110,11 @@ class Database {
             console.log('Database', this.database, 'exists');
         });
 
-        this.user = new User(this.db, this.LISTS, this.VIEWS);
+        this.user = new User(this.db, this.LISTS);
         this.trip = new Trip(this.db, this.LISTS);
         this.location = new Location(this.db, this.LISTS);
         this.staticdata = new StaticData(this.db, this.LISTS);
-        this.attachment = new Attachment(this.db, this.LISTS);
+        this.attachment = new Attachment(this.db);
         this.util = new Util(this.db);
         this.mail = new Mail(this.db, this.LISTS);
         this.chat = new Chat(this.db, this.LISTS);
@@ -138,6 +136,7 @@ class Database {
         server.expose('updateUser', this.user.updateUser);
         server.expose('updateUserPassword', this.user.updateUserPassword);
         server.expose('deleteUserById', this.user.deleteUserById);
+        server.expose('updateUserMail', this.user.updateUserMail);
 
         // trip
         server.expose('getTrips', this.trip.getTrips);
@@ -192,6 +191,7 @@ class Database {
 
         // mail
         server.expose('getRegistrationMail', this.mail.getRegistrationMail);
+        server.expose('getPasswordForgottenMail', this.mail.getPasswordForgottenMail);
 
         // chat
         server.expose('getConversationsByUserId', this.chat.getConversationsByUserId);
@@ -199,6 +199,7 @@ class Database {
         server.expose('getConversationById', this.chat.getConversationById);
         server.expose('getMessagesByConversionId', this.chat.getMessagesByConversionId);
         server.expose('saveMessage', this.chat.saveMessage);
+        server.expose('getExistingConversationByTwoUsers', this.chat.getExistingConversationByTwoUsers);
     }
 
 

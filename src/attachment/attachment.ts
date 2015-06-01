@@ -7,21 +7,20 @@ class Attachment {
     stream:any;
     boom:any;
 
-    constructor(private db:any, private LISTS:any) {
+    constructor(private db:any) {
         this.stream = require('stream');
-        this.Readable = this.stream.Readable ||
-            require('readable-stream').Readable;
+        this.Readable = this.stream.Readable || require('readable-stream').Readable;
         this.boom = require('boom');
     }
 
     /**
      * Returns the picture (attachment) with that name to that corresponding document
      * @param documentid
-     * @param userid
+     * @param filename
      * @param callback
      */
     getPicture = (documentid:string, filename:string, callback) => {
-
+        // TODO: callback?
         return new this.Readable().wrap(this.db.getAttachment(documentid, filename, (err) => {
             //TODO: log error with good
             if (err) {
@@ -34,18 +33,17 @@ class Attachment {
     /**
      * Saves an attachment and returns a Promise
      * @param documentId
-     * @param filename
+     * @param attachmentData
      * @param readStream
-     * @param callback
      */
     savePicture = (documentId:string, attachmentData:any, readStream:any) => {
 
         return new Promise((resolve, reject) => {
 
             // get revision from database with HEAD
-            this.db.head(documentId, (err, headers, res) =>  {
+            this.db.head(documentId, (err, headers, res) => {
                 if (res === 404 || !headers['etag']) {
-                    return reject(this.boom.create({ reason: 'not_found' }));
+                    return reject(this.boom.create(404, "user not found"));
                 }
 
                 if (err) {
