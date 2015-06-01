@@ -117,7 +117,7 @@ class Database {
         this.trip = new Trip(this.db, this.LISTS);
         this.location = new Location(this.db, this.LISTS);
         this.staticdata = new StaticData(this.db, this.LISTS);
-        this.attachment = new Attachment(this.db, this.LISTS);
+        this.attachment = new Attachment(this.db);
         this.util = new Util(this.db);
         this.mail = new Mail(this.db, this.LISTS);
         this.chat = new Chat(this.db, this.LISTS);
