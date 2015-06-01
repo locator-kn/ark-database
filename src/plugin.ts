@@ -55,7 +55,8 @@ class Database {
         LIST_MAIL_REGISTRATION: 'mail/listall/registration',
         LIST_CHAT_CONVERSATIONS: 'chat/listallByUserId/conversationsByUserId',
         LIST_CHAT_CONVERSATIONBYID: 'chat/listall/conversationsById',
-        LIST_CHAT_MESSAGESBYCONVERSATIONID: 'chat/listall/messagesByConversationId'
+        LIST_CHAT_MESSAGESBYCONVERSATIONID: 'chat/listall/messagesByConversationId',
+        LIST_CHAT_CONVERSATIONS_BY_TWO_USER: 'chat/getExistingConversationByUsers/conversationsByUserId'
     };
 
     private VIEWS = {
@@ -200,6 +201,7 @@ class Database {
         server.expose('getConversationById', this.chat.getConversationById);
         server.expose('getMessagesByConversionId', this.chat.getMessagesByConversionId);
         server.expose('saveMessage', this.chat.saveMessage);
+        server.expose('getExistingConversationByTwoUsers', this.chat.getExistingConversationByTwoUsers);
     }
 
 

@@ -13,6 +13,17 @@ class Chat {
     };
 
     /**
+     * Returns an array of a conversation of both users.
+     * Empty array if no conversation exists
+     * @param userid
+     * @param userid2
+     * @param callback
+     */
+    getExistingConversationByTwoUsers = (userid:string, userid2:string, callback) => {
+        this.db.list(this.LISTS.LIST_CHAT_CONVERSATIONS_BY_TWO_USER, {userId: userid, userId2: userid2}, callback);
+    };
+
+    /**
      * Create a new user.
      *
      * @param conversation:any
