@@ -20,7 +20,7 @@ class Attachment {
      * @param callback
      */
     getPicture = (documentid:string, filename:string, callback) => {
-
+        // TODO: callback?
         return new this.Readable().wrap(this.db.getAttachment(documentid, filename, (err) => {
             //TODO: log error with good
             if (err) {
