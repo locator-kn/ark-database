@@ -106,7 +106,7 @@ class User {
     };
 
     /**
-     * Delete a particular tuser by id.
+     * Delete a particular user by id.
      *
      * @param userId:string
      * @param callback
