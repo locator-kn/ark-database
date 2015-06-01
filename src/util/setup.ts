@@ -36,6 +36,8 @@ var designUser = {
                             name: doc.name,
                             password: doc.password,
                             strategy: doc.strategy,
+                            resetPasswordExpires: doc.resetPasswordExpires,
+                            resetPasswordToken: doc.resetPasswordToken,
                             mail: doc.mail,
                             _id: doc._id
                         });
