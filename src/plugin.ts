@@ -113,7 +113,7 @@ class Database {
             console.log('Database', this.database, 'exists');
         });
 
-        this.user = new User(this.db, this.LISTS, this.VIEWS);
+        this.user = new User(this.db, this.LISTS);
         this.trip = new Trip(this.db, this.LISTS);
         this.location = new Location(this.db, this.LISTS);
         this.staticdata = new StaticData(this.db, this.LISTS);
