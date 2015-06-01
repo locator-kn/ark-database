@@ -1,4 +1,4 @@
-# tripl-database
+# locator-database
 
 ## Server
 
