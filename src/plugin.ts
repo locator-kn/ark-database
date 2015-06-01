@@ -53,7 +53,6 @@ class Database {
         LIST_TRIP_CITY: 'trip/listall/city',
         LIST_MAIL_REGISTRATION: 'mail/listall/registration',
         LIST_MAIL_PASSWORD_FORGOTTEN: 'mail/listall/password_forgotten',
-        LIST_CHAT_CONVERSATIONS: 'chat/listallByUserId/conversations'
         LIST_CHAT_CONVERSATIONS: 'chat/listallByUserId/conversationsByUserId',
         LIST_CHAT_CONVERSATIONBYID: 'chat/listall/conversationsById',
         LIST_CHAT_MESSAGESBYCONVERSATIONID: 'chat/listall/messagesByConversationId'
