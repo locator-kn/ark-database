@@ -21,6 +21,8 @@ export function setUpDesignDocuments(database:any, callback:any) {
 
     database.save(designMail.title, designMail.content);
 
+    database.save(designChat.title, designChat.content);
+
     callback(null, "Views created")
 }
 
