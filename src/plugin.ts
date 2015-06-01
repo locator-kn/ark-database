@@ -59,10 +59,6 @@ class Database {
         LIST_CHAT_CONVERSATIONS_BY_TWO_USER: 'chat/getExistingConversationByUsers/conversationsByUserId'
     };
 
-    private VIEWS = {
-        USER_LOGIN: 'user/login'
-    };
-
     /**
      * Constructor to create a database instance
      *
