@@ -232,3 +232,62 @@ var designMail = {
         }
     }
 };
+
+var designChat = {
+    title: "_design/chat",
+    content: {
+        views: {
+            conversationsByUserId: {
+                "map": function (doc) {
+                    if (doc.type === 'conversation') {
+                        emit([doc.user_1, doc.user_2], doc);
+                    }
+                }
+            },
+            conversationsById: {
+                "map": function (doc) {
+                    if (doc.type === 'conversation') {
+                        emit(doc._id, doc);
+                    }
+                }
+            },
+            messagesByConversationId: {
+                "map": function (doc) {
+                    if (doc.type == 'message') {
+                        emit(doc.conversation_id, doc);
+                    }
+                }
+            }
+        },
+        lists: {
+            listall: function (head, req) {
+                var row;
+                var result = [];
+                while (row = getRow()) {
+                    result.push(row.value);
+                }
+                send(JSON.stringify(result));
+            },
+            listallByUserId: function (head, req) {
+                var result = [];
+                var row;
+                while (row = getRow()) {
+                    if (row.key[0] == req.query.userId || row.key[1] == req.query.userId) {
+                        result.push(row.value);
+                    }
+                }
+                send(JSON.stringify(result));
+            },
+            getExistingConversationByUsers: function (head, req) {
+                var result = [];
+                var row;
+                while (row = getRow()) {
+                    if ((row.key[0] == req.query.userId || row.key[1] == req.query.userId) && (row.key[0] == req.query.userId2 || row.key[1] == req.query.userId2)) {
+                        result.push(row.value);
+                    }
+                }
+                send(JSON.stringify(result));
+            }
+        }
+    }
+};
