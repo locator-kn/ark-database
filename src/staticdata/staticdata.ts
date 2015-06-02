@@ -1,6 +1,6 @@
 export default
 class StaticData {
-    constructor(private db: any, private VIEWS: any) {
+    constructor(private db:any, private LISTS:any) {
 
     }
 
@@ -12,7 +12,7 @@ class StaticData {
      * @param callback
      */
     getMoods = (callback) => {
-        this.db.view(this.VIEWS.VIEW_DATA_MOOD, callback);
+        this.db.list(this.LISTS.LIST_DATA_MOOD, callback);
     };
 
     /**
@@ -21,7 +21,15 @@ class StaticData {
      * @param callback
      */
     getCities = (callback) => {
-        this.db.view(this.VIEWS.VIEW_DATA_CITY, callback);
+        this.db.list(this.LISTS.LIST_DATA_CITY, callback);
+    };
+
+    /**
+     * Get cities with trips
+     * @param callback
+     */
+    getCitiesWithTrips = (callback) => {
+        this.db.list(this.LISTS.LIST_DATA_CITY_TRIPS, {reduce: true, group: true}, callback);
     };
 
     /**
@@ -30,7 +38,17 @@ class StaticData {
      * @param callback
      */
     getAccommodations = (callback) => {
-        this.db.view(this.VIEWS.VIEW_DATA_ACC, callback);
+        this.db.list(this.LISTS.LIST_DATA_ACC, callback);
+    };
+
+
+    /**
+     * Get accommodations equipment from database.
+     *
+     * @param callback
+     */
+    getAccommodationsEquipment = (callback) => {
+        this.db.list(this.LISTS.LIST_DATA_ACC_EQUIPMENT, callback);
     };
 
 
@@ -57,13 +75,23 @@ class StaticData {
     };
 
     /**
-     * Create a new City.
+     * Create a new accommodation.
      *
      * @param accommodations:json-object
      * @param callback
      */
     createAccommodation = (accommodations, callback) => {
         this.db.save(accommodations, callback);
+    };
+
+    /**
+     * Create a new accommodation equipment.
+     *
+     * @param accommodationsEquipment:json-object
+     * @param callback
+     */
+    createAccommodationEquipment = (accommodationsEquipment, callback) => {
+        this.db.save(accommodationsEquipment, callback);
     };
 
     // UPDATE
@@ -101,8 +129,20 @@ class StaticData {
      * @param accommodations:Accommodations
      * @param callback
      */
-    updateAccommodation = (accommodationsId:string, rev:string, accommodations , callback) => {
-        this.db.save(accommodationsId, rev, accommodations , callback);
+    updateAccommodation = (accommodationsId:string, rev:string, accommodations, callback) => {
+        this.db.save(accommodationsId, rev, accommodations, callback);
+    };
+
+    /**
+     * Update accommodationsEquipment information.
+     *
+     * @param accommodationsEquipmentId:string
+     * @param rev:string
+     * @param accommodationsEquipment:accommodationsEquipment
+     * @param callback
+     */
+    updateAccommodationEquipment = (accommodationsEquipmentId:string, rev:string, accommodationsEquipment, callback) => {
+        this.db.save(accommodationsEquipmentId, rev, accommodationsEquipment, callback);
     };
 
     /**
@@ -133,6 +173,16 @@ class StaticData {
      */
     deleteAccommodationById = (accommodationsId:string, callback) => {
         this.db.remove(accommodationsId, callback);
+    };
+
+    /**
+     * Delete a particular accommodations equipment by id.
+     *
+     * @param accommodationsEquipmentId:string
+     * @param callback
+     */
+    deleteAccommodationEquipmentById = (accommodationsEquipmentId:string, callback) => {
+        this.db.remove(accommodationsEquipmentId, callback);
     };
 
 }

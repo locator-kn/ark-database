@@ -1,6 +1,16 @@
+declare
+var Promise:any;
+
+import Util from './../util/util';
+
 export default
 class User {
-    constructor(private db:any, private VIEWS:any) {
+    private boom:any;
+    private util:any;
+
+    constructor(private db:any, private LISTS:any) {
+        this.boom = require('boom');
+        this.util = new Util(db);
     }
 
     /**
@@ -10,29 +20,37 @@ class User {
      * @param callback
      */
     getUserById = (userId:string, callback) => {
-        this.db.view(this.VIEWS.VIEW_USER_USER, {key: userId}, callback);
+        this.util.getObjectOf(userId, this.LISTS.LIST_USER_ALL, callback);
     };
+
+    /**
+     * get user by UUID
+     * @param uuid
+     * @param callback
+     */
+    getUserByUUID = (uuid:string, callback) => {
+        this.util.getObjectOf(uuid, this.LISTS.LIST_USER_UUID, callback);
+    };
+
 
     /**
      * Get user from database by specific user id.
      *
-     * @param userId:string
      * @param callback
      */
     getUsers = (callback) => {
-        this.db.view(this.VIEWS.VIEW_USER_USER, callback);
+        this.db.list(this.LISTS.LIST_USER_ALL, callback);
     };
 
     /**
      * Update user information.
      *
      * @param userId:string
-     * @param rev:string
      * @param user:IUser
      * @param callback
      */
-    updateUser = (userId:string, rev:string, user, callback) => {
-        this.db.save(userId, rev, user, callback);
+    updateUser = (userId:string, user:any, callback) => {
+        this.db.merge(userId, user, callback)
     };
 
     /**
@@ -50,10 +68,17 @@ class User {
      * Get json object with login data of specific user id.
      *
      * @param userId:string
-     * @param callback
      */
-    getUserLogin = (userId:string, callback) => {
-        this.db.view(this.VIEWS.VIEW_USER_LOGIN, {key: userId}, callback);
+    getUserLogin = (userId:string) => {
+        return new Promise((resolve, reject) => {
+            this.db.list(this.LISTS.LIST_USER_LOGIN, {key: userId}, (err, result) => {
+                // reject also if there is no match in the database
+                if (err || !result[0]) {
+                    return reject(err);
+                }
+                resolve(result[0]);
+            });
+        });
     };
 
     /**
@@ -64,11 +89,24 @@ class User {
      * @param callback
      */
     updateUserPassword = (userId:string, password:string, callback) => {
-        this.db.merge(userId, {'password': password}, callback);
+        // redirect to update method
+        this.updateUser(userId, {'password': password}, callback);
     };
 
     /**
-     * Delete a particular tuser by id.
+     * Update the mail field of a user. The mail will be added to the existing mail
+     *
+     * @param userId
+     * @param mail
+     * @param callback
+     */
+    updateUserMail = (userId:string, mail:any, callback) => {
+        // append new mail to field of user
+        this.util.appendFieldvalue(userId, 'mail', mail, callback);
+    };
+
+    /**
+     * Delete a particular user by id.
      *
      * @param userId:string
      * @param callback

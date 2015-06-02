@@ -1,6 +1,6 @@
 {
   "name": "ark-database",
-  "version": "0.1.0",
+  "version": "6.6.0",
   "description": "Wrapper for database access for locator-kn ark",
   "main": "index.js",
   "scripts": {
@@ -16,9 +16,11 @@
   },
   "devDependencies": {
     "code": "1.x.x",
-    "gulp": "^3.8.11",
     "hapi": "8.x.x",
-    "lab": "5.x.x",
+    "lab": "5.x.x"
+  },
+  "dependencies": {
+    "gulp": "^3.8.11",
     "gulp-jshint": "^1.9.4",
     "gulp-nodemon": "^2.0.2",
     "gulp-notify": "^2.2.0",
@@ -26,10 +28,10 @@
     "gulp-tsc": "^0.9.3",
     "gulp-typescript": "^2.5.0",
     "merge2": "^0.3.1",
-    "node-notifier": "^4.1.2"
-  },
-  "dependencies": {
+    "node-notifier": "^4.1.2",
+    "boom": "^2.7.1",
     "cradle": "^0.6.9",
+    "readable-stream": "^1.0.33",
     "typescript": "^1.5.0-alpha"
   }
 }

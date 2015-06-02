@@ -13,7 +13,10 @@ class Util {
      * Update one or more field of a document and returns a promise
      * @param documentid
      * @param object
+<<<<<<< HEAD
      * @param callback
+=======
+>>>>>>> cc42e103bacb18ae32d98a2805a74e7a0e5791f9
      */
     updateDocument = (documentid:string, object:any) => {
         return new Promise((resolve, reject) => {
@@ -42,6 +45,7 @@ class Util {
      * @param documentid
      * @param field
      * @param valueToAppend
+     * @param callback
      */
     appendFieldvalue = (documentid:string, field:string, valueToAppend:any, callback) => {
         this.db.get(documentid, (err, result) => {

@@ -1,15 +1,16 @@
 export default
 class Trip {
-    constructor(private db:any, private VIEWS:any) {
+    constructor(private db:any, private LISTS:any) {
     }
 
     /**
      * Get trips from database.
      *
+     * @param paginationOptions
      * @param callback
      */
-    getTrips = (callback) => {
-        this.db.view(this.VIEWS.VIEW_TRIP_TRIP, callback);
+    getTrips = (paginationOptions, callback) => {
+        this.db.list(this.LISTS.LIST_TRIP_ALL, paginationOptions, callback);
     };
 
     /**
@@ -19,19 +20,38 @@ class Trip {
      * @param callback
      */
     getTripById = (tripid:string, callback) => {
-        this.db.view(this.VIEWS.VIEW_TRIP_TRIP, {key: tripid}, callback);
+        this.db.list(this.LISTS.LIST_TRIP_ALL, {key: tripid}, callback);
+    };
+
+    /**
+     * Get trip from database by specific city name.
+     *
+     * @param city:string
+     * @param callback
+     */
+    getTripsByCity = (city:string, callback) => {
+        this.db.list(this.LISTS.LIST_TRIP_CITY, {key: city}, callback);
+    };
+
+    /**
+     * Get trip from database by query.
+     *
+     * @param query
+     * @param callback
+     */
+    searchTripsByQuery = (query, callback) => {
+        this.db.list(this.LISTS.LIST_SEARCH_TRIP, query, callback);
     };
 
     /**
      * Update trip information.
      *
      * @param tripId:string
-     * @param rev:string
      * @param trip:Trip
      * @param callback
      */
-    updateTrip = (tripId:string, rev:string, trip, callback) => {
-        this.db.save(tripId, rev, trip, callback);
+    updateTrip = (tripId:string, trip, callback) => {
+        this.db.merge(tripId, trip, callback);
     };
 
     /**
@@ -53,24 +73,5 @@ class Trip {
      */
     deleteTripById = (tripId:string, callback) => {
         this.db.remove(tripId, callback);
-    };
-
-    /**
-     * Get moods from database.
-     *
-     * @param callback
-     */
-    getMoods = (callback) => {
-        this.db.view(this.VIEWS.VIEW_TRIP_MOOD, callback);
-    };
-
-    /**
-     * Create a new mood.
-     *
-     * @param mood:json-object
-     * @param callback
-     */
-    createMood = (mood, callback) => {
-        this.db.save(mood, callback);
     };
 }
