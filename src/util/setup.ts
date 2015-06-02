@@ -214,7 +214,7 @@ var designMail = {
                     }
                 }
             },
-            forgotten: {
+            password_forgotten: {
                 "map": function (doc) {
                     if (doc.type == 'mail_forgotten') {
                         emit(doc._id, doc);
