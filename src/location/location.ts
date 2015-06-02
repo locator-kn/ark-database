@@ -83,7 +83,7 @@ class Location {
      * @param location
      * @param callback
      */
-    updateLocation = (locationid:string, rev:string, location, callback) => {
-        this.db.save(locationid, rev, location, callback);
+    updateLocation = (locationid:string, location, callback) => {
+        this.db.merge(locationid, location, callback);
     };
 }
