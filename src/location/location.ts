@@ -1,9 +1,9 @@
-
 import Util from './../util/util';
 
 export default
 class Location {
     private util:any;
+
     constructor(private db:any, private LISTS:any) {
         this.util = new Util(db);
     }
@@ -47,13 +47,13 @@ class Location {
     };
 
     /**
-     * Creates a new location and adds it to the location pool of a user.
+     * Creates a new location and returns a promise.
      * @param location
      */
     createLocation = (location) => {
         return new Promise((resolve, reject) => {
 
-            this.db.save(location, (err,res) => {
+            this.db.save(location, (err, res) => {
 
                 if (err) {
                     return reject(err);
@@ -63,10 +63,16 @@ class Location {
         })
     };
 
+    /**
+     * Appends the given location id to the location pool of a user.
+     * @param userid
+     * @param locationid
+     * @returns {Promise|Promise<T>|any}
+     */
     updateLocationOfUser = (userid:string, locationid:string) => {
         return new Promise((resolve, reject) => {
 
-            this.util.appendFieldvalue(userid, 'locationpool', locationid, (err,result) => {
+            this.util.appendFieldvalue(userid, 'locationpool', locationid, (err, result) => {
 
                 if (err) {
                     return reject(err);
@@ -79,7 +85,6 @@ class Location {
     /**
      * Updates a location of a user.
      * @param locationid
-     * @param rev
      * @param location
      * @param callback
      */
