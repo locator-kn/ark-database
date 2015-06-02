@@ -1,6 +1,11 @@
+
+import Util from './../util/util';
+
 export default
 class Location {
-    constructor(private db:any, private VIEWS:any) {
+    private util:any;
+    constructor(private db:any, private LISTS:any) {
+        this.util = new Util(db);
     }
 
     /**
@@ -9,7 +14,7 @@ class Location {
      * @param callback
      */
     getLocationsByUserId = (userid:string, callback) => {
-        this.db.view(this.VIEWS.VIEW_LOCATION_USER, {key: userid},  callback);
+        this.db.list(this.LISTS.LIST_LOCATION_USER, {key: userid}, callback);
     };
 
     /**
@@ -18,7 +23,7 @@ class Location {
      * @param callback
      */
     getLocationById = (locationid:string, callback) => {
-        this.db.view(this.VIEWS.VIEW_LOCATION_LOCATION, {key: locationid}, callback);
+        this.db.list(this.LISTS.LIST_LOCATION_LOCATION, {key: locationid}, callback);
     };
 
     /**
@@ -28,7 +33,7 @@ class Location {
      */
     deleteLocationsByUserId = (userid:string, callback) => {
         callback({
-         error: 'not implemented yet!'
+            error: 'not implemented yet!'
         });
     };
 
@@ -44,19 +49,41 @@ class Location {
     /**
      * Creates a new location and adds it to the location pool of a user.
      * @param location
-     * @param callback
      */
-    createLocation = (userid:string, location, callback) => {
-        this.db.save(location, callback);
+    createLocation = (location) => {
+        return new Promise((resolve, reject) => {
+
+            this.db.save(location, (err,res) => {
+
+                if (err) {
+                    return reject(err);
+                }
+                return resolve(res);
+            });
+        })
+    };
+
+    updateLocationOfUser = (userid:string, locationid:string) => {
+        return new Promise((resolve, reject) => {
+
+            this.util.appendFieldvalue(userid, 'locationpool', locationid, (err,result) => {
+
+                if (err) {
+                    return reject(err);
+                }
+                return resolve(result);
+            })
+        });
     };
 
     /**
      * Updates a location of a user.
      * @param locationid
      * @param rev
+     * @param location
      * @param callback
      */
-    updateLocation = (locationid:string,rev:string, location, callback) => {
+    updateLocation = (locationid:string, rev:string, location, callback) => {
         this.db.save(locationid, rev, location, callback);
     };
 }

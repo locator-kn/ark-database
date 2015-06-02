@@ -114,6 +114,7 @@ class Database {
         server.expose('deleteLocationById', this.location.deleteLocationById);
         server.expose('createLocation', this.location.createLocation);
         server.expose('updateLocation', this.location.updateLocation);
+        server.expose('updateLocationOfUser', this.location.updateLocationOfUser);
 
         // staticdata mood
         server.expose('getMoods', this.staticdata.getMoods);
