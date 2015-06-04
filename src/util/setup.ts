@@ -75,9 +75,9 @@ var designUser = {
         },
         updates: {
             timestamp: function (doc, req) {
-                var b = req.query;
-                b._id = req.uuid;
-                b.create_date = new Date().toISOString();
+                var document = req.query;
+                document._id = req.uuid;
+                document.create_date = new Date().toISOString();
                 return [b, toJSON(b)];
             }
         }
