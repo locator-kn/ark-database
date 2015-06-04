@@ -80,6 +80,7 @@ var designUser = {
                     doc._id = req.uuid;
                     doc.create_date = new Date().toISOString();
                 } else {
+                    for (var attrname in req.query) { doc[attrname] = req.query[attrname]; }
                     doc.modified_date = new Date().toISOString();
                 }
                 return [doc, toJSON(doc)];
