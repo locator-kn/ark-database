@@ -75,10 +75,12 @@ var designUser = {
         },
         updates: {
             timestamp: function (doc, req) {
-                var document = req.query;
-                document._id = req.uuid;
-                document.create_date = new Date().toISOString();
-                return [document, toJSON(document)];
+                if(!doc) {
+                    var doc = req.query;
+                    doc._id = req.uuid;
+                    doc.create_date = new Date().toISOString();
+                }
+                return [doc, toJSON(doc)];
             }
         }
     }
