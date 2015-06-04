@@ -7,6 +7,8 @@ declare
 var send:any;
 declare
 var sum:any;
+declare
+var toJSON:any;
 
 
 export function setUpDesignDocuments(database:any, callback:any) {
