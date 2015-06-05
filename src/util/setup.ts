@@ -73,7 +73,6 @@ var designUser = {
                 send(JSON.stringify(result));
             }
         },
-        // TODO: refactor in new function
         updates: {
             timestamp: function (doc, req) {
                 if(!doc) {
