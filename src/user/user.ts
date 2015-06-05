@@ -60,7 +60,7 @@ class User {
      * @param callback
      */
     createUser = (user, callback) => {
-        this.db.update('user/timestamp', null, user, callback);
+        this.db.save(user, callback);
     };
 
 
