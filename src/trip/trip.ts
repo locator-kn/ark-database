@@ -51,6 +51,8 @@ class Trip {
      * @param callback
      */
     updateTrip = (tripId:string, trip, callback) => {
+        var date = new Date();
+        trip.modified_date = date.toISOString();
         this.db.merge(tripId, trip, callback);
     };
 
@@ -61,6 +63,8 @@ class Trip {
      * @param callback
      */
     createTrip = (trip, callback) => {
+        var date = new Date();
+        trip.create_date = date.toISOString();
         this.db.save(trip, callback);
     };
 
