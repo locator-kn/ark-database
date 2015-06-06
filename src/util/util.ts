@@ -10,18 +10,61 @@ class Util {
     }
 
     /**
-     * Update one or more field of a document and returns a promise
+     * Update one or more field(s) of a document and returns a promise.
+     * The provided type ensures that the correct document is updated
      * @param documentid
      * @param object
+     * @param type
      */
-    updateDocument = (documentid:string, object:any) => {
+    updateDocument = (documentid:string, object:any, type:string) => {
         return new Promise((resolve, reject) => {
-            this.db.merge(documentid, object, (err, result) => {
+
+            this.db.get(documentid, (err, res) => {
+
                 if (err) {
                     return reject(err);
                 }
-                return resolve(result);
-            })
+
+                if (res.type !== type) {
+                    return reject(this.boom.notAcceptable())
+                }
+
+                this.db.merge(documentid, object, (err, result) => {
+                    if (err) {
+                        return reject(err);
+                    }
+                    return resolve(result);
+                })
+            });
+        });
+    };
+
+
+    /**
+     * Deletes a document in the database. Makes sure, that the document with the right type is deleted
+     * @param documentid
+     * @param type
+     */
+    deleteDocument = (documentid:string, type:string) => {
+        return new Promise((resolve, reject) => {
+
+            this.db.get(documentid, (err, res) => {
+
+                if (err) {
+                    return reject(err);
+                }
+
+                if (res.type !== type) {
+                    return reject(this.boom.notAcceptable())
+                }
+
+                this.db.remove(documentid, (err, result) => {
+                    if (err) {
+                        return reject(err);
+                    }
+                    return resolve(result);
+                })
+            });
         });
     };
 
@@ -48,13 +91,15 @@ class Util {
             if (err) {
                 return callback(err)
             }
-            var fieldValue = result.field;
-            if (!fieldValue) {
-                return callback(this.boom.create('field in document not found', 404))
-            }
-
             var toUpdate = {};
-            toUpdate[field] = fieldValue.concat(valueToAppend);
+            var fieldValue = result.field;
+
+            // if field is not present create a new one
+            if (!fieldValue) {
+                toUpdate[field] = valueToAppend;
+            } else {
+                toUpdate[field] = fieldValue.concat(valueToAppend);
+            }
 
             this.db.merge(documentid, toUpdate, callback);
         });
@@ -84,7 +129,7 @@ class Util {
         return new Promise((resolve, reject) => {
             // check if the document exist (or attachment), by sending a lightweight HEAD request
             this.db.query(options, (err, data, response) => {
-                if (response != 200) {
+                if (response !== 200) {
                     return reject(this.boom.create(response, 'entry in database was not found'));
                 }
                 if (err) {
