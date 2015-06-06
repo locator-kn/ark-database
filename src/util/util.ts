@@ -39,6 +39,35 @@ class Util {
         });
     };
 
+
+    /**
+     * Deletes a document in the database. Makes sure, that the document with the right type is deleted
+     * @param documentid
+     * @param type
+     */
+    deleteDocument = (documentid:string, type:string) => {
+        return new Promise((resolve, reject) => {
+
+            this.db.get(documentid, (err, res) => {
+
+                if (err) {
+                    return reject(err);
+                }
+
+                if (res.type !== type) {
+                    return reject(this.boom.notAcceptable())
+                }
+
+                this.db.remove(documentid, (err, result) => {
+                    if (err) {
+                        return reject(err);
+                    }
+                    return resolve(result);
+                })
+            });
+        });
+    };
+
     /**
      * Create a view or list
      * @param name
