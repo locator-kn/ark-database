@@ -188,6 +188,7 @@ class Database {
         server.expose('updateDocument', this.util.updateDocument);
         server.expose('createView', this.util.createView);
         server.expose('entryExist', this.util.entryExist);
+        server.expose('deleteDocument', this.util.deleteDocument);
 
         // mail
         server.expose('getRegistrationMail', this.mail.getRegistrationMail);
