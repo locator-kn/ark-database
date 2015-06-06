@@ -21,7 +21,7 @@ class Util {
 
             this.db.get(documentid, (err, res) => {
 
-                if(err) {
+                if (err) {
                     return reject(err);
                 }
 

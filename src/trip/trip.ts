@@ -1,4 +1,3 @@
-
 import Util from './../util/util';
 
 export default
@@ -58,8 +57,8 @@ class Trip {
      */
     updateTrip = (tripId:string, trip, callback) => {
         this.util.updateDocument(tripId, trip, 'trip')
-            .then(callback)
-            .catch(callback)
+            .then(value => callback(null, value))
+            .catch(error => callback(error))
     };
 
     /**
