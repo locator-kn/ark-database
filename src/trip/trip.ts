@@ -3,6 +3,7 @@ import Util from './../util/util';
 export default
 class Trip {
     private util:any;
+    private TYPE:string = 'trip';
 
     constructor(private db:any, private LISTS:any) {
         this.util = new Util(db);
@@ -55,10 +56,8 @@ class Trip {
      * @param trip:Trip
      * @param callback
      */
-    updateTrip = (tripId:string, trip, callback) => {
-        this.util.updateDocument(tripId, trip, 'trip')
-            .then(value => callback(null, value))
-            .catch(error => callback(error))
+    updateTrip = (tripId:string, trip) => {
+        return this.util.updateDocument(tripId, trip, this.TYPE);
     };
 
     /**
@@ -73,13 +72,13 @@ class Trip {
 
 
     /**
-     * Delete a particular trip by id.
+     * Delete a particular trip by id and returns a Promise
      *
      * @param tripId:string
      * @param callback
      */
-    deleteTripById = (tripId:string, callback) => {
-        this.db.remove(tripId, callback);
+    deleteTripById = (tripId:string) => {
+        return this.util.removeDocument(tripId, this.TYPE);
     };
 
     /**
