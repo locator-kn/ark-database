@@ -25,7 +25,7 @@ class Util {
                     return reject(err);
                 }
 
-                if (!res.type) {
+                if (res.type !== type) {
                     return reject(this.boom.notAcceptable())
                 }
 
