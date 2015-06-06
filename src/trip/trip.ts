@@ -1,6 +1,12 @@
+
+import Util from './../util/util';
+
 export default
 class Trip {
+    private util:any;
+
     constructor(private db:any, private LISTS:any) {
+        this.util = new Util(db);
     }
 
     /**
@@ -51,7 +57,9 @@ class Trip {
      * @param callback
      */
     updateTrip = (tripId:string, trip, callback) => {
-        this.db.merge(tripId, trip, callback);
+        this.util.updateDocument(tripId, trip, 'trip')
+            .then(callback)
+            .catch(callback)
     };
 
     /**
