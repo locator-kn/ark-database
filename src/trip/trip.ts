@@ -74,4 +74,13 @@ class Trip {
     deleteTripById = (tripId:string, callback) => {
         this.db.remove(tripId, callback);
     };
+
+    /**
+     * Get all trips for this user id.
+     * @param userid
+     * @param callback
+     */
+    getUserTrips = (userid:string, callback) => {
+        this.db.list(this.LISTS.LIST_TRIP_ALL, {key: userid}, callback);
+    }
 }
