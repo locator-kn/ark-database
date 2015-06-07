@@ -104,7 +104,6 @@ class StaticData {
      * Update mood information.
      *
      * @param moodId:string
-     * @param rev:string
      * @param mood:Mood
      * @param callback
      */
@@ -116,7 +115,6 @@ class StaticData {
      * Update city information.
      *
      * @param cityId:string
-     * @param rev:string
      * @param city:City
      * @param callback
      */
@@ -129,7 +127,6 @@ class StaticData {
      * Update accommodations information.
      *
      * @param accommodationsId:string
-     * @param rev:string
      * @param accommodations:Accommodations
      * @param callback
      */
@@ -141,7 +138,6 @@ class StaticData {
      * Update accommodationsEquipment information.
      *
      * @param accommodationsEquipmentId:string
-     * @param rev:string
      * @param accommodationsEquipment:accommodationsEquipment
      * @param callback
      */
