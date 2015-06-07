@@ -58,14 +58,11 @@ class Location {
 
     /**
      * Updates a location of a user.
-     * @param locationid
-     * @param rev
+     * @param locationId
      * @param location
      * @param callback
      */
-    updateLocation = (locationid:string, rev:string, location, callback) => {
-        var date = new Date();
-        location.modified_date = date.toISOString();
-        this.db.save(locationid, rev, location, callback);
+    updateLocation = (locationId:string, location, callback) => {
+        this.util.updateDocumentWithCallback(locationId, location, callback);
     };
 }
