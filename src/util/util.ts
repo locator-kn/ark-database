@@ -131,12 +131,13 @@ class Util {
 
     /**
      * Update document by id and update modified_date.
+     * TODO: use callback or promise in complete project.
      *
      * @param documentId
      * @param document
      * @param callback
      */
-    updateDocument = (documentId:string, document:any, callback) => {
+    updateDocumentWithCallback = (documentId:string, document:any, callback) => {
         var date = new Date();
         document.modified_date = date.toISOString();
         this.db.merge(documentId, document, callback)
