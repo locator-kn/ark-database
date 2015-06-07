@@ -108,10 +108,8 @@ class StaticData {
      * @param mood:Mood
      * @param callback
      */
-    updateMood = (moodId:string, rev:string, mood, callback) => {
-        var date = new Date();
-        mood.modified_date = date.toISOString();
-        this.db.save(moodId, rev, mood, callback);
+    updateMood = (moodId:string, mood, callback) => {
+        this.util.updateDocumentWithCallback(moodId, mood, callback);
     };
 
     /**
@@ -122,10 +120,8 @@ class StaticData {
      * @param city:City
      * @param callback
      */
-    updateCity = (cityId:string, rev:string, city, callback) => {
-        var date = new Date();
-        city.modified_date = date.toISOString();
-        this.db.save(cityId, rev, city, callback);
+    updateCity = (cityId:string, city, callback) => {
+        this.util.updateDocumentWithCallback(cityId, city, callback);
     };
 
 
@@ -137,10 +133,8 @@ class StaticData {
      * @param accommodations:Accommodations
      * @param callback
      */
-    updateAccommodation = (accommodationsId:string, rev:string, accommodations, callback) => {
-        var date = new Date();
-        accommodations.modified_date = date.toISOString();
-        this.db.save(accommodationsId, rev, accommodations, callback);
+    updateAccommodation = (accommodationsId:string, accommodations, callback) => {
+        this.util.updateDocumentWithCallback(accommodationsId, accommodations, callback);
     };
 
     /**
@@ -151,10 +145,8 @@ class StaticData {
      * @param accommodationsEquipment:accommodationsEquipment
      * @param callback
      */
-    updateAccommodationEquipment = (accommodationsEquipmentId:string, rev:string, accommodationsEquipment, callback) => {
-        var date = new Date();
-        accommodationsEquipment.modified_date = date.toISOString();
-        this.db.save(accommodationsEquipmentId, rev, accommodationsEquipment, callback);
+    updateAccommodationEquipment = (accommodationsEquipmentId:string, accommodationsEquipment, callback) => {
+        this.util.updateDocumentWithCallback(accommodationsEquipmentId, accommodationsEquipment, callback);
     };
 
     /**
