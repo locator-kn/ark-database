@@ -1,6 +1,11 @@
+import Util from './../util/util';
+
 export default
 class Chat {
+    private util:any;
+
     constructor(private db:any, private LISTS:any) {
+        this.util = new Util(db);
     }
 
     /**
@@ -30,9 +35,7 @@ class Chat {
      * @param callback
      */
     createConversation = (conversation, callback) => {
-        var date = new Date();
-        conversation.create_date= date.toISOString();
-        this.db.save(conversation, callback);
+        this.util.createDocument(conversation, callback);
     };
 
     /**
@@ -67,8 +70,6 @@ class Chat {
      * @param callback
      */
     saveMessage = (messageObj, callback) => {
-        var date = new Date();
-        messageObj.create_date = date.toISOString();
-        this.db.save(messageObj, callback);
+        this.util.createDocument(messageObj, callback);
     };
 }
