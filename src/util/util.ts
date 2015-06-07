@@ -116,4 +116,16 @@ class Util {
             return callback(null, result[0]);
         });
     };
+
+    /**
+     * Create document with Timestamp.
+     *
+     * @param element
+     * @param callback
+     */
+    createDocument = (element, callback) => {
+        var date = new Date();
+        element.create_date = date.toISOString();
+        this.db.save(element, callback);
+    };
 }
