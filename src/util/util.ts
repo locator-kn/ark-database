@@ -16,7 +16,7 @@ class Util {
      * @param object
      * @param type
      */
-    updateDocument = (documentid:string, object:any, type:string) => {
+    updateDocument = (documentid:string, userid:string, object:any, type:string) => {
         return new Promise((resolve, reject) => {
 
             this.db.get(documentid, (err, res) => {
@@ -25,8 +25,12 @@ class Util {
                     return reject(err);
                 }
 
-                if (res.type !== type) {
+                if (!res.type || res.type !== type) {
                     return reject(this.boom.notAcceptable())
+                }
+
+                if (!res.userid || res.userid !== userid) {
+                    return reject(this.boom.forbidden())
                 }
 
                 this.db.merge(documentid, object, (err, result) => {
@@ -45,7 +49,7 @@ class Util {
      * @param documentid
      * @param type
      */
-    deleteDocument = (documentid:string, type:string) => {
+    deleteDocument = (documentid:string, userid:string, type:string) => {
         return new Promise((resolve, reject) => {
 
             this.db.get(documentid, (err, res) => {
@@ -54,8 +58,12 @@ class Util {
                     return reject(err);
                 }
 
-                if (res.type !== type) {
+                if (!res.type || res.type !== type) {
                     return reject(this.boom.notAcceptable())
+                }
+
+                if (!res.userid || res.userid !== userid) {
+                    return reject(this.boom.forbidden());
                 }
 
                 this.db.remove(documentid, (err, result) => {

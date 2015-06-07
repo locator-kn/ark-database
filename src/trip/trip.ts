@@ -56,8 +56,8 @@ class Trip {
      * @param trip:Trip
      * @param callback
      */
-    updateTrip = (tripId:string, trip) => {
-        return this.util.updateDocument(tripId, trip, this.TYPE);
+    updateTrip = (tripId:string, userid:string, trip) => {
+        return this.util.updateDocument(tripId, userid, trip, this.TYPE);
     };
 
     /**
@@ -77,8 +77,8 @@ class Trip {
      * @param tripId:string
      * @param callback
      */
-    deleteTripById = (tripId:string) => {
-        return this.util.removeDocument(tripId, this.TYPE);
+    deleteTripById = (tripId:string, userid:string) => {
+        return this.util.removeDocument(tripId, userid, this.TYPE);
     };
 
     /**
