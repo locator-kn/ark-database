@@ -1,6 +1,11 @@
+import Util from './../util/util';
+
 export default
 class Trip {
+    private util:any;
+
     constructor(private db:any, private LISTS:any) {
+        this.util = new Util(db);
     }
 
     /**
@@ -63,9 +68,7 @@ class Trip {
      * @param callback
      */
     createTrip = (trip, callback) => {
-        var date = new Date();
-        trip.create_date = date.toISOString();
-        this.db.save(trip, callback);
+        this.util.createDocument(trip, callback);
     };
 
 
