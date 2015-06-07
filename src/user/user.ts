@@ -50,9 +50,7 @@ class User {
      * @param callback
      */
     updateUser = (userId:string, user:any, callback) => {
-        var date = new Date();
-        user.modified_date = date.toISOString();
-        this.db.merge(userId, user, callback)
+        this.util.updateDocumentWithCallback(userId, user, callback);
     };
 
     /**
@@ -91,9 +89,8 @@ class User {
      * @param callback
      */
     updateUserPassword = (userId:string, password:string, callback) => {
-        var date = new Date();
         // redirect to update method
-        this.updateUser(userId, {'password': password, modified_date:date.toISOString()}, callback);
+        this.updateUser(userId, {'password': password}, callback);
     };
 
     /**
