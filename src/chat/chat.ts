@@ -30,6 +30,8 @@ class Chat {
      * @param callback
      */
     createConversation = (conversation, callback) => {
+        var date = new Date();
+        conversation.create_date= date.toISOString();
         this.db.save(conversation, callback);
     };
 
@@ -65,6 +67,8 @@ class Chat {
      * @param callback
      */
     saveMessage = (messageObj, callback) => {
+        var date = new Date();
+        messageObj.create_date = date.toISOString();
         this.db.save(messageObj, callback);
     };
 }
