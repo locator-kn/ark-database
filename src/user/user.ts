@@ -62,9 +62,7 @@ class User {
      * @param callback
      */
     createUser = (user, callback) => {
-        var date = new Date();
-        user.create_date = date.toISOString();
-        this.db.save(user, callback);
+        this.util.createDocument(user, callback);
     };
 
 
