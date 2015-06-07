@@ -48,6 +48,8 @@ class Location {
      * @param callback
      */
     createLocation = (userid:string, location, callback) => {
+        var date = new Date();
+        location.create_date = date.toISOString();
         this.db.save(location, callback);
     };
 
@@ -59,6 +61,8 @@ class Location {
      * @param callback
      */
     updateLocation = (locationid:string, rev:string, location, callback) => {
+        var date = new Date();
+        location.modified_date = date.toISOString();
         this.db.save(locationid, rev, location, callback);
     };
 }
