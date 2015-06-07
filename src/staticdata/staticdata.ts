@@ -1,7 +1,11 @@
+import Util from './../util/util';
+
 export default
 class StaticData {
-    constructor(private db:any, private LISTS:any) {
+    private util:any;
 
+    constructor(private db:any, private LISTS:any) {
+        this.util = new Util(db);
     }
 
     // GET
@@ -61,9 +65,7 @@ class StaticData {
      * @param callback
      */
     createMood = (mood, callback) => {
-        var date = new Date();
-        mood.create_date = date.toISOString();
-        this.db.save(mood, callback);
+        this.util.createDocument(mood, callback);
     };
 
     /**
@@ -73,9 +75,7 @@ class StaticData {
      * @param callback
      */
     createCity = (city, callback) => {
-        var date = new Date();
-        city.create_date = date.toISOString();
-        this.db.save(city, callback);
+        this.util.createDocument(city, callback);
     };
 
     /**
@@ -85,9 +85,7 @@ class StaticData {
      * @param callback
      */
     createAccommodation = (accommodations, callback) => {
-        var date = new Date();
-        accommodations.create_date = date.toISOString();
-        this.db.save(accommodations, callback);
+        this.util.createDocument(accommodations, callback);
     };
 
     /**
@@ -97,9 +95,7 @@ class StaticData {
      * @param callback
      */
     createAccommodationEquipment = (accommodationsEquipment, callback) => {
-        var date = new Date();
-        accommodationsEquipment.create_date = date.toISOString();
-        this.db.save(accommodationsEquipment, callback);
+        this.util.createDocument(accommodationsEquipment, callback);
     };
 
     // UPDATE
