@@ -1,6 +1,11 @@
+import Util from './../util/util';
+
 export default
 class Location {
+    private util:any;
+
     constructor(private db:any, private LISTS:any) {
+        this.util = new Util(db);
     }
 
     /**
@@ -48,9 +53,7 @@ class Location {
      * @param callback
      */
     createLocation = (userid:string, location, callback) => {
-        var date = new Date();
-        location.create_date = date.toISOString();
-        this.db.save(location, callback);
+        this.util.createDocument(location, callback);
     };
 
     /**
