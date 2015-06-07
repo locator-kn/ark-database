@@ -128,4 +128,17 @@ class Util {
         element.create_date = date.toISOString();
         this.db.save(element, callback);
     };
+
+    /**
+     * Update document by id and update modified_date.
+     *
+     * @param documentId
+     * @param document
+     * @param callback
+     */
+    updateDocument = (documentId:string, document:any, callback) => {
+        var date = new Date();
+        document.modified_date = date.toISOString();
+        this.db.merge(documentId, document, callback)
+    };
 }
