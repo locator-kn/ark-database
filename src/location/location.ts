@@ -23,7 +23,16 @@ class Location {
      * @param callback
      */
     getLocationById = (locationid:string, callback) => {
-        this.db.list(this.LISTS.LIST_LOCATION_LOCATION, {key: locationid}, callback);
+        return new Promise((reject, resolve) => {
+
+            this.db.list(this.LISTS.LIST_LOCATION_LOCATION, {key: locationid}, (err,data) => {
+
+                if (err) {
+                    return reject(err);
+                }
+                resolve(data);
+            });
+        })
     };
 
     /**
