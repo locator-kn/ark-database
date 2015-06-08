@@ -198,4 +198,25 @@ class Util {
         document.modified_date = date.toISOString();
         this.db.merge(documentId, document, callback)
     };
+
+    /**
+     * USE WITH CAUTION!! This method updates a document without checking for correct type or possessing user.
+     * Use only if you are absolutely certain what are you doing. If not, use updateDocument().
+     * @param documentId
+     * @param document
+     * @returns {any}
+     */
+    updateDocumentWithoutCheck = (documentId:string, document:any) => {
+        var date = new Date();
+        document.modified_date = date.toISOString();
+        return new Promise((reject,resolve) => {
+            this.db.merge(documentId, document, (err,data) => {
+
+                if (err) {
+                    return reject(err);
+                }
+                return resolve(data);
+            })
+        })
+    }
 }
