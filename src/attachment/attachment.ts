@@ -1,16 +1,20 @@
 declare
 var Promise:any;
 
+import Util from './../util/util';
+
 export default
 class Attachment {
     Readable:any;
     stream:any;
     boom:any;
+    util:any;
 
     constructor(private db:any) {
         this.stream = require('stream');
         this.Readable = this.stream.Readable || require('readable-stream').Readable;
         this.boom = require('boom');
+        this.util = new Util(db);
     }
 
     /**
@@ -60,7 +64,7 @@ class Attachment {
                         if (err) {
                             return reject(err);
                         }
-                        resolve(result)
+                        resolve(result);
                     }
                 );
 
