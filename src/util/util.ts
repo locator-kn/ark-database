@@ -16,6 +16,8 @@ class Util {
      */
     updateDocument = (documentid:string, object:any) => {
         return new Promise((resolve, reject) => {
+            var date = new Date();
+            object.modified_date = date.toISOString();
             this.db.merge(documentid, object, (err, result) => {
                 if (err) {
                     return reject(err);
