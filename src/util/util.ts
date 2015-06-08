@@ -43,7 +43,7 @@ class Util {
      * @param valueToAppend
      * @param callback
      */
-    appendFieldvalue = (documentid:string, field:string, valueToAppend:any, callback) => {
+    appendFieldValue = (documentid:string, field:string, valueToAppend:any, callback) => {
         this.db.get(documentid, (err, result) => {
             if (err) {
                 return callback(err)

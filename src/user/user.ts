@@ -102,7 +102,7 @@ class User {
      */
     updateUserMail = (userId:string, mail:any, callback) => {
         // append new mail to field of user
-        this.util.appendFieldvalue(userId, 'mail', mail, callback);
+        this.util.appendFieldValue(userId, 'mail', mail, callback);
     };
 
     /**
