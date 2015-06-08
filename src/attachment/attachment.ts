@@ -65,6 +65,8 @@ class Attachment {
                             return reject(err);
                         }
                         resolve(result);
+                        // update modified_date
+                        this.util.updateDocument(documentId, {});
                     }
                 );
 
