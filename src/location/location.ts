@@ -87,7 +87,7 @@ class Location {
      * @param location
      * @param callback
      */
-    createLocation = (userid:string, location, callback) => {
+    createLocation = (location, callback) => {
         this.util.createDocument(location, callback);
     };
 
