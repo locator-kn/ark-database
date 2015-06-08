@@ -93,5 +93,10 @@ class Trip {
         this.db.list(this.LISTS.LIST_TRIP_USER, opt, callback);
     };
 
+    getMyTrips = (userid:string, date:any, callback) => {
+        var opt = {
+            startkey: [userid, date || '']
+        };
+        this.db.list(this.LISTS.LIST_TRIP_MY, opt, callback);
     }
 }
