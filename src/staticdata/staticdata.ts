@@ -1,7 +1,11 @@
+import Util from './../util/util';
+
 export default
 class StaticData {
-    constructor(private db:any, private LISTS:any) {
+    private util:any;
 
+    constructor(private db:any, private LISTS:any) {
+        this.util = new Util(db);
     }
 
     // GET
@@ -61,7 +65,7 @@ class StaticData {
      * @param callback
      */
     createMood = (mood, callback) => {
-        this.db.save(mood, callback);
+        this.util.createDocument(mood, callback);
     };
 
     /**
@@ -71,7 +75,7 @@ class StaticData {
      * @param callback
      */
     createCity = (city, callback) => {
-        this.db.save(city, callback);
+        this.util.createDocument(city, callback);
     };
 
     /**
@@ -81,7 +85,7 @@ class StaticData {
      * @param callback
      */
     createAccommodation = (accommodations, callback) => {
-        this.db.save(accommodations, callback);
+        this.util.createDocument(accommodations, callback);
     };
 
     /**
@@ -91,7 +95,7 @@ class StaticData {
      * @param callback
      */
     createAccommodationEquipment = (accommodationsEquipment, callback) => {
-        this.db.save(accommodationsEquipment, callback);
+        this.util.createDocument(accommodationsEquipment, callback);
     };
 
     // UPDATE
@@ -100,24 +104,22 @@ class StaticData {
      * Update mood information.
      *
      * @param moodId:string
-     * @param rev:string
      * @param mood:Mood
      * @param callback
      */
-    updateMood = (moodId:string, rev:string, mood, callback) => {
-        this.db.save(moodId, rev, mood, callback);
+    updateMood = (moodId:string, mood, callback) => {
+        this.util.updateDocumentWithCallback(moodId, mood, callback);
     };
 
     /**
      * Update city information.
      *
      * @param cityId:string
-     * @param rev:string
      * @param city:City
      * @param callback
      */
-    updateCity = (cityId:string, rev:string, city, callback) => {
-        this.db.save(cityId, rev, city, callback);
+    updateCity = (cityId:string, city, callback) => {
+        this.util.updateDocumentWithCallback(cityId, city, callback);
     };
 
 
@@ -125,24 +127,22 @@ class StaticData {
      * Update accommodations information.
      *
      * @param accommodationsId:string
-     * @param rev:string
      * @param accommodations:Accommodations
      * @param callback
      */
-    updateAccommodation = (accommodationsId:string, rev:string, accommodations, callback) => {
-        this.db.save(accommodationsId, rev, accommodations, callback);
+    updateAccommodation = (accommodationsId:string, accommodations, callback) => {
+        this.util.updateDocumentWithCallback(accommodationsId, accommodations, callback);
     };
 
     /**
      * Update accommodationsEquipment information.
      *
      * @param accommodationsEquipmentId:string
-     * @param rev:string
      * @param accommodationsEquipment:accommodationsEquipment
      * @param callback
      */
-    updateAccommodationEquipment = (accommodationsEquipmentId:string, rev:string, accommodationsEquipment, callback) => {
-        this.db.save(accommodationsEquipmentId, rev, accommodationsEquipment, callback);
+    updateAccommodationEquipment = (accommodationsEquipmentId:string, accommodationsEquipment, callback) => {
+        this.util.updateDocumentWithCallback(accommodationsEquipmentId, accommodationsEquipment, callback);
     };
 
     /**

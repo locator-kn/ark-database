@@ -12,14 +12,14 @@ class Util {
     /**
      * Update one or more field(s) of a document and returns a promise.
      * The provided type ensures that the correct document is updated
-     * @param documentid
+     * @param documentId
      * @param object
      * @param type
      */
-    updateDocument = (documentid:string, userid:string, object:any, type:string) => {
+    updateDocument = (documentId:string, userid:string, object:any, type:string) => {
         return new Promise((resolve, reject) => {
 
-            this.db.get(documentid, (err, res) => {
+            this.db.get(documentId, (err, res) => {
 
                 if (err) {
                     return reject(err);
@@ -33,7 +33,11 @@ class Util {
                     return reject(this.boom.forbidden())
                 }
 
-                this.db.merge(documentid, object, (err, result) => {
+                // update modified_date
+                var date = new Date();
+                object.modified_date = date.toISOString();
+
+                this.db.merge(documentId, object, (err, result) => {
                     if (err) {
                         return reject(err);
                     }
@@ -94,7 +98,7 @@ class Util {
      * @param valueToAppend
      * @param callback
      */
-    appendFieldvalue = (documentid:string, field:string, valueToAppend:any, callback) => {
+    appendFieldValue = (documentid:string, field:string, valueToAppend:any, callback) => {
         this.db.get(documentid, (err, result) => {
             if (err) {
                 return callback(err)
@@ -109,7 +113,7 @@ class Util {
                 toUpdate[field] = fieldValue.concat(valueToAppend);
             }
 
-            this.db.merge(documentid, toUpdate, callback);
+            this.updateDocumentWithCallback(documentid, toUpdate, callback);
         });
     };
 
@@ -168,5 +172,30 @@ class Util {
             // return first entry from array
             return callback(null, result[0]);
         });
+    };
+
+    /**
+     * Create document with Timestamp.
+     *
+     * @param element
+     * @param callback
+     */
+    createDocument = (element, callback) => {
+        var date = new Date();
+        element.create_date = date.toISOString();
+        this.db.save(element, callback);
+    };
+
+    /**
+     * Update document by id and update modified_date.
+     *
+     * @param documentId
+     * @param document
+     * @param callback
+     */
+    updateDocumentWithCallback = (documentId:string, document:any, callback) => {
+        var date = new Date();
+        document.modified_date = date.toISOString();
+        this.db.merge(documentId, document, callback)
     };
 }

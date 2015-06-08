@@ -53,13 +53,12 @@ class Location {
      * @param callback
      */
     createLocation = (userid:string, location, callback) => {
-        this.db.save(location, callback);
+        this.util.createDocument(location, callback);
     };
 
     /**
      * Updates a location of a user.
-     * @param locationid
-     * @param rev
+     * @param locationId
      * @param location
      * @param callback
      */

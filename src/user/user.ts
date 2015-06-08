@@ -50,7 +50,7 @@ class User {
      * @param callback
      */
     updateUser = (userId:string, user:any, callback) => {
-        this.db.merge(userId, user, callback)
+        this.util.updateDocumentWithCallback(userId, user, callback);
     };
 
     /**
@@ -60,7 +60,7 @@ class User {
      * @param callback
      */
     createUser = (user, callback) => {
-        this.db.save(user, callback);
+        this.util.createDocument(user, callback);
     };
 
 
@@ -102,7 +102,7 @@ class User {
      */
     updateUserMail = (userId:string, mail:any, callback) => {
         // append new mail to field of user
-        this.util.appendFieldvalue(userId, 'mail', mail, callback);
+        this.util.appendFieldValue(userId, 'mail', mail, callback);
     };
 
     /**

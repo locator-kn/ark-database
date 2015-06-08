@@ -67,7 +67,7 @@ class Trip {
      * @param callback
      */
     createTrip = (trip, callback) => {
-        this.db.save(trip, callback);
+        this.util.createDocument(trip, callback);
     };
 
 
