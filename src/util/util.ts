@@ -209,8 +209,8 @@ class Util {
     updateDocumentWithoutCheck = (documentId:string, document:any) => {
         var date = new Date();
         document.modified_date = date.toISOString();
-        return new Promise((reject,resolve) => {
-            this.db.merge(documentId, document, (err,data) => {
+        return new Promise((resolve, reject) => {
+            this.db.merge(documentId, document, (err, data) => {
 
                 if (err) {
                     return reject(err);
