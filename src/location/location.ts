@@ -1,6 +1,11 @@
+import Util from './../util/util';
+
 export default
 class Location {
+    private util:any;
+
     constructor(private db:any, private LISTS:any) {
+        this.util = new Util(db);
     }
 
     /**
@@ -48,17 +53,16 @@ class Location {
      * @param callback
      */
     createLocation = (userid:string, location, callback) => {
-        this.db.save(location, callback);
+        this.util.createDocument(location, callback);
     };
 
     /**
      * Updates a location of a user.
-     * @param locationid
-     * @param rev
+     * @param locationId
      * @param location
      * @param callback
      */
-    updateLocation = (locationid:string, rev:string, location, callback) => {
-        this.db.save(locationid, rev, location, callback);
+    updateLocation = (locationId:string, location, callback) => {
+        this.util.updateDocumentWithCallback(locationId, location, callback);
     };
 }
