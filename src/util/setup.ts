@@ -194,14 +194,14 @@ var designTrip = {
             tripByUserId: {
                 "map": function (doc) {
                     if (doc.type == 'trip' && doc.active == true) {
-                        emit([doc.userid, doc.start_date], doc);
+                        emit([doc.userid, doc.end_date], doc);
                     }
                 }
             },
             myTrips: {
                 "map": function (doc) {
                     if (doc.type == 'trip') {
-                        emit([doc.userid, doc.start_date], doc);
+                        emit([doc.userid, doc.end_date], doc);
                     }
                 }
             }
