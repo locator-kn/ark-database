@@ -4,6 +4,7 @@ export default
 class Location {
     private util:any;
     private TYPE:string = 'location';
+
     constructor(private db:any, private LISTS:any) {
         this.util = new Util(db);
     }
@@ -14,7 +15,16 @@ class Location {
      * @param callback
      */
     getLocationsByUserId = (userid:string, callback) => {
-        this.db.list(this.LISTS.LIST_LOCATION_USER, {key: userid}, callback);
+        return new Promise((reject, resolve) => {
+
+            this.db.list(this.LISTS.LIST_LOCATION_USER, {key: userid}, (err, data) => {
+
+                if (err) {
+                    return reject(err);
+                }
+                resolve(data);
+            });
+        })
     };
 
     /**
@@ -25,7 +35,7 @@ class Location {
     getLocationById = (locationid:string, callback) => {
         return new Promise((reject, resolve) => {
 
-            this.db.list(this.LISTS.LIST_LOCATION_LOCATION, {key: locationid}, (err,data) => {
+            this.db.list(this.LISTS.LIST_LOCATION_LOCATION, {key: locationid}, (err, data) => {
 
                 if (err) {
                     return reject(err);
@@ -71,7 +81,7 @@ class Location {
      * @param location
      * @param callback
      */
-    updateLocation = (locationid:string, userid:string, location) =>{
+    updateLocation = (locationid:string, userid:string, location) => {
         return this.util.updateDocument(locationid, userid, location, this.TYPE);
     };
 }
