@@ -131,7 +131,6 @@ class Util {
 
     /**
      * Update document by id and update modified_date.
-     * TODO: use callback or promise in complete project.
      *
      * @param documentId
      * @param document
