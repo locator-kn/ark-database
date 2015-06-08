@@ -52,6 +52,7 @@ class Database {
         LIST_DATA_CITY_TRIPS: 'data/listall/cities_trips',
         LIST_TRIP_ALL: 'trip/listall/trip',
         LIST_TRIP_CITY: 'trip/listall/city',
+        LIST_TRIP_USER: 'trip/listall/tripByUserId',
         LIST_MAIL_REGISTRATION: 'mail/listall/registration',
         LIST_MAIL_PASSWORD_FORGOTTEN: 'mail/listall/password_forgotten',
         LIST_CHAT_CONVERSATIONS: 'chat/listallByUserId/conversationsByUserId',
@@ -146,6 +147,7 @@ class Database {
         server.expose('updateTrip', this.trip.updateTrip);
         server.expose('createTrip', this.trip.createTrip);
         server.expose('deleteTripById', this.trip.deleteTripById);
+        server.expose('getUserTrips', this.trip.getUserTrips);
 
         // location
         server.expose('getLocationsByUserId', this.location.getLocationsByUserId);
@@ -188,6 +190,7 @@ class Database {
         server.expose('updateDocument', this.util.updateDocument);
         server.expose('createView', this.util.createView);
         server.expose('entryExist', this.util.entryExist);
+        server.expose('deleteDocument', this.util.deleteDocument);
 
         // mail
         server.expose('getRegistrationMail', this.mail.getRegistrationMail);

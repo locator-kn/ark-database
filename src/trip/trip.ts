@@ -1,8 +1,7 @@
-import Util from './../util/util';
-
 export default
 class Trip {
     private util:any;
+    private TYPE:string = 'trip';
 
     constructor(private db:any, private LISTS:any) {
         this.util = new Util(db);
@@ -55,8 +54,8 @@ class Trip {
      * @param trip:Trip
      * @param callback
      */
-    updateTrip = (tripId:string, trip, callback) => {
-        this.util.updateDocumentWithCallback(tripId, trip, callback);
+    updateTrip = (tripId:string, trip) => {
+        return this.util.updateDocument(tripId, trip, this.TYPE);
     };
 
     /**
@@ -71,12 +70,21 @@ class Trip {
 
 
     /**
-     * Delete a particular trip by id.
+     * Delete a particular trip by id and returns a Promise
      *
      * @param tripId:string
      * @param callback
      */
-    deleteTripById = (tripId:string, callback) => {
-        this.db.remove(tripId, callback);
+    deleteTripById = (tripId:string) => {
+        return this.util.removeDocument(tripId, this.TYPE);
     };
+
+    /**
+     * Get all trips for this user id.
+     * @param userid
+     * @param callback
+     */
+    getUserTrips = (userid:string, callback) => {
+        this.db.list(this.LISTS.LIST_TRIP_USER, {key: userid}, callback);
+    }
 }

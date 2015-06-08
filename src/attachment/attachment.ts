@@ -47,7 +47,7 @@ class Attachment {
             // get revision from database with HEAD
             this.db.head(documentId, (err, headers, res) => {
                 if (res === 404 || !headers['etag']) {
-                    return reject(this.boom.create(404, "user not found"));
+                    return reject(this.boom.create(404, "document not found"));
                 }
 
                 if (err) {

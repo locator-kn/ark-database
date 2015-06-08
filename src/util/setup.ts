@@ -190,6 +190,13 @@ var designTrip = {
                         emit(doc._id, doc);
                     }
                 }
+            },
+            tripByUserId: {
+                "map": function (doc) {
+                    if (doc.type == 'trip') {
+                        emit(doc.userid, doc);
+                    }
+                }
             }
         },
         lists: {
