@@ -145,9 +145,16 @@ var designLocation = {
                     }
                 }
             },
-            user: {
+            locationByUser: {
                 "map": function (doc) {
                     if (doc.type == 'location') {
+                        emit(doc.userid, doc);
+                    }
+                }
+            },
+            preLocationByUser: {
+                "map": function (doc) {
+                    if (doc.type == 'preLocation') {
                         emit(doc.userid, doc);
                     }
                 }

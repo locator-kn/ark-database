@@ -42,8 +42,9 @@ class Database {
         LIST_USER_ALL: 'user/listall/user',
         LIST_USER_LOGIN: 'user/listall/login',
         LIST_USER_UUID: 'user/listall/uuid',
-        LIST_LOCATION_USER: 'location/listall/user',
+        LIST_LOCATION_USER: 'location/listall/locationByUser',
         LIST_LOCATION_LOCATION: 'location/listall/location',
+        LIST_LOCATION_PRELOCATION_USER: 'location/listall/preLocationByUser',
         LIST_SEARCH_TRIP: 'search/searchlist/city',
         LIST_DATA_MOOD: 'data/listall/moods',
         LIST_DATA_ACC: 'data/listall/accommodations',
@@ -159,6 +160,7 @@ class Database {
         server.expose('deleteLocationById', this.location.deleteLocationById);
         server.expose('createLocation', this.location.createLocation);
         server.expose('updateLocation', this.location.updateLocation);
+        server.expose('getPreLocationsByUserId', this.location.getPreLocationsByUserId);
 
         // static data mood
         server.expose('getMoods', this.staticdata.getMoods);

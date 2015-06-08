@@ -30,6 +30,19 @@ class Location {
         })
     };
 
+    getPreLocationsByUserId = (userid:string, callback) => {
+        return new Promise((reject, resolve) => {
+
+            this.db.list(this.LISTS.LIST_LOCATION_USER, {key: userid}, (err, data) => {
+
+                if (err) {
+                    return reject(err);
+                }
+                resolve(data);
+            });
+        })
+    };
+
     /**
      * Returns a particular location from a location pool of a user.
      * @param locationid
