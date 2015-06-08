@@ -1,3 +1,5 @@
+import Util from './../util/util';
+
 export default
 class Trip {
     private util:any;
