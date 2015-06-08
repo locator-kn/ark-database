@@ -1,6 +1,11 @@
+import Util from './../util/util';
+
 export default
 class Location {
+    private util:any;
+    private TYPE:string = 'location';
     constructor(private db:any, private LISTS:any) {
+        this.util = new Util(db);
     }
 
     /**
@@ -37,8 +42,8 @@ class Location {
      * @param locationid
      * @param callback
      */
-    deleteLocationById = (locationid:string, callback) => {
-        this.db.remove(locationid, callback);
+    deleteLocationById = (locationid:string, userid:string) => {
+        return this.util.removeDocument(locationid, userid, this.TYPE)
     };
 
     /**
@@ -58,7 +63,7 @@ class Location {
      * @param location
      * @param callback
      */
-    updateLocation = (locationid:string, rev:string, location, callback) => {
-        this.db.save(locationid, rev, location, callback);
+    updateLocation = (locationid:string, userid:string, location) =>{
+        return this.util.updateDocument(locationid, userid, location, this.TYPE);
     };
 }
