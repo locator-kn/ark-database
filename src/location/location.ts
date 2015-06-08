@@ -1,3 +1,6 @@
+declare
+var Promise:any;
+
 import Util from './../util/util';
 
 export default
