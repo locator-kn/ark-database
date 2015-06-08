@@ -56,8 +56,8 @@ class Trip {
      * @param trip:Trip
      * @param callback
      */
-    updateTrip = (tripId:string, trip) => {
-        return this.util.updateDocument(tripId, trip, this.TYPE);
+    updateTrip = (tripId:string, userid:string, trip) => {
+        return this.util.updateDocument(tripId, userid, trip, this.TYPE);
     };
 
     /**
@@ -77,8 +77,8 @@ class Trip {
      * @param tripId:string
      * @param callback
      */
-    deleteTripById = (tripId:string) => {
-        return this.util.removeDocument(tripId, this.TYPE);
+    deleteTripById = (tripId:string, userid:string) => {
+        return this.util.removeDocument(tripId, userid, this.TYPE);
     };
 
     /**
@@ -86,7 +86,17 @@ class Trip {
      * @param userid
      * @param callback
      */
-    getUserTrips = (userid:string, callback) => {
-        this.db.list(this.LISTS.LIST_TRIP_USER, {key: userid}, callback);
+    getUserTrips = (userid:string, date:any, callback) => {
+        var opt = {
+            startkey: [userid, date || '']
+        };
+        this.db.list(this.LISTS.LIST_TRIP_USER, opt, callback);
+    };
+
+    getMyTrips = (userid:string, date:any, callback) => {
+        var opt = {
+            startkey: [userid, date || '']
+        };
+        this.db.list(this.LISTS.LIST_TRIP_MY, opt, callback);
     }
 }

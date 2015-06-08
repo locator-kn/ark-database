@@ -16,7 +16,7 @@ class Util {
      * @param object
      * @param type
      */
-    updateDocument = (documentId:string, object:any, type:string) => {
+    updateDocument = (documentId:string, userid:string, object:any, type:string) => {
         return new Promise((resolve, reject) => {
 
             this.db.get(documentId, (err, res) => {
@@ -25,8 +25,12 @@ class Util {
                     return reject(err);
                 }
 
-                if (res.type !== type) {
+                if (!res.type || res.type !== type) {
                     return reject(this.boom.notAcceptable())
+                }
+
+                if (!res.userid || res.userid !== userid) {
+                    return reject(this.boom.forbidden())
                 }
 
                 // update modified_date
@@ -43,12 +47,13 @@ class Util {
         });
     };
 
+
     /**
      * Deletes a document in the database. Makes sure, that the document with the right type is deleted
      * @param documentid
      * @param type
      */
-    deleteDocument = (documentid:string, type:string) => {
+    deleteDocument = (documentid:string, userid:string, type:string) => {
         return new Promise((resolve, reject) => {
 
             this.db.get(documentid, (err, res) => {
@@ -57,8 +62,12 @@ class Util {
                     return reject(err);
                 }
 
-                if (res.type !== type) {
+                if (!res.type || res.type !== type) {
                     return reject(this.boom.notAcceptable())
+                }
+
+                if (!res.userid || res.userid !== userid) {
+                    return reject(this.boom.forbidden());
                 }
 
                 this.db.remove(documentid, (err, result) => {
