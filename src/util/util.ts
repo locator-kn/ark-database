@@ -174,6 +174,12 @@ class Util {
         });
     };
 
+    /**
+     * Same function as getObjectOf but with a returned promise
+     * @param keyValue
+     * @param list
+     * @returns {any}
+     */
     retrieveSingleValue = (keyValue:any, list:string) => {
         return new Promise((resolve, reject) => {
 
@@ -187,6 +193,25 @@ class Util {
                 }
                 // return first entry from array
                 return resolve(result[0]);
+            });
+        })
+    };
+
+    /**
+     * Query a design document (list) with the given key and returns a promise.
+     * @param keyValue
+     * @param list
+     * @returns {any}
+     */
+    retrieveAllValues = (keyValue:any, list:string) => {
+        return new Promise((resolve, reject) => {
+
+            this.db.list(list, {key: keyValue}, (err, data) => {
+
+                if (err) {
+                    return reject(this.boom.wrap(err));
+                }
+                resolve(data);
             });
         })
     };
