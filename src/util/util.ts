@@ -174,6 +174,23 @@ class Util {
         });
     };
 
+    retrieveSingleValue = (keyValue:any, list:string) => {
+        return new Promise((resolve, reject) => {
+
+            this.db.list(list, {key: keyValue}, (err, result) => {
+
+                if (err) {
+                    return reject(this.boom.wrap(err));
+                }
+                if (!result.length) {
+                    return reject(this.boom.create(404, 'Database entry not found'))
+                }
+                // return first entry from array
+                return resolve(result[0]);
+            });
+        })
+    };
+
     /**
      * Create document with Timestamp.
      *
