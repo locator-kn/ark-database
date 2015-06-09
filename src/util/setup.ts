@@ -147,14 +147,14 @@ var designLocation = {
             },
             locationByUser: {
                 "map": function (doc) {
-                    if (doc.type == 'location') {
+                    if (doc.type == 'location' && !doc.preLocation) {
                         emit(doc.userid, doc);
                     }
                 }
             },
             preLocationByUser: {
                 "map": function (doc) {
-                    if (doc.type == 'preLocation') {
+                    if (doc.type == 'location' && doc.preLocation) {
                         emit(doc.userid, doc);
                     }
                 }
