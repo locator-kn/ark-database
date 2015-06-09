@@ -17,30 +17,12 @@ class Location {
      * @param userid
      * @param callback
      */
-    getLocationsByUserId = (userid:string, callback) => {
-        return new Promise((resolve, reject) => {
-
-            this.db.list(this.LISTS.LIST_LOCATION_USER, {key: userid}, (err, data) => {
-
-                if (err) {
-                    return reject(err);
-                }
-                resolve(data);
-            });
-        })
+    getLocationsByUserId = (userid:string) => {
+        return this.util.retrieveAllValues(userid, this.LISTS.LIST_LOCATION_USER);
     };
 
-    getPreLocationsByUserId = (userid:string, callback) => {
-        return new Promise((resolve, reject) => {
-
-            this.db.list(this.LISTS.LIST_LOCATION_PRELOCATION_USER, {key: userid}, (err, data) => {
-
-                if (err) {
-                    return reject(err);
-                }
-                resolve(data);
-            });
-        })
+    getPreLocationsByUserId = (userid:string) => {
+        return this.util.retrieveAllValues(userid, this.LISTS.LIST_LOCATION_PRELOCATION_USER);
     };
 
     /**
@@ -48,17 +30,8 @@ class Location {
      * @param locationid
      * @param callback
      */
-    getLocationById = (locationid:string, callback) => {
-        return new Promise((resolve, reject) => {
-
-            this.db.list(this.LISTS.LIST_LOCATION_LOCATION, {key: locationid}, (err, data) => {
-
-                if (err) {
-                    return reject(err);
-                }
-                resolve(data);
-            });
-        })
+    getLocationById = (locationid:string) => {
+        return this.util.retrieveSingleValue(locationid, this.LISTS.LIST_LOCATION_LOCATION);
     };
 
     /**
@@ -88,15 +61,7 @@ class Location {
      * @param callback
      */
     createLocation = (location) => {
-        return new Promise((resolve, reject) => {
-            this.util.createDocument(location, (err, data) => {
-                if (err) {
-                    return reject(err);
-                }
-                resolve(data);
-            })
-
-        });
+        return this.util.createDocument(location);
     };
 
     /**
