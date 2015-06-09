@@ -223,21 +223,20 @@ class Util {
      * @param callback
      */
     createDocument = (element, callback) => {
+        callback = callback || this.noop;
         var date = new Date();
         element.create_date = date.toISOString();
 
-        if (!callback) {
-            return new Promise((resolve, reject) => {
-                this.db.save(element, (err, data) => {
-                    if (err) {
-                        return reject(this.boom.badRequest(err));
-                    }
-                    return resolve(data);
-                })
+        return new Promise((resolve, reject) => {
+            this.db.save(element, (err, data) => {
+                callback(err, data);
+                if (err) {
+                    return reject(this.boom.badRequest(err));
+                }
+                return resolve(data);
             })
-        } else {
-            this.db.save(element, callback);
-        }
+        })
+
     };
 
 
@@ -274,4 +273,6 @@ class Util {
             })
         })
     }
+
+    noop = () => {};
 }

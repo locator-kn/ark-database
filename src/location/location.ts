@@ -60,8 +60,8 @@ class Location {
      * @param location
      * @param callback
      */
-    createLocation = (location) => {
-        return this.util.createDocument(location);
+    createLocation = (location, callback) => {
+        return this.util.createDocument(location, callback);
     };
 
     /**
