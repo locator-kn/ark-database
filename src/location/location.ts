@@ -78,7 +78,7 @@ class Location {
      * @param callback
      */
     deleteLocationById = (locationid:string, userid:string) => {
-        return this.util.removeDocument(locationid, userid, this.TYPE)
+        return this.util.deleteDocument(locationid, userid, this.TYPE)
     };
 
     /**
