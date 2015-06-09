@@ -22,7 +22,7 @@ class Util {
             this.db.get(documentId, (err, res) => {
 
                 if (err) {
-                    return reject(err);
+                    return reject(this.boom.badRequest(err));
                 }
 
                 if (!res.type || res.type !== type) {
@@ -39,7 +39,7 @@ class Util {
 
                 this.db.merge(documentId, object, (err, result) => {
                     if (err) {
-                        return reject(err);
+                        return reject(this.boom.badRequest(err));
                     }
                     return resolve(result);
                 })
@@ -59,7 +59,7 @@ class Util {
             this.db.get(documentid, (err, res) => {
 
                 if (err) {
-                    return reject(err);
+                    return reject(this.boom.badRequest(err));
                 }
 
                 if (!res.type || res.type !== type) {
@@ -72,7 +72,7 @@ class Util {
 
                 this.db.remove(documentid, (err, result) => {
                     if (err) {
-                        return reject(err);
+                        return reject(this.boom.badRequest(err));
                     }
                     return resolve(result);
                 })
@@ -101,7 +101,7 @@ class Util {
     appendFieldValue = (documentid:string, field:string, valueToAppend:any, callback) => {
         this.db.get(documentid, (err, result) => {
             if (err) {
-                return callback(err)
+                return callback(this.boom.badRequest(err))
             }
             var toUpdate = {};
             var fieldValue = result.field;
@@ -142,10 +142,10 @@ class Util {
             // check if the document exist (or attachment), by sending a lightweight HEAD request
             this.db.query(options, (err, data, response) => {
                 if (response !== 200) {
-                    return reject(this.boom.create(response, 'entry in database was not found'));
+                    return reject(this.boom.notFound('entry in database was not found'));
                 }
                 if (err) {
-                    return reject(err);
+                    return reject(this.boom.badRequest(err));
                 }
 
                 return resolve(true);
@@ -164,10 +164,10 @@ class Util {
     getObjectOf = (keyValue, listName, callback) => {
         this.db.list(listName, {key: keyValue}, (err, result) => {
             if (err) {
-                return callback(err);
+                return callback(this.boom.badRequest(err));
             }
             if (!result.length) {
-                return callback(this.boom.create(404, 'Database entry not found'))
+                return callback(this.boom.notFound('Database entry not found'))
             }
             // return first entry from array
             return callback(null, result[0]);
@@ -186,10 +186,10 @@ class Util {
             this.db.list(list, {key: keyValue}, (err, result) => {
 
                 if (err) {
-                    return reject(this.boom.wrap(err));
+                    return reject(this.boom.badRequest(err));
                 }
                 if (!result.length) {
-                    return reject(this.boom.create(404, 'Database entry not found'))
+                    return reject(this.boom.notFound('Database entry not found'))
                 }
                 // return first entry from array
                 return resolve(result[0]);
@@ -209,7 +209,7 @@ class Util {
             this.db.list(list, {key: keyValue}, (err, data) => {
 
                 if (err) {
-                    return reject(this.boom.wrap(err));
+                    return reject(this.boom.badRequest(err));
                 }
                 resolve(data);
             });
@@ -230,7 +230,7 @@ class Util {
             return new Promise((resolve, reject) => {
                 this.db.save(element, (err, data) => {
                     if (err) {
-                        return reject(this.boom.wrap(err));
+                        return reject(this.boom.badRequest(err));
                     }
                     return resolve(data);
                 })
@@ -268,7 +268,7 @@ class Util {
             this.db.merge(documentId, document, (err, data) => {
 
                 if (err) {
-                    return reject(err);
+                    return reject(this.boom.badRequest(err));
                 }
                 return resolve(data);
             })
