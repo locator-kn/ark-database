@@ -22,7 +22,7 @@ class Util {
             this.db.get(documentId, (err, res) => {
 
                 if (err) {
-                    return reject(err);
+                    return reject(this.boom.wrap(err));
                 }
 
                 if (!res.type || res.type !== type) {
@@ -39,7 +39,7 @@ class Util {
 
                 this.db.merge(documentId, object, (err, result) => {
                     if (err) {
-                        return reject(err);
+                        return reject(this.boom.wrap(err));
                     }
                     return resolve(result);
                 })
@@ -59,7 +59,7 @@ class Util {
             this.db.get(documentid, (err, res) => {
 
                 if (err) {
-                    return reject(err);
+                    return reject(this.boom.wrap(err));
                 }
 
                 if (!res.type || res.type !== type) {
@@ -72,7 +72,7 @@ class Util {
 
                 this.db.remove(documentid, (err, result) => {
                     if (err) {
-                        return reject(err);
+                        return reject(this.boom.wrap(err));
                     }
                     return resolve(result);
                 })
@@ -101,7 +101,7 @@ class Util {
     appendFieldValue = (documentid:string, field:string, valueToAppend:any, callback) => {
         this.db.get(documentid, (err, result) => {
             if (err) {
-                return callback(err)
+                return callback(this.boom.wrap(err))
             }
             var toUpdate = {};
             var fieldValue = result.field;
@@ -145,7 +145,7 @@ class Util {
                     return reject(this.boom.create(response, 'entry in database was not found'));
                 }
                 if (err) {
-                    return reject(err);
+                    return reject(this.boom.wrap(err));
                 }
 
                 return resolve(true);
@@ -164,10 +164,10 @@ class Util {
     getObjectOf = (keyValue, listName, callback) => {
         this.db.list(listName, {key: keyValue}, (err, result) => {
             if (err) {
-                return callback(err);
+                return callback(this.boom.wrap(err));
             }
             if (!result.length) {
-                return callback(this.boom.create(404, 'Database entry not found'))
+                return callback(this.boom.notFound('Database entry not found'))
             }
             // return first entry from array
             return callback(null, result[0]);
@@ -183,7 +183,7 @@ class Util {
                     return reject(this.boom.wrap(err));
                 }
                 if (!result.length) {
-                    return reject(this.boom.create(404, 'Database entry not found'))
+                    return reject(this.boom.notFound('Database entry not found'))
                 }
                 // return first entry from array
                 return resolve(result[0]);
@@ -230,7 +230,7 @@ class Util {
             this.db.merge(documentId, document, (err, data) => {
 
                 if (err) {
-                    return reject(err);
+                    return reject(this.boom.wrap(err));
                 }
                 return resolve(data);
             })
