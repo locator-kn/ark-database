@@ -18,29 +18,11 @@ class Location {
      * @param callback
      */
     getLocationsByUserId = (userid:string) => {
-        return new Promise((resolve, reject) => {
-
-            this.db.list(this.LISTS.LIST_LOCATION_USER, {key: userid}, (err, data) => {
-
-                if (err) {
-                    return reject(err);
-                }
-                resolve(data);
-            });
-        })
+        return this.util.retrieveAllValues(userid, this.LISTS.LIST_LOCATION_USER);
     };
 
     getPreLocationsByUserId = (userid:string) => {
-        return new Promise((resolve, reject) => {
-
-            this.db.list(this.LISTS.LIST_LOCATION_PRELOCATION_USER, {key: userid}, (err, data) => {
-
-                if (err) {
-                    return reject(err);
-                }
-                resolve(data);
-            });
-        })
+        return this.util.retrieveAllValues(userid, this.LISTS.LIST_LOCATION_PRELOCATION_USER);
     };
 
     /**
