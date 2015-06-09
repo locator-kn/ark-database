@@ -18,7 +18,7 @@ class Location {
      * @param callback
      */
     getLocationsByUserId = (userid:string, callback) => {
-        return new Promise((reject, resolve) => {
+        return new Promise((resolve, reject) => {
 
             this.db.list(this.LISTS.LIST_LOCATION_USER, {key: userid}, (err, data) => {
 
@@ -31,7 +31,7 @@ class Location {
     };
 
     getPreLocationsByUserId = (userid:string, callback) => {
-        return new Promise((reject, resolve) => {
+        return new Promise((resolve, reject) => {
 
             this.db.list(this.LISTS.LIST_LOCATION_PRELOCATION_USER, {key: userid}, (err, data) => {
 
@@ -48,17 +48,8 @@ class Location {
      * @param locationid
      * @param callback
      */
-    getLocationById = (locationid:string, callback) => {
-        return new Promise((reject, resolve) => {
-
-            this.db.list(this.LISTS.LIST_LOCATION_LOCATION, {key: locationid}, (err, data) => {
-
-                if (err) {
-                    return reject(err);
-                }
-                resolve(data);
-            });
-        })
+    getLocationById = (locationid:string) => {
+        return this.util.retrieveSingleValue(locationid, this.LISTS.LIST_LOCATION_LOCATION);
     };
 
     /**
@@ -78,7 +69,7 @@ class Location {
      * @param callback
      */
     deleteLocationById = (locationid:string, userid:string) => {
-        return this.util.removeDocument(locationid, userid, this.TYPE)
+        return this.util.deleteDocument(locationid, userid, this.TYPE)
     };
 
     /**
@@ -87,8 +78,16 @@ class Location {
      * @param location
      * @param callback
      */
-    createLocation = (location, callback) => {
-        this.util.createDocument(location, callback);
+    createLocation = (location) => {
+        return new Promise((resolve, reject) => {
+            this.util.createDocument(location, (err, data) => {
+                if (err) {
+                    return reject(err);
+                }
+                resolve(data);
+            })
+
+        });
     };
 
     /**
