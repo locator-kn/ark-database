@@ -60,7 +60,15 @@ class Chat {
      * @param callback
      */
     getMessagesByConversionId = (conversationId:string, callback) => {
-        this.db.list(this.LISTS.LIST_CHAT_MESSAGESBYCONVERSATIONID, {key: conversationId}, callback);
+        this.db.list(this.LISTS.LIST_CHAT_MESSAGESBYCONVERSATIONID, {key: conversationId}, (err, data) => {
+            if(err) {
+                return callback(err);
+            }
+            data.sort((a, b) => {
+                return a.timestamp - b.timestamp;
+            });
+            callback(null, data);
+        });
     };
 
     /**
