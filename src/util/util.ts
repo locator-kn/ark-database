@@ -200,8 +200,21 @@ class Util {
     createDocument = (element, callback) => {
         var date = new Date();
         element.create_date = date.toISOString();
-        this.db.save(element, callback);
+
+        if (!callback) {
+            return new Promise((resolve, reject) => {
+                this.db.save(element, (err, data) => {
+                    if (err) {
+                        return reject(this.boom.wrap(err));
+                    }
+                    return resolve(data);
+                })
+            })
+        } else {
+            this.db.save(element, callback);
+        }
     };
+
 
     /**
      * Update document by id and update modified_date.
