@@ -26,11 +26,11 @@ class Util {
                 }
 
                 if (!res.type || res.type !== type) {
-                    return reject(this.boom.notAcceptable())
+                    return reject(this.boom.notAcceptable());
                 }
 
                 if (!res.userid || res.userid !== userid) {
-                    return reject(this.boom.forbidden())
+                    return reject(this.boom.forbidden());
                 }
 
                 // update modified_date
@@ -42,7 +42,7 @@ class Util {
                         return reject(this.boom.badRequest(err));
                     }
                     return resolve(result);
-                })
+                });
             });
         });
     };
@@ -63,7 +63,7 @@ class Util {
                 }
 
                 if (!res.type || res.type !== type) {
-                    return reject(this.boom.notAcceptable())
+                    return reject(this.boom.notAcceptable());
                 }
 
                 if (!res.userid || res.userid !== userid) {
@@ -71,11 +71,12 @@ class Util {
                 }
 
                 this.db.remove(documentid, (err, result) => {
+
                     if (err) {
                         return reject(this.boom.badRequest(err));
                     }
                     return resolve(result);
-                })
+                });
             });
         });
     };
@@ -100,8 +101,9 @@ class Util {
      */
     appendFieldValue = (documentid:string, field:string, valueToAppend:any, callback) => {
         this.db.get(documentid, (err, result) => {
+
             if (err) {
-                return callback(this.boom.badRequest(err))
+                return callback(this.boom.badRequest(err));
             }
             var toUpdate = {};
             var fieldValue = result.field;
@@ -141,6 +143,7 @@ class Util {
         return new Promise((resolve, reject) => {
             // check if the document exist (or attachment), by sending a lightweight HEAD request
             this.db.query(options, (err, data, response) => {
+
                 if (response !== 200) {
                     return reject(this.boom.notFound('entry in database was not found'));
                 }
@@ -163,6 +166,7 @@ class Util {
      */
     getObjectOf = (keyValue, listName, callback) => {
         this.db.list(listName, {key: keyValue}, (err, result) => {
+
             if (err) {
                 return callback(this.boom.badRequest(err));
             }
@@ -194,7 +198,7 @@ class Util {
                 // return first entry from array
                 return resolve(result[0]);
             });
-        })
+        });
     };
 
     /**
@@ -213,7 +217,7 @@ class Util {
                 }
                 resolve(data);
             });
-        })
+        });
     };
 
     /**
@@ -228,14 +232,16 @@ class Util {
         element.create_date = date.toISOString();
 
         return new Promise((resolve, reject) => {
+
             this.db.save(element, (err, data) => {
+
                 callback(err, data);
                 if (err) {
                     return reject(this.boom.badRequest(err));
                 }
                 return resolve(data);
-            })
-        })
+            });
+        });
 
     };
 
@@ -250,7 +256,7 @@ class Util {
     updateDocumentWithCallback = (documentId:string, document:any, callback) => {
         var date = new Date();
         document.modified_date = date.toISOString();
-        this.db.merge(documentId, document, callback)
+        this.db.merge(documentId, document, callback);
     };
 
     /**
@@ -264,15 +270,17 @@ class Util {
         var date = new Date();
         document.modified_date = date.toISOString();
         return new Promise((resolve, reject) => {
+
             this.db.merge(documentId, document, (err, data) => {
 
                 if (err) {
                     return reject(this.boom.badRequest(err));
                 }
                 return resolve(data);
-            })
-        })
-    }
+            });
+        });
+    };
 
-    noop = () => {};
+    noop = () => {
+    };
 }
