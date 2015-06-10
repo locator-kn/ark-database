@@ -103,7 +103,7 @@ var designData = {
             },
             cities_trips: {
                 "map": function (doc) {
-                    if (doc.type == 'trip') {
+                    if (doc.type == 'trip' && doc.active == true) {
                         emit([doc.city], 1);
                     }
                 },
