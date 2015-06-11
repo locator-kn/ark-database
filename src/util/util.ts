@@ -26,7 +26,7 @@ class Util {
                 }
 
                 if (!res.type || res.type !== type) {
-                    return reject(this.boom.notAcceptable());
+                    return reject(this.boom.notAcceptable('Wrong document type'));
                 }
 
                 if (!res.userid || res.userid !== userid) {
@@ -63,7 +63,7 @@ class Util {
                 }
 
                 if (!res.type || res.type !== type) {
-                    return reject(this.boom.notAcceptable());
+                    return reject(this.boom.notAcceptable('Wrong document type'));
                 }
 
                 if (!res.userid || res.userid !== userid) {
@@ -256,7 +256,12 @@ class Util {
     updateDocumentWithCallback = (documentId:string, document:any, callback) => {
         var date = new Date();
         document.modified_date = date.toISOString();
-        this.db.merge(documentId, document, callback);
+        this.db.merge(documentId, document, (err, data) => {
+            if (err) {
+                return callback(this.boom.badRequest(err))
+            }
+            return callback(null, data);
+        });
     };
 
     /**
