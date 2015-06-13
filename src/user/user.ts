@@ -70,20 +70,21 @@ class User {
      * @param userId:string
      */
     getUserLogin = (userId:string) => {
+        return this.getLogin(userId, this.LISTS.LIST_USER_LOGIN);
+    };
+
+    getAdminLogin = (userId:string) => {
+        return this.getLogin(userId, this.LISTS.LIST_ADMIN_LOGIN,);
+    };
+
+    private getLogin = (mail:string, list:string) => {
         return new Promise((resolve, reject) => {
-            this.db.list(this.LISTS.LIST_USER_LOGIN, {key: userId}, (err, result) => {
-                // reject also if there is no match in the database
+            this.db.ligtst(list, {key: mail}, (err, result) => {
                 if (err || !result[0]) {
                     return reject(err);
                 }
                 resolve(result[0]);
             });
-        });
-    };
-
-    getAdminLogin = (userId:string) => {
-        return new Promise((resolve, reject) => {
-
         });
     };
 
