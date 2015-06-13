@@ -65,7 +65,7 @@ class User {
 
 
     /**
-     * Get json object with login data of specific user id.
+     * Get user by mail
      *
      * @param userId:string
      */
