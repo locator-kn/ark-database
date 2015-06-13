@@ -81,7 +81,7 @@ class User {
         });
     };
 
-    getAdminLogin = () => {
+    getAdminLogin = (userId:string) => {
 
     };
 
