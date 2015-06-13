@@ -67,14 +67,14 @@ class User {
     /**
      * Get user by mail
      *
-     * @param userId:string
+     * @param mail:string
      */
-    getUserLogin = (userId:string) => {
-        return this.getLogin(userId, this.LISTS.LIST_USER_LOGIN);
+    getUserLogin = (mail:string) => {
+        return this.getLogin(mail, this.LISTS.LIST_USER_LOGIN);
     };
 
-    getAdminLogin = (userId:string) => {
-        return this.getLogin(userId, this.LISTS.LIST_ADMIN_LOGIN);
+    getAdminLogin = (mail:string) => {
+        return this.getLogin(mail, this.LISTS.LIST_ADMIN_LOGIN);
     };
 
     private getLogin = (mail:string, list:string) => {
