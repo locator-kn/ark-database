@@ -73,6 +73,11 @@ class User {
         return this.getLogin(mail, this.LISTS.LIST_USER_LOGIN);
     };
 
+    /**
+     * Get admin user by mail
+     *
+     * @param mail:string
+     */
     getAdminLogin = (mail:string) => {
         return this.getLogin(mail, this.LISTS.LIST_ADMIN_LOGIN);
     };
