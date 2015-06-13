@@ -84,7 +84,7 @@ class User {
 
     private getLogin = (mail:string, list:string) => {
         return new Promise((resolve, reject) => {
-            this.db.ligtst(list, {key: mail}, (err, result) => {
+            this.db.list(list, {key: mail}, (err, result) => {
                 if (err || !result[0]) {
                     return reject(err || 'No user found');
                 }
