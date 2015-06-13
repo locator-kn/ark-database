@@ -74,7 +74,7 @@ class User {
     };
 
     getAdminLogin = (userId:string) => {
-        return this.getLogin(userId, this.LISTS.LIST_ADMIN_LOGIN,);
+        return this.getLogin(userId, this.LISTS.LIST_ADMIN_LOGIN);
     };
 
     private getLogin = (mail:string, list:string) => {
