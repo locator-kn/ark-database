@@ -41,7 +41,7 @@ class Database {
     private LISTS = {
         LIST_USER_ALL: 'user/listall/user',
         LIST_USER_LOGIN: 'user/listall/login',
-        LIST_USER_LOGIN: 'user/listall/loginAdmin',
+        LIST_ADMIN_LOGIN: 'user/listall/loginAdmin',
         LIST_USER_UUID: 'user/listall/uuid',
         LIST_LOCATION_USER: 'location/listall/locationByUser',
         LIST_LOCATION_LOCATION: 'location/listall/location',
