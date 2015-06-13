@@ -81,7 +81,7 @@ class User {
         return new Promise((resolve, reject) => {
             this.db.ligtst(list, {key: mail}, (err, result) => {
                 if (err || !result[0]) {
-                    return reject(err);
+                    return reject(err || 'No user found');
                 }
                 resolve(result[0]);
             });
