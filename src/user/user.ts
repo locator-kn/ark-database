@@ -82,7 +82,9 @@ class User {
     };
 
     getAdminLogin = (userId:string) => {
+        return new Promise((resolve, reject) => {
 
+        })
     };
 
     /**
