@@ -136,6 +136,7 @@ class Database {
         server.expose('getUsers', this.user.getUsers);
         server.expose('getUserByUUID', this.user.getUserByUUID);
         server.expose('getUserLogin', this.user.getUserLogin);
+        server.expose('getAdminLogin', this.user.getAdminLogin);
         server.expose('createUser', this.user.createUser);
         server.expose('updateUser', this.user.updateUser);
         server.expose('updateUserPassword', this.user.updateUserPassword);
