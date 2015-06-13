@@ -81,6 +81,10 @@ class User {
         });
     };
 
+    getAdminLogin = () => {
+
+    };
+
     /**
      * Update only password attribute and leave the others untouched.
      *
