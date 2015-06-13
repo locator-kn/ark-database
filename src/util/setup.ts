@@ -48,6 +48,21 @@ var designUser = {
                     }
                 }
             },
+            loginAdmin: {
+                "map": function (doc) {
+                    if (doc.type == 'user' && doc.isAdmin) {
+                        emit(doc.mail, {
+                            name: doc.name,
+                            password: doc.password,
+                            strategy: doc.strategy,
+                            resetPasswordExpires: doc.resetPasswordExpires,
+                            resetPasswordToken: doc.resetPasswordToken,
+                            mail: doc.mail,
+                            _id: doc._id
+                        });
+                    }
+                }
+            },
             user: {
                 "map": function (doc) {
                     if (doc.type == 'user') {
