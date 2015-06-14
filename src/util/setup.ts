@@ -1,31 +1,25 @@
 // describe the shape of libraries not written in TypeScript
-declare
-var emit:any;
-declare
-var getRow:any;
-declare
-var send:any;
-declare
-var sum:any;
-declare
-var toJSON:any;
+declare var emit:any;
+declare var getRow:any;
+declare var send:any;
+declare var sum:any;
+declare var toJSON:any;
 
 
 export function setUpDesignDocuments(database:any, callback:any) {
 
-    database.save(designUser.title, designUser.content);
+    database.save(designUser.title, designUser.content, callback);
 
-    database.save(designData.title, designData.content);
+    database.save(designData.title, designData.content, callback);
 
-    database.save(designLocation.title, designLocation.content);
+    database.save(designLocation.title, designLocation.content, callback);
 
-    database.save(designTrip.title, designTrip.content);
+    database.save(designTrip.title, designTrip.content, callback);
 
-    database.save(designMail.title, designMail.content);
+    database.save(designMail.title, designMail.content, callback);
 
-    database.save(designChat.title, designChat.content);
+    database.save(designChat.title, designChat.content, callback);
 
-    callback(null, "Views created")
 }
 
 // user design document
