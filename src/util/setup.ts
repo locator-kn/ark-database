@@ -88,13 +88,6 @@ var designData = {
                     }
                 }
             },
-            accommodations: {
-                "map": function (doc) {
-                    if (doc.type == 'accommodation') {
-                        emit(doc._id, doc);
-                    }
-                }
-            },
             cities_trips: {
                 "map": function (doc) {
                     if (doc.type == 'trip') {

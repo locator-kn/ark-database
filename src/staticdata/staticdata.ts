@@ -38,15 +38,6 @@ class StaticData {
         return this.util.retrieveAllValues(this.LISTS.LIST_DATA_CITY_TRIPS, {reduce: true, group: true});
     };
 
-    /**
-     * Get accommodations from database.
-     *
-     * @param callback
-     */
-    getAccommodations = (callback) => {
-        this.db.list(this.LISTS.LIST_DATA_ACC, callback);
-    };
-
 
     /**
      * Get accommodations equipment from database.
