@@ -16,13 +16,10 @@ export interface IRegister {
 /**
  * database plugin
  *
- * example calls:
+ * example call:
  *
  *      // local database (default)
- *      new Database('tripl');
- *
- *      // iriscouch online
- *      new Database('tripl','http://emily.iriscouch.com',80);
+ *      new Database('app');
  */
 export default
 class Database {
@@ -231,6 +228,24 @@ class Database {
      */
     public setup(callback) {
         setup(this.db, callback);
+    }
+
+    /**
+     * Making a raw method call on the cradle connection.
+     * Example call: rawMethod('save', {key: 'foo', value: 'bar'}, callback)
+     * @param name of the desired method
+     * @param options for that method
+     * @param callback
+     */
+    public rawMethod(name:string, options:any, callback) {
+        switch (name) {
+            case 'save':
+                this.db.save(options.key, options.value, callback);
+                break;
+            default :
+                callback({error: 'method call not available'})
+                break;
+        }
     }
 
 }
