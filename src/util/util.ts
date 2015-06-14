@@ -205,25 +205,12 @@ class Util {
      * @param list
      * @returns {any}
      */
-    retrieveAllValuesByKey = (keyValue:any, list:string) => {
+    retrieveAllValues = (list:string, options:any) => {
         return new Promise((resolve, reject) => {
 
-            this.db.list(list, {key: keyValue}, (err, data) => {
+            this.db.list(list, options, (err, data) => {
 
                 if (err) {
-                    return reject(this.boom.badRequest(err));
-                }
-                resolve(data);
-            });
-        });
-    };
-
-    retrieveAllValues = (list:string) => {
-        return new Promise((resolve, reject) => {
-
-            this.db.list(list, (err, data)=> {
-
-                if(err) {
                     return reject(this.boom.badRequest(err));
                 }
                 resolve(data);
