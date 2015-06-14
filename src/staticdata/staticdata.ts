@@ -1,5 +1,4 @@
-declare
-var Promise:any;
+declare var Promise:any;
 
 import Util from './../util/util';
 
@@ -35,8 +34,8 @@ class StaticData {
      * Get cities with trips
      * @param callback
      */
-    getCitiesWithTrips = (callback) => {
-        this.db.list(this.LISTS.LIST_DATA_CITY_TRIPS, {reduce: true, group: true}, callback);
+    getCitiesWithTrips = () => {
+        return this.util.retrieveAllValues(this.LISTS.LIST_DATA_CITY_TRIPS, {reduce: true, group: true});
     };
 
     /**
@@ -54,8 +53,8 @@ class StaticData {
      *
      * @param callback
      */
-    getAccommodationsEquipment = (callback) => {
-        this.db.list(this.LISTS.LIST_DATA_ACC_EQUIPMENT, callback);
+    getAccommodationsEquipment = () => {
+        return this.util.retrieveAllValues(this.LISTS.LIST_DATA_ACC_EQUIPMENT);
     };
 
 
