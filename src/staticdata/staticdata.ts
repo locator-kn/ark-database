@@ -1,3 +1,6 @@
+declare
+var Promise:any;
+
 import Util from './../util/util';
 
 export default
@@ -15,8 +18,8 @@ class StaticData {
      *
      * @param callback
      */
-    getMoods = (callback) => {
-        this.db.list(this.LISTS.LIST_DATA_MOOD, callback);
+    getMoods = () => {
+        return this.util.retrieveAllValues(this.LISTS.LIST_DATA_MOOD);
     };
 
     /**

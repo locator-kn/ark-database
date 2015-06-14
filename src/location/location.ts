@@ -18,11 +18,11 @@ class Location {
      * @param callback
      */
     getLocationsByUserId = (userid:string) => {
-        return this.util.retrieveAllValues(userid, this.LISTS.LIST_LOCATION_USER);
+        return this.util.retrieveAllValuesByKey(userid, this.LISTS.LIST_LOCATION_USER);
     };
 
     getPreLocationsByUserId = (userid:string) => {
-        return this.util.retrieveAllValues(userid, this.LISTS.LIST_LOCATION_PRELOCATION_USER);
+        return this.util.retrieveAllValuesByKey(userid, this.LISTS.LIST_LOCATION_PRELOCATION_USER);
     };
 
     /**

@@ -1,5 +1,4 @@
-declare
-var Promise:any;
+declare var Promise:any;
 
 export default
 class Util {
@@ -206,12 +205,25 @@ class Util {
      * @param list
      * @returns {any}
      */
-    retrieveAllValues = (keyValue:any, list:string) => {
+    retrieveAllValuesByKey = (keyValue:any, list:string) => {
         return new Promise((resolve, reject) => {
 
             this.db.list(list, {key: keyValue}, (err, data) => {
 
                 if (err) {
+                    return reject(this.boom.badRequest(err));
+                }
+                resolve(data);
+            });
+        });
+    };
+
+    retrieveAllValues = (list:string) => {
+        return new Promise((resolve, reject) => {
+
+            this.db.list(list, (err, data)=> {
+
+                if(err) {
                     return reject(this.boom.badRequest(err));
                 }
                 resolve(data);
