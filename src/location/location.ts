@@ -1,5 +1,4 @@
-declare
-var Promise:any;
+declare var Promise:any;
 
 import Util from './../util/util';
 
@@ -18,11 +17,11 @@ class Location {
      * @param callback
      */
     getLocationsByUserId = (userid:string) => {
-        return this.util.retrieveAllValues(userid, this.LISTS.LIST_LOCATION_USER);
+        return this.util.retrieveAllValues(this.LISTS.LIST_LOCATION_USER, {key: userid});
     };
 
     getPreLocationsByUserId = (userid:string) => {
-        return this.util.retrieveAllValues(userid, this.LISTS.LIST_LOCATION_PRELOCATION_USER);
+        return this.util.retrieveAllValues(this.LISTS.LIST_LOCATION_PRELOCATION_USER, {key: userid});
     };
 
     /**

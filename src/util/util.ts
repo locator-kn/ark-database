@@ -1,5 +1,4 @@
-declare
-var Promise:any;
+declare var Promise:any;
 
 export default
 class Util {
@@ -88,8 +87,7 @@ class Util {
      * @param callback
      */
     createView = (name:string, views, callback) => {
-        this.db.save(name, views);
-        return callback(null, 'View created!');
+        this.db.save(name, views, callback);
     };
 
     /**
@@ -207,10 +205,10 @@ class Util {
      * @param list
      * @returns {any}
      */
-    retrieveAllValues = (keyValue:any, list:string) => {
+    retrieveAllValues = (list:string, options:any) => {
         return new Promise((resolve, reject) => {
 
-            this.db.list(list, {key: keyValue}, (err, data) => {
+            this.db.list(list, options, (err, data) => {
 
                 if (err) {
                     return reject(this.boom.badRequest(err));

@@ -6,7 +6,7 @@ import Attachment from './attachment/attachment';
 import Util from './util/util'
 import Mail from './mail/mail'
 import Chat from './chat/chat'
-import {setUpDesignDocuments} from './util/setup'
+import {setup} from './setup';
 
 export interface IRegister {
     (server:any, options:any, next:any): void;
@@ -16,13 +16,10 @@ export interface IRegister {
 /**
  * database plugin
  *
- * example calls:
+ * example call:
  *
  *      // local database (default)
- *      new Database('tripl');
- *
- *      // iriscouch online
- *      new Database('tripl','http://emily.iriscouch.com',80);
+ *      new Database('app');
  */
 export default
 class Database {
@@ -47,7 +44,6 @@ class Database {
         LIST_LOCATION_PRELOCATION_USER: 'location/listall/preLocationByUser',
         LIST_SEARCH_TRIP: 'search/searchlist/city',
         LIST_DATA_MOOD: 'data/listall/moods',
-        LIST_DATA_ACC: 'data/listall/accommodations',
         LIST_DATA_ACC_EQUIPMENT: 'data/listall/accommodations_equipment',
         LIST_DATA_CITY: 'data/listall/cities',
         LIST_DATA_CITY_TRIPS: 'data/listall/cities_trips',
@@ -214,38 +210,32 @@ class Database {
 
     register:IRegister = (server, options, next) => {
         server.bind(this);
-        this._register(server, options);
         this.exportApi(server);
         next();
     };
-
-    private _register(server, options) {
-
-
-        server.route({
-            method: 'POST',
-            path: '/database/setup',
-            config: {
-                auth: false,
-                handler: (request, reply) => {
-
-                    setUpDesignDocuments(this.db, (err, result) => {
-                        if (err) {
-                            reply(err)
-                        }
-                        reply({"message": result})
-                    });
-                },
-                description: 'Setup all views and lists for couchdb',
-                tags: ['api', 'database']
-            }
-        });
-        return 'register';
-    }
 
     errorInit(err) {
         if (err) {
             console.log('Error: init plugin failed:', err);
         }
     }
+
+    /**
+     * Method for setting up all needed documents in the database. Needs to be called at
+     * least one time, before the application goes live.
+     * @param callback
+     */
+    public setup(data, callback) {
+        if (!data) {
+            // intern database views
+            setup(this.db, callback);
+        } else if (data.key) {
+            // view document
+            this.db.save(data.key, data.value, callback);
+        } else {
+            // regular document
+            this.db.save(data, callback);
+        }
+    }
+
 }
