@@ -88,8 +88,7 @@ class Util {
      * @param callback
      */
     createView = (name:string, views, callback) => {
-        this.db.save(name, views);
-        return callback(null, 'View created!');
+        this.db.save(name, views, callback);
     };
 
     /**
