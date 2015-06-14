@@ -225,25 +225,16 @@ class Database {
      * least one time, before the application goes live.
      * @param callback
      */
-    public setup(callback) {
-        setup(this.db, callback);
-    }
-
-    /**
-     * Making a raw method call on the cradle connection.
-     * Example call: rawMethod('save', {key: 'foo', value: 'bar'}, callback)
-     * @param name of the desired method
-     * @param options for that method
-     * @param callback
-     */
-    public rawMethod(name:string, options:any, callback) {
-        switch (name) {
-            case 'save':
-                this.db.save(options.key, options.value, callback);
-                break;
-            default :
-                callback({error: 'method call not available'})
-                break;
+    public setup(data, callback) {
+        if (!data) {
+            // intern database views
+            setup(this.db, callback);
+        } else if (data.key) {
+            // view document
+            this.db.save(data.key, data.value, callback);
+        } else {
+            // regular document
+            this.db.save(data, callback);
         }
     }
 
