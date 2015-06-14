@@ -6,7 +6,7 @@ import Attachment from './attachment/attachment';
 import Util from './util/util'
 import Mail from './mail/mail'
 import Chat from './chat/chat'
-import {setUpDesignDocuments} from './util/setup'
+import {setup} from './setup';
 
 export interface IRegister {
     (server:any, options:any, next:any): void;
@@ -214,38 +214,23 @@ class Database {
 
     register:IRegister = (server, options, next) => {
         server.bind(this);
-        this._register(server, options);
         this.exportApi(server);
         next();
     };
-
-    private _register(server, options) {
-
-
-        server.route({
-            method: 'POST',
-            path: '/database/setup',
-            config: {
-                auth: false,
-                handler: (request, reply) => {
-
-                    setUpDesignDocuments(this.db, (err, result) => {
-                        if (err) {
-                            reply(err)
-                        }
-                        reply({"message": result})
-                    });
-                },
-                description: 'Setup all views and lists for couchdb',
-                tags: ['api', 'database']
-            }
-        });
-        return 'register';
-    }
 
     errorInit(err) {
         if (err) {
             console.log('Error: init plugin failed:', err);
         }
     }
+
+    /**
+     * Method for setting up all needed documents in the database. Needs to be called at
+     * least one time, before the application goes live.
+     * @param callback
+     */
+    public setup(callback) {
+        setup(this.db, callback);
+    }
+
 }
