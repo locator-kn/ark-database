@@ -65,16 +65,28 @@ class User {
 
 
     /**
-     * Get json object with login data of specific user id.
+     * Get user by mail
      *
-     * @param userId:string
+     * @param mail:string
      */
-    getUserLogin = (userId:string) => {
+    getUserLogin = (mail:string) => {
+        return this.getLogin(mail, this.LISTS.LIST_USER_LOGIN);
+    };
+
+    /**
+     * Get admin user by mail
+     *
+     * @param mail:string
+     */
+    getAdminLogin = (mail:string) => {
+        return this.getLogin(mail, this.LISTS.LIST_ADMIN_LOGIN);
+    };
+
+    private getLogin = (mail:string, list:string) => {
         return new Promise((resolve, reject) => {
-            this.db.list(this.LISTS.LIST_USER_LOGIN, {key: userId}, (err, result) => {
-                // reject also if there is no match in the database
+            this.db.ligtst(list, {key: mail}, (err, result) => {
                 if (err || !result[0]) {
-                    return reject(err);
+                    return reject(err || 'No user found');
                 }
                 resolve(result[0]);
             });

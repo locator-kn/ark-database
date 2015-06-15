@@ -38,6 +38,7 @@ class Database {
     private LISTS = {
         LIST_USER_ALL: 'user/listall/user',
         LIST_USER_LOGIN: 'user/listall/login',
+        LIST_ADMIN_LOGIN: 'user/listall/loginAdmin',
         LIST_USER_UUID: 'user/listall/uuid',
         LIST_LOCATION_USER: 'location/listall/locationByUser',
         LIST_LOCATION_LOCATION: 'location/listall/location',
@@ -131,6 +132,7 @@ class Database {
         server.expose('getUsers', this.user.getUsers);
         server.expose('getUserByUUID', this.user.getUserByUUID);
         server.expose('getUserLogin', this.user.getUserLogin);
+        server.expose('getAdminLogin', this.user.getAdminLogin);
         server.expose('createUser', this.user.createUser);
         server.expose('updateUser', this.user.updateUser);
         server.expose('updateUserPassword', this.user.updateUserPassword);
