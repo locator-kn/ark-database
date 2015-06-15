@@ -88,15 +88,44 @@ class Trip {
      */
     getUserTrips = (userid:string, date:any, callback) => {
         var opt = {
-            startkey: [userid, date || '']
+            startkey: [userid, date || ''],
+            endkey: [userid, {}]
         };
-        this.db.list(this.LISTS.LIST_TRIP_USER, opt, callback);
+
+        this.db.view('trip/tripByUserId/', opt, (err, data) => {
+
+            if (err) {
+                return callback(err);
+            }
+            callback(null, this.reduceData(data))
+        });
     };
 
     getMyTrips = (userid:string, date:any, callback) => {
         var opt = {
-            startkey: [userid, date || '']
+            startkey: [userid, date || ''],
+            endkey: [userid, {}]
         };
-        this.db.list(this.LISTS.LIST_TRIP_MY, opt, callback);
+        this.db.view('trip/myTrips/', opt, (err, data) => {
+
+            if (err) {
+                return callback(err);
+            }
+            callback(null, this.reduceData(data))
+        });
+    };
+
+    reduceData = (data:any) => {
+        var item = {};
+        var r = [];
+
+        data.forEach(function (value) {
+            item[value] = value;
+        });
+
+        for (var i in item) {
+            r.push(item[i]);
+        }
+        return r
     }
 }
