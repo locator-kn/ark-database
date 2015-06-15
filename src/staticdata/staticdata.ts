@@ -1,3 +1,5 @@
+declare var Promise:any;
+
 import Util from './../util/util';
 
 export default
@@ -15,8 +17,8 @@ class StaticData {
      *
      * @param callback
      */
-    getMoods = (callback) => {
-        this.db.list(this.LISTS.LIST_DATA_MOOD, callback);
+    getMoods = () => {
+        return this.util.retrieveAllValues(this.LISTS.LIST_DATA_MOOD);
     };
 
     /**
@@ -32,17 +34,8 @@ class StaticData {
      * Get cities with trips
      * @param callback
      */
-    getCitiesWithTrips = (callback) => {
-        this.db.list(this.LISTS.LIST_DATA_CITY_TRIPS, {reduce: true, group: true}, callback);
-    };
-
-    /**
-     * Get accommodations from database.
-     *
-     * @param callback
-     */
-    getAccommodations = (callback) => {
-        this.db.list(this.LISTS.LIST_DATA_ACC, callback);
+    getCitiesWithTrips = () => {
+        return this.util.retrieveAllValues(this.LISTS.LIST_DATA_CITY_TRIPS, {reduce: true, group: true});
     };
 
 
@@ -51,8 +44,8 @@ class StaticData {
      *
      * @param callback
      */
-    getAccommodationsEquipment = (callback) => {
-        this.db.list(this.LISTS.LIST_DATA_ACC_EQUIPMENT, callback);
+    getAccommodationsEquipment = () => {
+        return this.util.retrieveAllValues(this.LISTS.LIST_DATA_ACC_EQUIPMENT);
     };
 
 
