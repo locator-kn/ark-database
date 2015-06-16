@@ -202,7 +202,7 @@ var designTrip = {
             city: {
                 "map": function (doc) {
                     if (doc.type == 'trip' && doc.active == true) {
-                        emit(doc.city, doc);
+                        emit(doc.city.id, doc);
                     }
                 }
             },
