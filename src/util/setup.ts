@@ -68,6 +68,7 @@ var designUser = {
                 "map": function (doc) {
                     if (doc.type == 'user') {
                         emit(doc._id, {
+                            _id: doc._id,
                             name: doc.name,
                             surname: doc.surname,
                             picture: doc.picture,
