@@ -64,6 +64,18 @@ var designUser = {
                     }
                 }
             },
+            user_public: {
+                "map": function (doc) {
+                    if (doc.type == 'user') {
+                        emit(doc._id, {
+                            name: doc.name,
+                            surname: doc.surname,
+                            picture: doc.picture,
+                            birthdate: doc.birthdate
+                        });
+                    }
+                }
+            },
             uuid: {
                 "map": function (doc) {
                     if (doc.type == 'user') {
