@@ -37,6 +37,7 @@ class Database {
     // define Lists
     private LISTS = {
         LIST_USER_ALL: 'user/listall/user',
+        LIST_USER_PUBLIC: 'user/listall/user_public',
         LIST_USER_LOGIN: 'user/listall/login',
         LIST_ADMIN_LOGIN: 'user/listall/loginAdmin',
         LIST_USER_UUID: 'user/listall/uuid',
