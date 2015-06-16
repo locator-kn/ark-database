@@ -116,16 +116,12 @@ class Trip {
     };
 
     reduceData = (data:any) => {
-        var item = {};
         var r = [];
 
         data.forEach(function (value) {
-            item[value] = value;
+            r.push(value)
         });
 
-        for (var i in item) {
-            r.push(item[i]);
-        }
         return r
     }
 }
