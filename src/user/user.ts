@@ -20,7 +20,7 @@ class User {
      * @param callback
      */
     getUserById = (userId:string, callback) => {
-        this.util.getObjectOf(userId, this.LISTS.LIST_USER_ALL, callback);
+        this.util.getObjectOf(userId, this.LISTS.LIST_USER_PUBLIC, callback);
     };
 
     /**
