@@ -72,7 +72,9 @@ var designUser = {
                             name: doc.name,
                             surname: doc.surname,
                             picture: doc.picture,
-                            birthdate: doc.birthdate
+                            birthdate: doc.birthdate,
+                            city: doc.city,
+                            description: doc.description
                         });
                     }
                 }
