@@ -25,7 +25,7 @@ db.deleteLocationById('12322456576567',  function(err, res) {
 > Note: We are slowly changing from using callbacks to promises ([issue #35](https://github.com/locator-kn/ark-database/issues/35)). When in doubt look up the source code.
 
 ## Server administration
-How to configure or maintain the actual database on our server, look here: (Server-Administration)[https://github.com/locator-kn/ark/wiki/Server-administration]
+How to configure or maintain the actual database on our server, look here: [Server-Administration](https://github.com/locator-kn/ark/wiki/Server-administration)
 
 
 ## Tests
