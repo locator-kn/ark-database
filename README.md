@@ -2,7 +2,7 @@
 Database-Plugin for [ark](https://github.com/locator-kn/ark) our application server of [locator-app.com](http://www.locator-app.com/)
 
 ## Usage
-```npm install ark-database```  use the option ```-S``` to include it in your project
+```npm install ark-database```  to install the plugin (use the option ```-S``` to include it in your project)
 
 ```js
 var Database = require('ark-database'); // import it to your code
@@ -22,22 +22,10 @@ db.deleteLocationById('12322456576567',  function(err, res) {
    console.log(res);
 });
 ```
+> Note: We are slowly changing from using callbacks to promises ([issue #35](https://github.com/locator-kn/ark-database/issues/35)). When in doubt look up the source code.
 
-## Server
-
-### open port on server
-
-**Server stop**: *"ps -U couchdb -o pid= | xargs kill -9"* -> because "sudo /etc/init.d/couchdb stop" stop doesn't work!
-
-**Changes**: *"etc/couchdb/local.ini"* -> change **bind_address = 0.0.0.0** instead of 127.0.0.1
-
-**Server start**: *"sudo /etc/init.d/couchdb start"*
-
-### load input from other database in local db
-
-```
- curl -H 'Content-Type: application/json' -X POST http://localhost:5984/_replicate -d ' {"source": "http://locator.in.htwg-konstanz.de:5984/app", "target": "http://localhost:5984/app", "create_target": true, "continuous": true} '
-```
+## Server administration
+How to configure or maintain the actual database on our server, look here: (Server-Administration)[https://github.com/locator-kn/ark/wiki/Server-administration]
 
 
 ## Tests
