@@ -150,7 +150,7 @@ class Database {
         server.expose('deleteTripById', this.trip.deleteTripById);
         server.expose('getUserTrips', this.trip.getUserTrips);
         server.expose('getMyTrips', this.trip.getMyTrips);
-
+        server.expose('updateTripsWithLocationImage', this.trip.updateTripsWithLocationImage);
 
         // location
         server.expose('getLocationsByUserId', this.location.getLocationsByUserId);

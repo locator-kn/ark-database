@@ -1,4 +1,5 @@
 import Util from './../util/util';
+declare var Promise:any;
 
 export default
 class Trip {
@@ -67,7 +68,7 @@ class Trip {
      * @param callback
      */
     createTrip = (trip) => {
-       return this.util.createDocument(trip);
+        return this.util.createDocument(trip);
     };
 
 
@@ -79,6 +80,16 @@ class Trip {
      */
     deleteTripById = (tripId:string, userid:string) => {
         return this.util.removeDocument(tripId, userid, this.TYPE);
+    };
+
+    updateTripsWithLocationImage = (locationid:string, userid:string, imageLocation:any)=> {
+
+        var trips = []; // get all trips containing the location
+
+        return Promise.all(trips.map(trip => {
+            this.util.updateDocument(trip.id || trip._id, userid, {image: imageLocation}, true)
+        }));
+
     };
 
     /**
