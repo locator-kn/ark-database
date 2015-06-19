@@ -74,6 +74,24 @@ class User {
     };
 
     /**
+     * Get user by mail
+     *
+     * @param mail:string
+     */
+    isMailAvailable = (mail:string) => {
+        return new Promise((resolve, reject) => {
+            this.db.list(this.LISTS.LIST_USER_LOGIN, {key: mail}, (err, result) => {
+                if (err) {
+                    return reject(this.boom.badRequest(err));
+                } else if (result.length) {
+                    return reject(this.boom.conflict('mail not available for registration'))
+                }
+                resolve();
+            });
+        });
+    };
+
+    /**
      * Get admin user by mail
      *
      * @param mail:string
