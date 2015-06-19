@@ -3,9 +3,11 @@ declare var Promise:any;
 export default
 class Util {
     private boom:any;
+    private hoek:any;
 
     constructor(private db:any) {
         this.boom = require('boom');
+        this.hoek = require('hoek');
     }
 
     /**
@@ -66,7 +68,7 @@ class Util {
                 }
 
                 if (!res.userid || res.userid !== userid) {
-                    return reject(this.boom.forbidden());
+                    return reject(this.boom.forbidden('Wrong user'));
                 }
 
                 this.db.remove(documentid, (err, result) => {
@@ -274,16 +276,29 @@ class Util {
         document.modified_date = date.toISOString();
         return new Promise((resolve, reject) => {
 
-            this.db.merge(documentId, document, (err, data) => {
+            this.db.get(documentId, (err, res) => {
 
                 if (err) {
                     return reject(this.boom.badRequest(err));
                 }
-                return resolve(data);
+
+                // deep merge of values before merge into database
+                var mergedLocation = this.hoek.merge(res, document);
+
+                this.db.merge(documentId, mergedLocation, (err, data) => {
+
+                    if (err) {
+                        return reject(this.boom.badRequest(err));
+                    }
+                    return resolve(data);
+                });
             });
         });
     };
 
+    /**
+     * empty pseudo callback
+     */
     noop = () => {
     };
 }
