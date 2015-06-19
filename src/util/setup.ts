@@ -106,11 +106,11 @@ var designData = {
             cities_trips: {
                 "map": function (doc) {
                     if (doc.type == 'trip') {
-                        emit([doc.city], 1);
+                        emit(doc.city, 1);
                     }
                 },
                 "reduce": function (keys, values, rereduce) {
-                    var obj = keys[0][0][0];
+                    var obj = keys[0][0];
                     var a = {id: obj.id, title: obj.title, total: sum(values), place_id: obj.place_id};
                     return a;
                 }
