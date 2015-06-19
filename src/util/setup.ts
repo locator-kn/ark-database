@@ -111,8 +111,8 @@ var designData = {
                 },
                 "reduce": function (keys, values, rereduce) {
                     var obj = keys[0][0];
-                    var a = {id: obj.id, title: obj.title, total: sum(values), place_id: obj.place_id};
-                    return a;
+                    return {id: obj.id, title: obj.title, total: sum(values), place_id: obj.place_id};
+
                 }
             },
             accommodations_equipment: {
