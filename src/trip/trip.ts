@@ -66,8 +66,8 @@ class Trip {
      * @param trip:json-object
      * @param callback
      */
-    createTrip = (trip, callback) => {
-        this.util.createDocument(trip, callback);
+    createTrip = (trip) => {
+        return this.util.createDocument(trip);
     };
 
 
