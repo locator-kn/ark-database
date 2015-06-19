@@ -51,7 +51,7 @@ class Attachment {
                 }
 
                 if (err) {
-                    return reject(err);
+                    return reject(this.boom.badRequest(err));
                 }
 
                 var idData = {
@@ -62,11 +62,9 @@ class Attachment {
                 // create read stream and pipe it
                 var writeStream = this.db.saveAttachment(idData, attachmentData, (err, result) => {
                         if (err) {
-                            return reject(err);
+                            return reject(this.boom.badRequest(err));
                         }
                         resolve(result);
-                        // update modified_date
-                        this.util.updateDocument(documentId, {});
                     }
                 );
 
