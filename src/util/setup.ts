@@ -64,6 +64,21 @@ var designUser = {
                     }
                 }
             },
+            user_public: {
+                "map": function (doc) {
+                    if (doc.type == 'user') {
+                        emit(doc._id, {
+                            _id: doc._id,
+                            name: doc.name,
+                            surname: doc.surname,
+                            picture: doc.picture,
+                            birthdate: doc.birthdate,
+                            city: doc.city,
+                            description: doc.description
+                        });
+                    }
+                }
+            },
             uuid: {
                 "map": function (doc) {
                     if (doc.type == 'user') {
@@ -189,7 +204,7 @@ var designTrip = {
             city: {
                 "map": function (doc) {
                     if (doc.type == 'trip' && doc.active == true) {
-                        emit(doc.city, doc);
+                        emit(doc.city.id, doc);
                     }
                 }
             },
