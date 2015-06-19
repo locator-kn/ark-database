@@ -11,6 +11,31 @@ class Util {
     }
 
     /**
+     * Create document with Timestamp.
+     *
+     * @param element
+     * @param callback
+     */
+    createDocument = (element, callback) => {
+        callback = callback || this.noop;
+        var date = new Date();
+        element.create_date = date.toISOString();
+
+        return new Promise((resolve, reject) => {
+
+            this.db.save(element, (err, data) => {
+
+                callback(err, data);
+                if (err) {
+                    return reject(this.boom.badRequest(err));
+                }
+                return resolve(data);
+            });
+        });
+
+    };
+
+    /**
      * Update one or more field(s) of a document and returns a promise.
      * The provided type ensures that the correct document is updated
      * @param documentId
@@ -218,31 +243,6 @@ class Util {
                 resolve(data);
             });
         });
-    };
-
-    /**
-     * Create document with Timestamp.
-     *
-     * @param element
-     * @param callback
-     */
-    createDocument = (element, callback) => {
-        callback = callback || this.noop;
-        var date = new Date();
-        element.create_date = date.toISOString();
-
-        return new Promise((resolve, reject) => {
-
-            this.db.save(element, (err, data) => {
-
-                callback(err, data);
-                if (err) {
-                    return reject(this.boom.badRequest(err));
-                }
-                return resolve(data);
-            });
-        });
-
     };
 
 
