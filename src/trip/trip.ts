@@ -5,9 +5,11 @@ export default
 class Trip {
     private util:any;
     private TYPE:string = 'trip';
+    private boom:any;
 
     constructor(private db:any, private LISTS:any) {
         this.util = new Util(db);
+        this.boom = require('boom');
     }
 
     /**
@@ -84,12 +86,17 @@ class Trip {
 
     updateTripsWithLocationImage = (locationid:string, userid:string, imageLocation:any)=> {
 
-        var trips = []; // get all trips containing the location
+        this.db.list(this.LISTS.LIST_TRIP_BY_LOCATION, {key: locationid}, (err, result) => {
 
-        return Promise.all(trips.map(trip => {
-            this.util.updateDocument(trip.id || trip._id, userid, {image: imageLocation}, true)
-        }));
+            if (err) {
+                return this.boom.badRequest(err);
+            }
 
+            return Promise.all(result.map(trip => {
+                this.util.updateDocument(trip.id || trip._id, userid, {image: imageLocation}, true)
+            }));
+
+        })
     };
 
     /**
