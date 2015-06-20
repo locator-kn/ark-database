@@ -74,7 +74,8 @@ var designUser = {
                             picture: doc.picture,
                             birthdate: doc.birthdate,
                             city: doc.city,
-                            description: doc.description
+                            description: doc.description,
+                            residence: doc.residence
                         });
                     }
                 }
