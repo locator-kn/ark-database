@@ -7,6 +7,7 @@ import Util from './util/util'
 import Mail from './mail/mail'
 import Chat from './chat/chat'
 import {setup} from './setup';
+import {initLogging} from './logging/logging'
 
 export interface IRegister {
     (server:any, options:any, next:any): void;
@@ -215,6 +216,7 @@ class Database {
     register:IRegister = (server, options, next) => {
         server.bind(this);
         this.exportApi(server);
+        initLogging(server);
         next();
     };
 
