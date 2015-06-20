@@ -48,6 +48,24 @@ class Location {
         });
     };
 
+    isLocationNotInUse = (locationid:string) => {
+        return new Promise((resolve, reject) => {
+
+            this.db.list(this.LISTS.LIST_TRIP_BY_LOCATION, {key: locationid}, (err, result)=> {
+
+                if (err) {
+                    return reject(this.boom.badRequest(err))
+                }
+
+                if (!result.isEmpty()) {
+                    return reject(this.boom.conflict('Location in use'));
+                }
+
+                resolve();
+            });
+        })
+    };
+
     /**
      * Deletes a particular location
      * @param locationid
