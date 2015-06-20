@@ -92,8 +92,14 @@ class Trip {
                 return this.boom.badRequest(err);
             }
 
+            var newLocation = {
+                locations: {}
+            };
+
+            newLocation.locations[locationid] = imageLocation;
+
             return Promise.all(result.map(trip => {
-                this.util.updateDocument(trip.id || trip._id, userid, {image: imageLocation}, true)
+                this.util.updateDocument(trip.id || trip._id, userid, newLocation, this.TYPE, true)
             }));
 
         })
