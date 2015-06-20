@@ -141,6 +141,7 @@ class Database {
         server.expose('updateUserPassword', this.user.updateUserPassword);
         server.expose('deleteUserById', this.user.deleteUserById);
         server.expose('updateUserMail', this.user.updateUserMail);
+        server.expose('isMailAvailable', this.user.isMailAvailable);
 
         // trip
         server.expose('getTrips', this.trip.getTrips);
