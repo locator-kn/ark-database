@@ -26,6 +26,7 @@ export function setUpDesignDocuments(database:any, callback:any) {
 var designUser = {
     title: "_design/user",
     content: {
+        language: 'javascript',
         views: {
             login: {
                 "map": function (doc) {
@@ -103,6 +104,7 @@ var designUser = {
 var designData = {
     title: "_design/data",
     content: {
+        language: 'javascript',
         views: {
             moods: {
                 "map": function (doc) {
@@ -154,6 +156,7 @@ var designData = {
 var designLocation = {
     title: "_design/location",
     content: {
+        language: 'javascript',
         views: {
             location: {
                 "map": function (doc) {
@@ -193,6 +196,7 @@ var designLocation = {
 var designTrip = {
     title: "_design/trip",
     content: {
+        language: 'javascript',
         views: {
             trip: {
                 "map": function (doc) {
@@ -226,6 +230,16 @@ var designTrip = {
                 "map": function (doc) {
                     if (doc.type == 'trip') {
                         emit([doc.userid, doc.end_date], doc);
+                    }
+                }
+            },
+            tripsByLocation: {
+                "map": function (doc) {
+                    if (doc.type == 'trip') {
+                        for (var key in doc.locations) {
+                            emit(key, doc);
+                        }
+
                     }
                 }
             }
@@ -278,6 +292,7 @@ var designMail = {
 var designChat = {
     title: "_design/chat",
     content: {
+        language: 'javascript',
         views: {
             conversationsByUserId: {
                 "map": function (doc) {
