@@ -54,7 +54,7 @@ class Util {
                 }
 
                 if (!res.type || res.type !== type) {
-                    log('User ' + userid + ' tried to update ' + res.type + ' with ' + type)
+                    log('User ' + userid + ' tried to update ' + res.type + ' with ' + type);
                     return reject(this.boom.notAcceptable('Wrong document type'));
                 }
 

@@ -10,5 +10,6 @@ export function log(logging:string) {
         console.error('Server not initialized for logging');
         return;
     }
+
     server.log(logging);
 }
