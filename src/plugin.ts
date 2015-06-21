@@ -200,6 +200,7 @@ class Database {
         server.expose('entryExist', this.util.entryExist);
         server.expose('deleteDocument', this.util.deleteDocument);
         server.expose('updateDocumentWithoutCheck', this.util.updateDocumentWithoutCheck);
+        server.expose('updateDocumentWithCallback', this.util.updateDocumentWithCallback);
 
         // mail
         server.expose('getRegistrationMail', this.mail.getRegistrationMail);
