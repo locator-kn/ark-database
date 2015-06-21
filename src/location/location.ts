@@ -48,6 +48,24 @@ class Location {
         });
     };
 
+    isLocationNotInUse = (locationid:string) => {
+        return new Promise((resolve, reject) => {
+
+            this.db.list(this.LISTS.LIST_TRIP_BY_LOCATION, {key: locationid}, (err, result)=> {
+
+                if (err) {
+                    return reject(this.boom.badRequest(err))
+                }
+
+                if (!result.isEmpty()) {
+                    return reject(this.boom.conflict('Location in use'));
+                }
+
+                resolve();
+            });
+        })
+    };
+
     /**
      * Deletes a particular location
      * @param locationid
@@ -74,37 +92,6 @@ class Location {
      * @param callback
      */
     updateLocation = (locationid:string, userid:string, location) => {
-        return new Promise((resolve, reject) => {
-
-            this.db.get(locationid, (err, res) => {
-
-                if (err) {
-                    return reject(this.boom.badRequest(err));
-                }
-
-                if (!res.type || res.type !== this.TYPE) {
-                    return reject(this.boom.notAcceptable('Wrong document type'));
-                }
-
-                if (!res.userid || res.userid !== userid) {
-                    return reject(this.boom.forbidden('Wrong user'));
-                }
-
-                // update modified_date
-                var date = new Date();
-                location.modified_date = date.toISOString();
-
-                // deep merge of values before merge into database
-                var mergedLocation = this.hoek.merge(res, location);
-
-                this.db.merge(locationid, mergedLocation, (err, result) => {
-
-                    if (err) {
-                        return reject(this.boom.badRequest(err));
-                    }
-                    return resolve(result);
-                });
-            });
-        });
+        return this.util.updateDocument(locationid, userid, location, this.TYPE, true);
     };
 }

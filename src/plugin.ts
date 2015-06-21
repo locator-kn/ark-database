@@ -7,6 +7,7 @@ import Util from './util/util'
 import Mail from './mail/mail'
 import Chat from './chat/chat'
 import {setup} from './setup';
+import {initLogging} from './logging/logging'
 
 export interface IRegister {
     (server:any, options:any, next:any): void;
@@ -53,6 +54,7 @@ class Database {
         LIST_TRIP_CITY: 'trip/listall/city',
         LIST_TRIP_USER: 'trip/listall/tripByUserId',
         LIST_TRIP_MY: 'trip/listall/myTrips',
+        LIST_TRIP_BY_LOCATION: 'trip/listall/tripsByLocation',
         LIST_MAIL_REGISTRATION: 'mail/listall/registration',
         LIST_MAIL_PASSWORD_FORGOTTEN: 'mail/listall/password_forgotten',
         LIST_CHAT_CONVERSATIONS: 'chat/listallByUserId/conversationsByUserId',
@@ -151,7 +153,7 @@ class Database {
         server.expose('deleteTripById', this.trip.deleteTripById);
         server.expose('getUserTrips', this.trip.getUserTrips);
         server.expose('getMyTrips', this.trip.getMyTrips);
-
+        server.expose('updateTripsWithLocationImage', this.trip.updateTripsWithLocationImage);
 
         // location
         server.expose('getLocationsByUserId', this.location.getLocationsByUserId);
@@ -161,6 +163,7 @@ class Database {
         server.expose('createLocation', this.location.createLocation);
         server.expose('updateLocation', this.location.updateLocation);
         server.expose('getPreLocationsByUserId', this.location.getPreLocationsByUserId);
+        server.expose('isLocationNotInUse', this.location.isLocationNotInUse);
 
         // static data mood
         server.expose('getMoods', this.staticdata.getMoods);
@@ -215,6 +218,7 @@ class Database {
     register:IRegister = (server, options, next) => {
         server.bind(this);
         this.exportApi(server);
+        initLogging(server);
         next();
     };
 

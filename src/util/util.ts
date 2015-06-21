@@ -1,5 +1,7 @@
 declare var Promise:any;
 
+import {log} from './../logging/logging'
+
 export default
 class Util {
     private boom:any;
@@ -11,13 +13,38 @@ class Util {
     }
 
     /**
+     * Create document with Timestamp.
+     *
+     * @param element
+     * @param callback
+     */
+    createDocument = (element, callback) => {
+        callback = callback || this.noop;
+        var date = new Date();
+        element.create_date = date.toISOString();
+
+        return new Promise((resolve, reject) => {
+
+            this.db.save(element, (err, data) => {
+
+                callback(err, data);
+                if (err) {
+                    return reject(this.boom.badRequest(err));
+                }
+                return resolve(data);
+            });
+        });
+
+    };
+
+    /**
      * Update one or more field(s) of a document and returns a promise.
      * The provided type ensures that the correct document is updated
      * @param documentId
      * @param object
      * @param type
      */
-    updateDocument = (documentId:string, userid:string, object:any, type:string) => {
+    updateDocument = (documentId:string, userid:string, object:any, type:string, deepMerge:boolean) => {
         return new Promise((resolve, reject) => {
 
             this.db.get(documentId, (err, res) => {
@@ -27,6 +54,7 @@ class Util {
                 }
 
                 if (!res.type || res.type !== type) {
+                    log('User ' + userid + ' tried to update ' + res.type + ' with ' + type);
                     return reject(this.boom.notAcceptable('Wrong document type'));
                 }
 
@@ -37,6 +65,11 @@ class Util {
                 // update modified_date
                 var date = new Date();
                 object.modified_date = date.toISOString();
+
+                if (deepMerge) {
+                    // deep merge of values before merge into database
+                    object = this.hoek.merge(res, object);
+                }
 
                 this.db.merge(documentId, object, (err, result) => {
                     if (err) {
@@ -218,31 +251,6 @@ class Util {
                 resolve(data);
             });
         });
-    };
-
-    /**
-     * Create document with Timestamp.
-     *
-     * @param element
-     * @param callback
-     */
-    createDocument = (element, callback) => {
-        callback = callback || this.noop;
-        var date = new Date();
-        element.create_date = date.toISOString();
-
-        return new Promise((resolve, reject) => {
-
-            this.db.save(element, (err, data) => {
-
-                callback(err, data);
-                if (err) {
-                    return reject(this.boom.badRequest(err));
-                }
-                return resolve(data);
-            });
-        });
-
     };
 
 
