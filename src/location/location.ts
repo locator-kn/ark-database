@@ -30,7 +30,7 @@ class Location {
      * @returns {*}
      */
     getPublicLocationsByUserId = (userid:string) => {
-        return this.util.retrieveAllValues(this.LISTS.LIST_LOCATION_LOCATION, {key: userid})
+        return this.util.retrieveAllValues(this.LISTS.LIST_PUBLIC_LOCATION_BY_USER, {key: userid})
     };
 
     getPreLocationsByUserId = (userid:string) => {
