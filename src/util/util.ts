@@ -104,7 +104,7 @@ class Util {
                     return reject(this.boom.forbidden('Wrong user'));
                 }
 
-                this.db.remove(documentid, (err, result) => {
+                this.db.merge(documentid, {delete: true, deleteDate: new Date()}, (err, result) => {
 
                     if (err) {
                         return reject(this.boom.badRequest(err));

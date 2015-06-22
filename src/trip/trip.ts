@@ -81,7 +81,7 @@ class Trip {
      * @param callback
      */
     deleteTripById = (tripId:string, userid:string) => {
-        return this.util.removeDocument(tripId, userid, this.TYPE);
+        return this.util.deleteDocument(tripId, userid, this.TYPE);
     };
 
     /**

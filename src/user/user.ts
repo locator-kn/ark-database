@@ -7,6 +7,7 @@ export default
 class User {
     private boom:any;
     private util:any;
+    private TYPE = 'user';
 
     constructor(private db:any, private LISTS:any) {
         this.boom = require('boom');
@@ -141,8 +142,8 @@ class User {
      * @param userId:string
      * @param callback
      */
-    deleteUserById = (userId:string, callback) => {
-        this.db.remove(userId, callback);
+    deleteUserById = (userId:string) => {
+       return this.util.deleteDocument(userId, userId, this.TYPE);
     };
 
 }
