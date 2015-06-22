@@ -169,10 +169,6 @@ class Util {
                     return reject(this.boom.forbidden());
                 }
 
-                if(!res.public) {
-                    return reject(this.boom.notAcceptable('Flag not available'))
-                }
-
                 // update modified_date
                 var date = new Date();
                 res.modified_date = date.toISOString();
