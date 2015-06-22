@@ -43,14 +43,8 @@ class Location {
      * @param callback
      */
     getLocationById = (locationid:string) => {
-        return new Promise((resolve, reject)=> {
-            this.db.get(locationid, (err, data)=> {
-                if (err) {
-                    return reject(this.boom.badRequest(err));
-                }
-                resolve(data);
-            });
-        });
+        // don't return deleted locations
+        return this.util.retrieveSingleValue(locationid, this.LISTS.LIST_LOCATION_LOCATION);
     };
 
     /**
