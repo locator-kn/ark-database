@@ -176,6 +176,24 @@ class Trip {
         });
     };
 
+    getPublicUserTrips = (userid:string, date:any) => {
+        return new Promise((resolve, reject)=> {
+
+            var opt = {
+                startkey: [userid, date || ''],
+                endkey: [userid, {}]
+            };
+
+            this.db.view('trip/publicTripByUserId/', opt, (err, data)=> {
+
+                if (err) {
+                    return reject(this.boom.badRequest(err));
+                }
+                resolve(this.reduceData(data));
+            });
+        });
+    };
+
     getMyTrips = (userid:string, date:any, callback) => {
         var opt = {
             startkey: [userid, date || ''],
