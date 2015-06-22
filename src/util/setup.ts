@@ -38,6 +38,7 @@ var designUser = {
                             resetPasswordExpires: doc.resetPasswordExpires,
                             resetPasswordToken: doc.resetPasswordToken,
                             mail: doc.mail,
+                            isAdmin: doc.isAdmin,
                             _id: doc._id
                         });
                     }
