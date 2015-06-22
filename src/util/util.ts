@@ -62,6 +62,10 @@ class Util {
                     return reject(this.boom.forbidden());
                 }
 
+                if(res.delete) {
+                    return reject(this.boom.notFound('deleted'));
+                }
+
                 // update modified_date
                 var date = new Date();
                 object.modified_date = date.toISOString();
@@ -104,6 +108,10 @@ class Util {
                     return reject(this.boom.forbidden('Wrong user'));
                 }
 
+                if(res.delete) {
+                    return reject(this.boom.notFound('deleted'));
+                }
+
                 this.db.merge(documentid, {delete: true, deleteDate: new Date()}, (err, result) => {
 
                     if (err) {
@@ -138,6 +146,11 @@ class Util {
             if (err) {
                 return callback(this.boom.badRequest(err));
             }
+
+            if (result.delete) {
+                return callback(this.boom.notFound('deleted'));
+            }
+
             var toUpdate = {};
             var fieldValue = result.field;
 
@@ -167,6 +180,10 @@ class Util {
 
                 if (!res.userid || res.userid !== userid) {
                     return reject(this.boom.forbidden());
+                }
+
+                if (res.delete) {
+                    return reject(this.boom.notFound('deleted'));
                 }
 
                 // update modified_date
@@ -326,6 +343,10 @@ class Util {
 
                 if (err) {
                     return reject(this.boom.badRequest(err));
+                }
+
+                if (res.delete) {
+                    return reject(this.boom.notFound('deleted'));
                 }
 
                 // deep merge of values before merge into database
