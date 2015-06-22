@@ -45,7 +45,7 @@ class Database {
         LIST_LOCATION_USER: 'location/listall/locationByUser',
         LIST_LOCATION_LOCATION: 'location/listall/location',
         LIST_LOCATION_PRELOCATION_USER: 'location/listall/preLocationByUser',
-        LIST_PUBLIC_LOCATION_BY_USER: '/location/listall/publicLocationByUser',
+        LIST_PUBLIC_LOCATION_BY_USER: 'location/listall/publicLocationByUser',
         LIST_SEARCH_TRIP: 'search/searchlist/city',
         LIST_DATA_MOOD: 'data/listall/moods',
         LIST_DATA_ACC_EQUIPMENT: 'data/listall/accommodations_equipment',
