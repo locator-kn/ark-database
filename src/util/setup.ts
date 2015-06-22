@@ -250,6 +250,16 @@ var designTrip = {
 
                     }
                 }
+            },
+            publicTripByUserId: {
+                "map": function (doc) {
+                    if (doc.type == 'trip' && !doc.delete && doc.public && doc.active) {
+                        for (var key in doc.locations) {
+                            emit(key, doc);
+                        }
+
+                    }
+                }
             }
         },
         lists: {
