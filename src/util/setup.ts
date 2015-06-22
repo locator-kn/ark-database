@@ -43,7 +43,7 @@ var designUser = {
                         });
                     }
                 }
-            }
+            },
             user: {
                 "map": function (doc) {
                     if (doc.type == 'user' && !doc.delete) {
