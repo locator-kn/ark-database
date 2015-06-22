@@ -24,6 +24,15 @@ class Location {
         return this.util.retrieveAllValues(this.LISTS.LIST_LOCATION_USER, {key: userid});
     };
 
+    /**
+     * Get all location of a user, which are public
+     * @param userid
+     * @returns {*}
+     */
+    getPublicLocationsByUserId = (userid:string) => {
+        return this.util.retrieveAllValues(this.LISTS.LIST_LOCATION_LOCATION, {key: userid})
+    };
+
     getPreLocationsByUserId = (userid:string) => {
         return this.util.retrieveAllValues(this.LISTS.LIST_LOCATION_PRELOCATION_USER, {key: userid});
     };
@@ -34,7 +43,14 @@ class Location {
      * @param callback
      */
     getLocationById = (locationid:string) => {
-        return this.util.retrieveSingleValue(locationid, this.LISTS.LIST_LOCATION_LOCATION);
+        return new Promise((resolve, reject)=> {
+            this.db.get(locationid, (err, data)=> {
+                if (err) {
+                    return reject(this.boom.badRequest(err));
+                }
+                resolve(data);
+            });
+        });
     };
 
     /**

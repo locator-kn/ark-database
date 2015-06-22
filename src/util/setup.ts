@@ -168,7 +168,7 @@ var designLocation = {
             },
             locationByUser: {
                 "map": function (doc) {
-                    if (doc.type == 'location' && !doc.preLocation && !doc.delete && doc.public) {
+                    if (doc.type == 'location' && !doc.preLocation && !doc.delete) {
                         emit(doc.userid, doc);
                     }
                 }
