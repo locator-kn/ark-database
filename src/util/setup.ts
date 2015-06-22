@@ -30,7 +30,7 @@ var designUser = {
         views: {
             login: {
                 "map": function (doc) {
-                    if (doc.type == 'user') {
+                    if (doc.type == 'user' && !doc.delete) {
                         emit(doc.mail, {
                             name: doc.name,
                             password: doc.password,
@@ -45,7 +45,7 @@ var designUser = {
             },
             loginAdmin: {
                 "map": function (doc) {
-                    if (doc.type == 'user' && doc.isAdmin) {
+                    if (doc.type == 'user' && doc.isAdmin && !doc.delete) {
                         emit(doc.mail, {
                             name: doc.name,
                             password: doc.password,
@@ -60,14 +60,14 @@ var designUser = {
             },
             user: {
                 "map": function (doc) {
-                    if (doc.type == 'user') {
+                    if (doc.type == 'user' && !doc.delete) {
                         emit(doc._id, doc);
                     }
                 }
             },
             user_public: {
                 "map": function (doc) {
-                    if (doc.type == 'user') {
+                    if (doc.type == 'user' && !doc.delete) {
                         emit(doc._id, {
                             _id: doc._id,
                             name: doc.name,
@@ -83,7 +83,7 @@ var designUser = {
             },
             uuid: {
                 "map": function (doc) {
-                    if (doc.type == 'user') {
+                    if (doc.type == 'user' && !doc.delete) {
                         emit(doc.uuid, doc);
                     }
                 }
@@ -123,7 +123,7 @@ var designData = {
             },
             cities_trips: {
                 "map": function (doc) {
-                    if (doc.type == 'trip') {
+                    if (doc.type == 'trip' && !doc.delete && doc.active) {
                         emit(doc.city, 1);
                     }
                 },
@@ -161,21 +161,21 @@ var designLocation = {
         views: {
             location: {
                 "map": function (doc) {
-                    if (doc.type == 'location') {
+                    if (doc.type == 'location' && !doc.delete) {
                         emit(doc._id, doc);
                     }
                 }
             },
             locationByUser: {
                 "map": function (doc) {
-                    if (doc.type == 'location' && !doc.preLocation) {
+                    if (doc.type == 'location' && !doc.preLocation && !doc.delete) {
                         emit(doc.userid, doc);
                     }
                 }
             },
             preLocationByUser: {
                 "map": function (doc) {
-                    if (doc.type == 'location' && doc.preLocation) {
+                    if (doc.type == 'location' && doc.preLocation && !doc.delete) {
                         emit(doc.userid, doc);
                     }
                 }
@@ -201,42 +201,42 @@ var designTrip = {
         views: {
             trip: {
                 "map": function (doc) {
-                    if (doc.type == 'trip') {
+                    if (doc.type == 'trip' && !doc.delete) {
                         emit(doc._id, doc);
                     }
                 }
             },
             city: {
                 "map": function (doc) {
-                    if (doc.type == 'trip' && doc.active == true) {
+                    if (doc.type == 'trip' && doc.active && !doc.delete) {
                         emit(doc.city.id, doc);
                     }
                 }
             },
             preTripById: {
                 "map": function (doc) {
-                    if (doc.type == 'preTrip') {
+                    if (doc.type == 'preTrip' && !doc.delete) {
                         emit(doc._id, doc);
                     }
                 }
             },
             tripByUserId: {
                 "map": function (doc) {
-                    if (doc.type == 'trip' && doc.active == true) {
+                    if (doc.type == 'trip' && doc.active && !doc.delete) {
                         emit([doc.userid, doc.end_date], doc);
                     }
                 }
             },
             myTrips: {
                 "map": function (doc) {
-                    if (doc.type == 'trip') {
+                    if (doc.type == 'trip' && !doc.delete) {
                         emit([doc.userid, doc.end_date], doc);
                     }
                 }
             },
             tripsByLocation: {
                 "map": function (doc) {
-                    if (doc.type == 'trip') {
+                    if (doc.type == 'trip' && !doc.delete) {
                         for (var key in doc.locations) {
                             emit(key, doc);
                         }
