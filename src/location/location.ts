@@ -38,6 +38,15 @@ class Location {
     };
 
     /**
+     * Change location into public or private, depending on the status.
+     * @param locationid
+     * @param userid
+     */
+    togglePublicLocation = (locationid:string, userid:string) => {
+        return this.util.togglePublic(locationid, userid, this.TYPE);
+    };
+
+    /**
      * Deletes the entire location pool of a user.
      * @param userid
      * @param callback

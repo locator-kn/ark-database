@@ -130,7 +130,7 @@ class Trip {
             }
 
             // remove all locations from all trips
-            return Promise.all(result.map(trip => {
+            return Promise.all(result.map((trip:any) => {
 
                 return new Promise((resolve, reject) => {
 

@@ -164,6 +164,7 @@ class Database {
         server.expose('updateLocation', this.location.updateLocation);
         server.expose('getPreLocationsByUserId', this.location.getPreLocationsByUserId);
         server.expose('isLocationNotInUse', this.location.isLocationNotInUse);
+        server.expose('togglePublicLocation', this.location.togglePublicLocation);
 
         // static data mood
         server.expose('getMoods', this.staticdata.getMoods);
