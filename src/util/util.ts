@@ -152,6 +152,48 @@ class Util {
         });
     };
 
+    togglePublic = (documentId:string, userid:string, type:string) => {
+        return new Promise((resolve, reject) => {
+
+            this.db.get(documentId, (err, res) => {
+
+                if (err) {
+                    return reject(this.boom.badRequest(err));
+                }
+
+                if (!res.type || res.type !== type) {
+                    return reject(this.boom.notAcceptable('Wrong document type'));
+                }
+
+                if (!res.userid || res.userid !== userid) {
+                    return reject(this.boom.forbidden());
+                }
+
+                if(!res.public) {
+                    return reject(this.boom.notAcceptable('Flag not available'))
+                }
+
+                // update modified_date
+                var date = new Date();
+                res.modified_date = date.toISOString();
+
+
+                // update public
+                var oldPublic = res.public;
+                res.public = !oldPublic;
+
+
+                this.db.merge(documentId, res, (err, result) => {
+                    if (err) {
+                        return reject(this.boom.badRequest(err));
+                    }
+                    result.value = res.public;
+                    return resolve(result);
+                });
+            });
+        });
+    };
+
     /**
      * Utiliy method for checking if a entry in the database exist.
      * If an attachment name is emitted, this method is going to check if this file
