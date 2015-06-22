@@ -280,7 +280,7 @@ class Util {
                 if (err) {
                     return reject(this.boom.badRequest(err));
                 }
-                if (!result.length) {
+                if (!result.length || result[0].delete) {
                     return reject(this.boom.notFound('Database entry not found'))
                 }
                 // return first entry from array

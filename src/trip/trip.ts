@@ -28,8 +28,8 @@ class Trip {
      * @param tripid:string
      * @param callback
      */
-    getTripById = (tripid:string, callback) => {
-        this.db.list(this.LISTS.LIST_TRIP_ALL, {key: tripid}, callback);
+    getTripById = (tripid:string) => {
+        return this.util.retrieveSingleValue(this.LISTS.LIST_TRIP_ALL, {key: tripid});
     };
 
     /**
