@@ -85,6 +85,15 @@ class Trip {
     };
 
     /**
+     * Change trip into public or private, depending on the status.
+     * @param locationid
+     * @param userid
+     */
+    togglePublicTrip = (tripid:string, userid:string) => {
+        return this.util.togglePublic(tripid, userid, this.TYPE);
+    };
+
+    /**
      * Update the url of a location in a trip document
      * @param locationid
      * @param userid

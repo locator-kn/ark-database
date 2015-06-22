@@ -123,7 +123,7 @@ var designData = {
             },
             cities_trips: {
                 "map": function (doc) {
-                    if (doc.type == 'trip' && !doc.delete && doc.active) {
+                    if (doc.type == 'trip' && !doc.delete && doc.public) {
                         emit(doc.city, 1);
                     }
                 },
@@ -215,7 +215,7 @@ var designTrip = {
             },
             city: {
                 "map": function (doc) {
-                    if (doc.type == 'trip' && doc.active && !doc.delete) {
+                    if (doc.type == 'trip' && doc.public && !doc.delete) {
                         emit(doc.city.id, doc);
                     }
                 }
@@ -229,7 +229,7 @@ var designTrip = {
             },
             tripByUserId: {
                 "map": function (doc) {
-                    if (doc.type == 'trip' && doc.active && !doc.delete) {
+                    if (doc.type == 'trip' && doc.public && !doc.delete) {
                         emit([doc.userid, doc.end_date], doc);
                     }
                 }
