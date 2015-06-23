@@ -1,6 +1,7 @@
 declare var Promise:any;
 
 import Util from './../util/util';
+import Attachment from './../attachment/attachment'
 
 export default
 class Location {
@@ -8,12 +9,14 @@ class Location {
     private TYPE:string = 'location';
     private boom:any;
     private hoek:any;
-    private DEFAULT_LOCATION:string = 'd476ccf97a8e5ceb0f18863b42b95cab';
+    private DEFAULT_LOCATION:string = '214550acff8530ec9e03f97b2903d008';
+    private attachment:any;
 
     constructor(private db:any, private LISTS:any) {
         this.util = new Util(db);
         this.boom = require('boom');
         this.hoek = require('hoek');
+        this.attachment = new Attachment(db);
     }
 
     /**
@@ -71,14 +74,13 @@ class Location {
     createDefaultLocation = (userid:string) => {
         return new Promise((resolve, reject) => {
 
-            this.db.get(this.DEFAULT_LOCATION, (err, result) => {
+            return this.util.createDocument({userid: userid})
+                .then(value => {
 
-                if (err) {
-                    return reject(this.boom.badRequest(err))
-                }
-                result.userid = userid;
-                resolve(this.util.createDocument(result));
-            });
+                    return this.util.copyDocument(this.DEFAULT_LOCATION, value.id);
+
+                    //return this.util.updateDocumentWithoutCheck(value.id, {userid: userid});
+                }).catch(err => reject(err))
         });
     };
 
