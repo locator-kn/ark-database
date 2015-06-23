@@ -127,7 +127,7 @@ class Location {
                     return reject(this.boom.badRequest(err))
                 }
 
-                if (!result.isEmpty()) {
+                if (result.length) {
                     return reject(this.boom.conflict('Location in use'));
                 }
 
