@@ -90,6 +90,7 @@ class Location {
 
             defaultLocation.images.picture = picture;
             defaultLocation.images.thumbnail = thumbnail;
+            defaultLocation.userid = userid;
 
             return this.util.createDocument(defaultLocation)
                 .then(value => {

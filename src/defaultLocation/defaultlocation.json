@@ -22,5 +22,6 @@
     "lat": 47.66261271615866
   },
   "delete": false,
-  "public": true
+  "public": true,
+  "type": "location"
 }
