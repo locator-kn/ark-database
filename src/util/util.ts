@@ -62,7 +62,7 @@ class Util {
                     return reject(this.boom.forbidden());
                 }
 
-                if(res.delete) {
+                if (res.delete) {
                     return reject(this.boom.notFound('deleted'));
                 }
 
@@ -114,7 +114,7 @@ class Util {
                     return reject(this.boom.forbidden('Wrong user'));
                 }
 
-                if(res.delete) {
+                if (res.delete) {
                     return reject(this.boom.notFound('deleted'));
                 }
 
@@ -238,11 +238,11 @@ class Util {
             // check if the document exist (or attachment), by sending a lightweight HEAD request
             this.db.query(options, (err, data, response) => {
 
-                if (response !== 200) {
-                    return reject(this.boom.notFound('entry in database was not found'));
-                }
                 if (err) {
                     return reject(this.boom.badRequest(err));
+                }
+                if (response !== 200) {
+                    return reject(this.boom.notFound('entry in database was not found'));
                 }
 
                 return resolve(true);

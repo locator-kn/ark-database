@@ -1,6 +1,9 @@
 declare var Promise:any;
 
 import Util from './../util/util';
+import Attachment from './../attachment/attachment'
+var fse = require('fs-extra');
+var path = require('path');
 
 export default
 class Location {
@@ -8,12 +11,14 @@ class Location {
     private TYPE:string = 'location';
     private boom:any;
     private hoek:any;
-    private DEFAULT_LOCATION:string = 'd476ccf97a8e5ceb0f18863b42b95cab';
+    private DEFAULT_LOCATION:string = '214550acff8530ec9e03f97b2903d008';
+    private attachment:any;
 
     constructor(private db:any, private LISTS:any) {
         this.util = new Util(db);
         this.boom = require('boom');
         this.hoek = require('hoek');
+        this.attachment = new Attachment(db);
     }
 
     /**
@@ -71,14 +76,45 @@ class Location {
     createDefaultLocation = (userid:string) => {
         return new Promise((resolve, reject) => {
 
-            this.db.get(this.DEFAULT_LOCATION, (err, result) => {
+            // gather informations
+            var originalPicture = path.resolve(__dirname, './../defaultlocation/default-location.jpeg');
+            var thumbnailPicture = path.resolve(__dirname, './../defaultlocation/default-location-thumb.jpeg');
+            var filename = path.basename(originalPicture);
+            var thumbnailname = path.basename(thumbnailPicture);
+            var picture = '/api/v1/users/' + userid + '/' + filename;
+            var thumbnail = '/api/v1/users/' + userid + '/' + thumbnailname;
+            var ext = path.extname(filename);
 
-                if (err) {
-                    return reject(this.boom.badRequest(err))
-                }
-                result.userid = userid;
-                resolve(this.util.createDocument(result));
-            });
+
+            var defaultLocation = fse.readJsonSync(path.resolve(__dirname,'./../defaultlocation/defaultlocation.json'));
+
+            defaultLocation.images.picture = picture;
+            defaultLocation.images.thumbnail = thumbnail;
+
+            return this.util.createDocument(defaultLocation)
+                .then(value => {
+
+                    // stream picture
+                    var attachmentData = {
+                        'Content-Type': 'image/jpeg', // TODO generic
+                        name: filename
+                    };
+                    var readstream = fse.createReadStream(originalPicture);
+
+                  return  this.attachment.savePicture(value.id, attachmentData, readstream)
+
+                }).then(value => {
+
+                    // stream picture
+                    var attachmentData = {
+                        'Content-Type': 'image/jpeg', // TODO generic
+                        name: thumbnailname
+                    };
+                    var readstream = fse.createReadStream(thumbnailPicture);
+
+                    return  this.attachment.savePicture(value.id, attachmentData, readstream)
+
+                }).catch(err => reject(err))
         });
     };
 
