@@ -83,6 +83,7 @@ class Location {
             var thumbnailname = path.basename(thumbnailPicture);
             var picture = '/api/v1/users/' + userid + '/' + filename;
             var thumbnail = '/api/v1/users/' + userid + '/' + thumbnailname;
+            var ext = path.extname(filename);
 
 
             var defaultLocation = fse.readJsonSync(path.resolve(__dirname,'./../defaultlocation/defaultlocation.json'));
@@ -93,8 +94,25 @@ class Location {
             return this.util.createDocument(defaultLocation)
                 .then(value => {
 
-                    // stream pictures
-                    console.log(value);
+                    // stream picture
+                    var attachmentData = {
+                        'Content-Type': 'image/jpeg', // TODO generic
+                        name: filename
+                    };
+                    var readstream = fse.createReadStream(originalPicture);
+
+                  return  this.attachment.savePicture(value.id, attachmentData, readstream)
+
+                }).then(value => {
+
+                    // stream picture
+                    var attachmentData = {
+                        'Content-Type': 'image/jpeg', // TODO generic
+                        name: thumbnailname
+                    };
+                    var readstream = fse.createReadStream(thumbnailPicture);
+
+                    return  this.attachment.savePicture(value.id, attachmentData, readstream)
 
                 }).catch(err => reject(err))
         });
