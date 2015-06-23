@@ -2,6 +2,8 @@ declare var Promise:any;
 
 import Util from './../util/util';
 import Attachment from './../attachment/attachment'
+var fse = require('fs-extra');
+var path = require('path');
 
 export default
 class Location {
@@ -74,12 +76,26 @@ class Location {
     createDefaultLocation = (userid:string) => {
         return new Promise((resolve, reject) => {
 
-            return this.util.createDocument({userid: userid})
+            // gather informations
+            var originalPicture = path.resolve(__dirname, './../defaultlocation/default-location.jpeg');
+            var thumbnailPicture = path.resolve(__dirname, './../defaultlocation/default-location-thumb.jpeg');
+            var filename = path.basename(originalPicture);
+            var thumbnailname = path.basename(thumbnailPicture);
+            var picture = '/api/v1/users/' + userid + '/' + filename;
+            var thumbnail = '/api/v1/users/' + userid + '/' + thumbnailname;
+
+
+            var defaultLocation = fse.readJsonSync(path.resolve(__dirname,'./../defaultlocation/defaultlocation.json'));
+
+            defaultLocation.images.picture = picture;
+            defaultLocation.images.thumbnail = thumbnail;
+
+            return this.util.createDocument(defaultLocation)
                 .then(value => {
 
-                    return this.util.copyDocument(this.DEFAULT_LOCATION, value.id);
+                    // stream pictures
+                    console.log(value);
 
-                    //return this.util.updateDocumentWithoutCheck(value.id, {userid: userid});
                 }).catch(err => reject(err))
         });
     };
