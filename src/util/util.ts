@@ -71,6 +71,12 @@ class Util {
                 object.modified_date = date.toISOString();
 
                 if (deepMerge) {
+
+                    // remove old tags
+                    if (res.tags) {
+                        res.tags = [];
+                    }
+
                     // deep merge of values before merge into database
                     object = this.hoek.merge(res, object);
                 }
