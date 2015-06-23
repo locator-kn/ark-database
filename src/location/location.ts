@@ -8,6 +8,7 @@ class Location {
     private TYPE:string = 'location';
     private boom:any;
     private hoek:any;
+    private DEFAULT_LOCATION:string = 'd476ccf97a8e5ceb0f18863b42b95cab';
 
     constructor(private db:any, private LISTS:any) {
         this.util = new Util(db);
@@ -64,6 +65,20 @@ class Location {
     deleteLocationsByUserId = (userid:string, callback) => {
         callback({
             error: 'not implemented yet!'
+        });
+    };
+
+    createDefaultLocation = (userid:string) => {
+        return new Promise((resolve, reject) => {
+
+            this.db.get(this.DEFAULT_LOCATION, (err, result) => {
+
+                if (err) {
+                    return reject(this.boom.badRequest(err))
+                }
+                result.userid = userid;
+                resolve(this.util.createDocument(result));
+            });
         });
     };
 
