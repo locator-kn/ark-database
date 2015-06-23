@@ -289,46 +289,6 @@ class Util {
         });
     };
 
-    copyDocument = (originalDocumentid:string, newDocumentId:string) => {
-        return new Promise((resolve, reject) => {
-
-            // get revision from database with HEAD
-            this.db.head(newDocumentId, (err, headers, res) => {
-
-                if (res === 404 || !headers['etag']) {
-                    return reject(this.boom.create(404, "document not found"));
-                }
-
-                if (err) {
-                    return reject(this.boom.badRequest(err));
-                }
-
-                var revision = headers['etag'].slice(1, -1);// remove quotes to get revision
-
-                var options = {
-                    method: 'COPY',
-                    path: '/' + originalDocumentid,
-                    headers: {
-                        destination: newDocumentId + '?rev=' + revision
-                    }
-                };
-
-                this.db.query(options, (err, data, response) => {
-
-                    if (err) {
-                        return reject(this.boom.badRequest(err))
-                    }
-
-                    if(response >= 400) {
-                        return reject(this.boom.create(response));
-                    }
-
-                    resolve(data);
-                })
-            });
-        })
-    };
-
     /**
      * Query a design document (list) with the given key and returns a promise.
      * @param keyValue
