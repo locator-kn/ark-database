@@ -62,7 +62,7 @@ class Util {
                     return reject(this.boom.forbidden());
                 }
 
-                if(res.delete) {
+                if (res.delete) {
                     return reject(this.boom.notFound('deleted'));
                 }
 
@@ -108,7 +108,7 @@ class Util {
                     return reject(this.boom.forbidden('Wrong user'));
                 }
 
-                if(res.delete) {
+                if (res.delete) {
                     return reject(this.boom.notFound('deleted'));
                 }
 
@@ -232,11 +232,11 @@ class Util {
             // check if the document exist (or attachment), by sending a lightweight HEAD request
             this.db.query(options, (err, data, response) => {
 
-                if (response !== 200) {
-                    return reject(this.boom.notFound('entry in database was not found'));
-                }
                 if (err) {
                     return reject(this.boom.badRequest(err));
+                }
+                if (response !== 200) {
+                    return reject(this.boom.notFound('entry in database was not found'));
                 }
 
                 return resolve(true);
@@ -287,6 +287,46 @@ class Util {
                 return resolve(result[0]);
             });
         });
+    };
+
+    copyDocument = (originalDocumentid:string, newDocumentId:string) => {
+        return new Promise((resolve, reject) => {
+
+            // get revision from database with HEAD
+            this.db.head(newDocumentId, (err, headers, res) => {
+
+                if (res === 404 || !headers['etag']) {
+                    return reject(this.boom.create(404, "document not found"));
+                }
+
+                if (err) {
+                    return reject(this.boom.badRequest(err));
+                }
+
+                var revision = headers['etag'].slice(1, -1);// remove quotes to get revision
+
+                var options = {
+                    method: 'COPY',
+                    path: '/' + originalDocumentid,
+                    headers: {
+                        destination: newDocumentId + '?rev=' + revision
+                    }
+                };
+
+                this.db.query(options, (err, data, response) => {
+
+                    if (err) {
+                        return reject(this.boom.badRequest(err))
+                    }
+
+                    if(response >= 400) {
+                        return reject(this.boom.create(response));
+                    }
+
+                    resolve(data);
+                })
+            });
+        })
     };
 
     /**
