@@ -81,15 +81,11 @@ class Location {
             var thumbnailPicture = path.resolve(__dirname, './../defaultlocation/default-location-thumb.jpeg');
             var filename = path.basename(originalPicture);
             var thumbnailname = path.basename(thumbnailPicture);
-            var picture = '/api/v1/users/' + userid + '/' + filename;
-            var thumbnail = '/api/v1/users/' + userid + '/' + thumbnailname;
-            var ext = path.extname(filename);
+            var ext = path.extname(filename).substring(1);
 
 
-            var defaultLocation = fse.readJsonSync(path.resolve(__dirname,'./../defaultlocation/defaultlocation.json'));
+            var defaultLocation = fse.readJsonSync(path.resolve(__dirname, './../defaultlocation/defaultlocation.json'));
 
-            defaultLocation.images.picture = picture;
-            defaultLocation.images.thumbnail = thumbnail;
             defaultLocation.userid = userid;
 
             return this.util.createDocument(defaultLocation)
@@ -97,24 +93,32 @@ class Location {
 
                     // stream picture
                     var attachmentData = {
-                        'Content-Type': 'image/jpeg', // TODO generic
+                        'Content-Type': 'image/' + ext,
                         name: filename
                     };
                     var readstream = fse.createReadStream(originalPicture);
 
-                  return  this.attachment.savePicture(value.id, attachmentData, readstream)
+                    return this.attachment.savePicture(value.id, attachmentData, readstream)
 
                 }).then(value => {
 
-                    // stream picture
+                    // stream thumbnail
                     var attachmentData = {
-                        'Content-Type': 'image/jpeg', // TODO generic
+                        'Content-Type': 'image/' + ext,
                         name: thumbnailname
                     };
                     var readstream = fse.createReadStream(thumbnailPicture);
 
-                    return  this.attachment.savePicture(value.id, attachmentData, readstream)
+                    return this.attachment.savePicture(value.id, attachmentData, readstream)
 
+                }).then(value => {
+                    var images = {
+                        images: {
+                            picture: '/api/v1/users/' + value.id + '/' + filename,
+                            thumbnail: '/api/v1/users/' + value.id + '/' + thumbnailname
+                        }
+                    };
+                    return this.util.updateDocumentWithoutCheck(value.id, images)
                 }).catch(err => reject(err))
         });
     };
