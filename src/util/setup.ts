@@ -172,6 +172,13 @@ var designLocation = {
                         emit(doc.userid, doc);
                     }
                 }
+            },
+            locationByCity: {
+                "map": function (doc) {
+                    if (doc.type == 'location' && !doc.preLocation && !doc.delete && doc.public) {
+                        emit(doc.city.title, doc);
+                    }
+                }
             }
         },
         lists: {
