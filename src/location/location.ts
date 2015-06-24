@@ -73,6 +73,10 @@ class Location {
         });
     };
 
+    getLocationsByCity = (city:string) => {
+       return this.util.retrieveAllValues(this.LISTS.LIST_PUBLIC_LOCATION_BY_CITY, {key: city});
+    };
+
     createDefaultLocation = (userid:string) => {
         return new Promise((resolve, reject) => {
 
