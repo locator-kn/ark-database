@@ -1,27 +1,26 @@
 {
-  "preLocation": false,
-  "images": {
-    "googlemap": "https://maps.googleapis.com/maps/api/staticmap?zoom=15&markers=47.66261271615866,9.175643920898438"
-  },
-  "tags": [
-    "htwg",
-    "konstanz",
-    "default",
-    "geil"
-  ],
-  "title": "Default locationasd",
-  "description": "Default location welcher jeder user am anfang zu sehen bekommt",
-  "budget": "1000 Mark",
-  "city": {
-    "title": "Konstanz",
-    "id": "58433437e7710a957cd798b0774a79385389035b",
-    "place_id": "ChIJWx8MOBv2mkcR0JnfpbdrHwQ"
-  },
-  "geotag": {
-    "long": 9.175643920898438,
-    "lat": 47.66261271615866
-  },
-  "delete": false,
-  "public": true,
-  "type": "location"
+    "preLocation": false,
+    "images": {
+        "googlemap": "https://maps.googleapis.com/maps/api/staticmap?zoom=15&markers=47.668906023791884,9.169710874557495"
+    },
+    "tags": [
+        "htwg",
+        "konstanz",
+        "geil",
+    ],
+    "title": "HTWG KONSTANZ",
+    "description": "Default location, welcher jeder user am anfang zu sehen bekommt",
+    "budget": "1000 Mark",
+    "city": {
+        "title": "Konstanz",
+        "id": "58433437e7710a957cd798b0774a79385389035b",
+        "place_id": "ChIJWx8MOBv2mkcR0JnfpbdrHwQ"
+    },
+    "geotag": {
+        "long": 9.169710874557495,
+        "lat": 47.668906023791884
+    },
+    "delete": false,
+    "public": true,
+    "type": "location"
 }
