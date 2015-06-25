@@ -46,6 +46,7 @@ class Database {
         LIST_LOCATION_PRELOCATION_USER: 'location/listall/preLocationByUser',
         LIST_PUBLIC_LOCATION_BY_USER: 'location/listall/publicLocationByUser',
         LIST_PUBLIC_LOCATION_BY_CITY: 'location/listall/locationByCity',
+        LIST_LOCATION_BY_CITY_AND_USER: 'location/listall/locationByCityAndUser',
         LIST_SEARCH_TRIP: 'search/searchlist/city',
         LIST_DATA_MOOD: 'data/listall/moods',
         LIST_DATA_ACC_EQUIPMENT: 'data/listall/accommodations_equipment',
@@ -169,6 +170,7 @@ class Database {
         server.expose('getPublicLocationsByUserId', this.location.getPublicLocationsByUserId);
         server.expose('createDefaultLocation', this.location.createDefaultLocation);
         server.expose('getLocationsByCity', this.location.getLocationsByCity);
+        server.expose('getLocationsByCityAndUser', this.location.getLocationsByCityAndUser)
 
         // static data mood
         server.expose('getMoods', this.staticdata.getMoods);
@@ -206,6 +208,7 @@ class Database {
         server.expose('deleteDocument', this.util.deleteDocument);
         server.expose('updateDocumentWithoutCheck', this.util.updateDocumentWithoutCheck);
         server.expose('updateDocumentWithCallback', this.util.updateDocumentWithCallback);
+        server.expose('copyDocument', this.util.copyDocument);
 
         // chat
         server.expose('getConversationsByUserId', this.chat.getConversationsByUserId);

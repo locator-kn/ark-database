@@ -74,7 +74,11 @@ class Location {
     };
 
     getLocationsByCity = (city:string) => {
-       return this.util.retrieveAllValues(this.LISTS.LIST_PUBLIC_LOCATION_BY_CITY, {key: city});
+        return this.util.retrieveAllValues(this.LISTS.LIST_PUBLIC_LOCATION_BY_CITY, {key: city});
+    };
+
+    getLocationsByCityAndUser = (city:string, userid:string) => {
+        return this.util.retrieveAllValues(this.LISTS.LIST_LOCATION_BY_CITY_AND_USER, {key: [city, userid]})
     };
 
     createDefaultLocation = (userid:string) => {
