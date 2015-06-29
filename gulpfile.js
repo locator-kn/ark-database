@@ -32,6 +32,11 @@ gulp.task('ts', function () {
     ]);
 });
 
-gulp.task('default', ['ts'], function () {
+gulp.task('defaultlocation', function() {
+    return gulp.src('src/defaultlocation/**/*')
+        .pipe(gulp.dest('lib/js/defaultlocation'))
+});
+
+gulp.task('default', ['ts', 'defaultlocation'], function () {
 
 });

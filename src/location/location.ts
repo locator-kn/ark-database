@@ -1,6 +1,9 @@
 declare var Promise:any;
 
 import Util from './../util/util';
+import Attachment from './../attachment/attachment'
+var fse = require('fs-extra');
+var path = require('path');
 
 export default
 class Location {
@@ -8,11 +11,14 @@ class Location {
     private TYPE:string = 'location';
     private boom:any;
     private hoek:any;
+    private DEFAULT_LOCATION:string = '214550acff8530ec9e03f97b2903d008';
+    private attachment:any;
 
     constructor(private db:any, private LISTS:any) {
         this.util = new Util(db);
         this.boom = require('boom');
         this.hoek = require('hoek');
+        this.attachment = new Attachment(db);
     }
 
     /**
@@ -67,6 +73,64 @@ class Location {
         });
     };
 
+    getLocationsByCity = (city:string) => {
+        return this.util.retrieveAllValues(this.LISTS.LIST_PUBLIC_LOCATION_BY_CITY, {key: city});
+    };
+
+    getLocationsByCityAndUser = (city:string, userid:string) => {
+        return this.util.retrieveAllValues(this.LISTS.LIST_LOCATION_BY_CITY_AND_USER, {key: [city, userid]})
+    };
+
+    createDefaultLocation = (userid:string) => {
+        return new Promise((resolve, reject) => {
+
+            // gather informations
+            var originalPicture = path.resolve(__dirname, './../defaultlocation/default-location.jpeg');
+            var thumbnailPicture = path.resolve(__dirname, './../defaultlocation/default-location-thumb.jpeg');
+            var filename = path.basename(originalPicture);
+            var thumbnailname = path.basename(thumbnailPicture);
+            var ext = path.extname(filename).substring(1);
+
+
+            var defaultLocation = fse.readJsonSync(path.resolve(__dirname, './../defaultlocation/defaultlocation.json'));
+
+            defaultLocation.userid = userid;
+
+            return this.util.createDocument(defaultLocation)
+                .then(value => {
+
+                    // stream picture
+                    var attachmentData = {
+                        'Content-Type': 'image/' + ext,
+                        name: filename
+                    };
+                    var readstream = fse.createReadStream(originalPicture);
+
+                    return this.attachment.savePicture(value.id, attachmentData, readstream)
+
+                }).then(value => {
+
+                    // stream thumbnail
+                    var attachmentData = {
+                        'Content-Type': 'image/' + ext,
+                        name: thumbnailname
+                    };
+                    var readstream = fse.createReadStream(thumbnailPicture);
+
+                    return this.attachment.savePicture(value.id, attachmentData, readstream)
+
+                }).then(value => {
+                    var images = {
+                        images: {
+                            picture: '/api/v1/users/' + value.id + '/' + filename,
+                            thumbnail: '/api/v1/users/' + value.id + '/' + thumbnailname
+                        }
+                    };
+                    return this.util.updateDocumentWithoutCheck(value.id, images)
+                }).catch(err => reject(err))
+        });
+    };
+
     isLocationNotInUse = (locationid:string) => {
         return new Promise((resolve, reject) => {
 
@@ -76,7 +140,7 @@ class Location {
                     return reject(this.boom.badRequest(err))
                 }
 
-                if (!result.isEmpty()) {
+                if (result.length) {
                     return reject(this.boom.conflict('Location in use'));
                 }
 

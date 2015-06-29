@@ -4,7 +4,6 @@ import Location from './location/location';
 import StaticData from './staticdata/staticdata';
 import Attachment from './attachment/attachment';
 import Util from './util/util'
-import Mail from './mail/mail'
 import Chat from './chat/chat'
 import {setup} from './setup';
 import {initLogging} from './logging/logging'
@@ -46,6 +45,8 @@ class Database {
         LIST_LOCATION_LOCATION: 'location/listall/location',
         LIST_LOCATION_PRELOCATION_USER: 'location/listall/preLocationByUser',
         LIST_PUBLIC_LOCATION_BY_USER: 'location/listall/publicLocationByUser',
+        LIST_PUBLIC_LOCATION_BY_CITY: 'location/listall/locationByCity',
+        LIST_LOCATION_BY_CITY_AND_USER: 'location/listall/locationByCityAndUser',
         LIST_SEARCH_TRIP: 'search/searchlist/city',
         LIST_DATA_MOOD: 'data/listall/moods',
         LIST_DATA_ACC_EQUIPMENT: 'data/listall/accommodations_equipment',
@@ -120,7 +121,6 @@ class Database {
         this.staticdata = new StaticData(this.db, this.LISTS);
         this.attachment = new Attachment(this.db);
         this.util = new Util(this.db);
-        this.mail = new Mail(this.db, this.LISTS);
         this.chat = new Chat(this.db, this.LISTS);
     };
 
@@ -156,6 +156,7 @@ class Database {
         server.expose('getMyTrips', this.trip.getMyTrips);
         server.expose('updateTripsWithLocationImage', this.trip.updateTripsWithLocationImage);
         server.expose('togglePublicTrip', this.trip.togglePublicTrip);
+        server.expose('removeLocationFromTrips', this.trip.removeLocationFromTrips);
 
         // location
         server.expose('getLocationsByUserId', this.location.getLocationsByUserId);
@@ -168,6 +169,9 @@ class Database {
         server.expose('isLocationNotInUse', this.location.isLocationNotInUse);
         server.expose('togglePublicLocation', this.location.togglePublicLocation);
         server.expose('getPublicLocationsByUserId', this.location.getPublicLocationsByUserId);
+        server.expose('createDefaultLocation', this.location.createDefaultLocation);
+        server.expose('getLocationsByCity', this.location.getLocationsByCity);
+        server.expose('getLocationsByCityAndUser', this.location.getLocationsByCityAndUser)
 
         // static data mood
         server.expose('getMoods', this.staticdata.getMoods);
@@ -205,10 +209,7 @@ class Database {
         server.expose('deleteDocument', this.util.deleteDocument);
         server.expose('updateDocumentWithoutCheck', this.util.updateDocumentWithoutCheck);
         server.expose('updateDocumentWithCallback', this.util.updateDocumentWithCallback);
-
-        // mail
-        server.expose('getRegistrationMail', this.mail.getRegistrationMail);
-        server.expose('getPasswordForgottenMail', this.mail.getPasswordForgottenMail);
+        server.expose('copyDocument', this.util.copyDocument);
 
         // chat
         server.expose('getConversationsByUserId', this.chat.getConversationsByUserId);

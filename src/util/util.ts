@@ -62,7 +62,7 @@ class Util {
                     return reject(this.boom.forbidden());
                 }
 
-                if(res.delete) {
+                if (res.delete) {
                     return reject(this.boom.notFound('deleted'));
                 }
 
@@ -71,6 +71,12 @@ class Util {
                 object.modified_date = date.toISOString();
 
                 if (deepMerge) {
+
+                    // remove old tags
+                    if (res.tags) {
+                        res.tags = [];
+                    }
+
                     // deep merge of values before merge into database
                     object = this.hoek.merge(res, object);
                 }
@@ -108,7 +114,7 @@ class Util {
                     return reject(this.boom.forbidden('Wrong user'));
                 }
 
-                if(res.delete) {
+                if (res.delete) {
                     return reject(this.boom.notFound('deleted'));
                 }
 
@@ -232,11 +238,11 @@ class Util {
             // check if the document exist (or attachment), by sending a lightweight HEAD request
             this.db.query(options, (err, data, response) => {
 
-                if (response !== 200) {
-                    return reject(this.boom.notFound('entry in database was not found'));
-                }
                 if (err) {
                     return reject(this.boom.badRequest(err));
+                }
+                if (response !== 200) {
+                    return reject(this.boom.notFound('entry in database was not found'));
                 }
 
                 return resolve(true);
@@ -280,7 +286,7 @@ class Util {
                 if (err) {
                     return reject(this.boom.badRequest(err));
                 }
-                if (!result.length) {
+                if (!result.length || result[0].delete) {
                     return reject(this.boom.notFound('Database entry not found'))
                 }
                 // return first entry from array
