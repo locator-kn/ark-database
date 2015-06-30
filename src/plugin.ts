@@ -47,6 +47,7 @@ class Database {
         LIST_PUBLIC_LOCATION_BY_USER: 'location/listall/publicLocationByUser',
         LIST_PUBLIC_LOCATION_BY_CITY: 'location/listall/locationByCity',
         LIST_LOCATION_BY_CITY_AND_USER: 'location/listall/locationByCityAndUser',
+        LIST_LOCATION_BY_TRIP: 'location/listall/locationByTrip',
         LIST_SEARCH_TRIP: 'search/searchlist/city',
         LIST_DATA_MOOD: 'data/listall/moods',
         LIST_DATA_ACC_EQUIPMENT: 'data/listall/accommodations_equipment',
@@ -171,7 +172,8 @@ class Database {
         server.expose('getPublicLocationsByUserId', this.location.getPublicLocationsByUserId);
         server.expose('createDefaultLocation', this.location.createDefaultLocation);
         server.expose('getLocationsByCity', this.location.getLocationsByCity);
-        server.expose('getLocationsByCityAndUser', this.location.getLocationsByCityAndUser)
+        server.expose('getLocationsByCityAndUser', this.location.getLocationsByCityAndUser);
+        server.expose('getLocationsByTripId', this.location.getLocationsByTripId);
 
         // static data mood
         server.expose('getMoods', this.staticdata.getMoods);

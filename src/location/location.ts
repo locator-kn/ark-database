@@ -81,6 +81,10 @@ class Location {
         return this.util.retrieveAllValues(this.LISTS.LIST_LOCATION_BY_CITY_AND_USER, {key: [city, userid]})
     };
 
+    getLocationsByTripId = (tripid:string) => {
+        return this.util.retrieveAllValues(this.LISTS.LIST_LOCATION_BY_TRIP ,{key: tripid})
+    };
+
     createDefaultLocation = (userid:string) => {
         return new Promise((resolve, reject) => {
 
