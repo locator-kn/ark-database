@@ -369,6 +369,50 @@ class Util {
         });
     };
 
+    copyDocument = (documentid:string) => {
+        return new Promise((resolve, reject)=> {
+
+            var createOptions = {
+                method: 'POST',
+                path: '/',
+                body: {}
+            };
+
+            this.db.query(createOptions, (err, data, response) => {
+
+                if (err) {
+                    return reject(this.boom.badRequest(err))
+                }
+
+                if (response >= 400) {
+                    return reject(this.boom.create(response))
+                }
+
+                var options = {
+                    method: 'COPY',
+                    path: '/' + documentid,
+                    headers: {
+                        destination: data.id
+                    }
+                };
+
+                this.db.query(options, (err, data, response)=> {
+
+                    if (err) {
+                        return reject(this.boom.badRequest(err))
+                    }
+
+                    if (response >= 400) {
+                        return reject(this.boom.create(response))
+                    }
+
+                    resolve(data)
+                });
+            })
+
+
+        })
+    };
     /**
      * empty pseudo callback
      */
