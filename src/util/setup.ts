@@ -93,13 +93,6 @@ var designData = {
     content: {
         language: 'javascript',
         views: {
-            moods: {
-                "map": function (doc) {
-                    if (doc.type == 'mood') {
-                        emit(doc._id, doc);
-                    }
-                }
-            },
             cities: {
                 "map": function (doc) {
                     if (doc.type == 'city') {
@@ -117,13 +110,6 @@ var designData = {
                     var obj = keys[0][0];
                     return {id: obj.id, title: obj.title, total: sum(values), place_id: obj.place_id};
 
-                }
-            },
-            accommodations_equipment: {
-                "map": function (doc) {
-                    if (doc.type == 'accommodation_equipment') {
-                        emit(doc._id, doc);
-                    }
                 }
             }
         },
@@ -184,6 +170,15 @@ var designLocation = {
                 "map": function (doc) {
                     if (doc.type == 'location' && !doc.preLocation && !doc.delete) {
                         emit([doc.city.title, doc.userid], doc);
+                    }
+                }
+            },
+            locationByTrip: {
+                "map": function(doc) {
+                    if (doc.type == 'trip' && !doc.delete) {
+                        for (var location in doc.locations) {
+                            emit(doc._id, {_id: location})
+                        }
                     }
                 }
             }
