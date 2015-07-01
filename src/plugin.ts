@@ -13,6 +13,8 @@ export interface IRegister {
     attributes?: any;
 }
 
+export var DEFAULT_LOCATION = 'defaultLocation_StrandbarKonstanz';
+
 /**
  * database plugin
  *
@@ -74,6 +76,8 @@ class Database {
         LIST_CHAT_MESSAGESBYCONVERSATIONID: 'chat/listall/messagesByConversationId',
         LIST_CHAT_CONVERSATIONS_BY_TWO_USER: 'chat/getExistingConversationByUsers/conversationsByUserId'
     };
+
+
 
     /**
      * Constructor to create a database instance
@@ -183,10 +187,12 @@ class Database {
         server.expose('getLocationsByCity', this.location.getLocationsByCity);
         server.expose('getLocationsByCityAndUser', this.location.getLocationsByCityAndUser);
         server.expose('getLocationsByTripId', this.location.getLocationsByTripId);
+        server.expose('addDefaultLocationToUser', this.location.addDefaultLocationToUser);
         
         // static data
         server.expose('getCitiesWithTrips', this.staticdata.getCitiesWithTrips);
         server.expose('getAllTagsFromLocations', this.staticdata.getAllTagsFromLocations);
+        server.expose('getDefaultLocation', this.staticdata.getDefaultLocation);
 
         // attachment
         server.expose('getPicture', this.attachment.getPicture);
