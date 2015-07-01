@@ -1,7 +1,8 @@
 declare var Promise:any;
 
 import Util from './../util/util';
-import Attachment from './../attachment/attachment'
+import Attachment from './../attachment/attachment';
+import {DEFAULT_LOCATION} from '../plugin';
 var fse = require('fs-extra');
 var path = require('path');
 
@@ -11,7 +12,6 @@ class Location {
     private TYPE:string = 'location';
     private boom:any;
     private hoek:any;
-    private DEFAULT_LOCATION:string = '214550acff8530ec9e03f97b2903d008';
     private attachment:any;
 
     constructor(private db:any, private LISTS:any) {
@@ -84,7 +84,7 @@ class Location {
     getLocationsByTripId = (tripid:string) => {
         return new Promise((resolve, reject) => {
             this.db.view('location/locationByTrip', {key: tripid, include_docs: true}, (err, result) => {
-                if(err) {
+                if (err) {
                     return reject(this.boom.badRequest(err))
                 }
                 resolve(this.reduceData(result))
@@ -188,6 +188,32 @@ class Location {
      */
     updateLocation = (locationid:string, userid:string, location) => {
         return this.util.updateDocument(locationid, userid, location, this.TYPE, true);
+    };
+
+    /**
+     * Adds the default location to a user profile
+     * @param userid
+     */
+    addDefaultLocationToUser = (userid:string) => {
+        return new Promise((resolve, reject)=> {
+            this.db.get(DEFAULT_LOCATION, (err,result) => {
+
+                if (err) {
+                    return reject(this.boom.badRequest(err))
+                }
+                var defaultLocation = {
+                    locations: result.images
+                };
+                this.db.merge(userid, defaultLocation, (err, data) => {
+
+                    if(err) {
+                        return reject(this.boom.badRequest(err))
+                    }
+                    resolve(data)
+                })
+            });
+
+        })
     };
 
     reduceData = (data:any) => {
