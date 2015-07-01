@@ -12,14 +12,6 @@ class StaticData {
 
     // GET
 
-    /**
-     * Get moods from database.
-     *
-     * @param callback
-     */
-    getMoods = () => {
-        return this.util.retrieveAllValues(this.LISTS.LIST_DATA_MOOD);
-    };
 
     /**
      * Get cities from database.
@@ -40,28 +32,6 @@ class StaticData {
 
 
     /**
-     * Get accommodations equipment from database.
-     *
-     * @param callback
-     */
-    getAccommodationsEquipment = () => {
-        return this.util.retrieveAllValues(this.LISTS.LIST_DATA_ACC_EQUIPMENT);
-    };
-
-
-    // CREATE
-
-    /**
-     * Create a new Mood.
-     *
-     * @param mood:json-object
-     * @param callback
-     */
-    createMood = (mood, callback) => {
-        this.util.createDocument(mood, callback);
-    };
-
-    /**
      * Create a new City.
      *
      * @param city:json-object
@@ -71,38 +41,6 @@ class StaticData {
         this.util.createDocument(city, callback);
     };
 
-    /**
-     * Create a new accommodation.
-     *
-     * @param accommodations:json-object
-     * @param callback
-     */
-    createAccommodation = (accommodations, callback) => {
-        this.util.createDocument(accommodations, callback);
-    };
-
-    /**
-     * Create a new accommodation equipment.
-     *
-     * @param accommodationsEquipment:json-object
-     * @param callback
-     */
-    createAccommodationEquipment = (accommodationsEquipment, callback) => {
-        this.util.createDocument(accommodationsEquipment, callback);
-    };
-
-    // UPDATE
-
-    /**
-     * Update mood information.
-     *
-     * @param moodId:string
-     * @param mood:Mood
-     * @param callback
-     */
-    updateMood = (moodId:string, mood, callback) => {
-        this.util.updateDocumentWithCallback(moodId, mood, callback);
-    };
 
     /**
      * Update city information.
@@ -117,38 +55,6 @@ class StaticData {
 
 
     /**
-     * Update accommodations information.
-     *
-     * @param accommodationsId:string
-     * @param accommodations:Accommodations
-     * @param callback
-     */
-    updateAccommodation = (accommodationsId:string, accommodations, callback) => {
-        this.util.updateDocumentWithCallback(accommodationsId, accommodations, callback);
-    };
-
-    /**
-     * Update accommodationsEquipment information.
-     *
-     * @param accommodationsEquipmentId:string
-     * @param accommodationsEquipment:accommodationsEquipment
-     * @param callback
-     */
-    updateAccommodationEquipment = (accommodationsEquipmentId:string, accommodationsEquipment, callback) => {
-        this.util.updateDocumentWithCallback(accommodationsEquipmentId, accommodationsEquipment, callback);
-    };
-
-    /**
-     * Delete a particular mood by id.
-     *
-     * @param moodId:string
-     * @param callback
-     */
-    deleteMoodById = (moodId:string, callback) => {
-        this.db.remove(moodId, callback);
-    };
-
-    /**
      * Delete a particular city by id.
      *
      * @param cityId:string
@@ -158,24 +64,5 @@ class StaticData {
         this.db.remove(cityId, callback);
     };
 
-    /**
-     * Delete a particular accommodations by id.
-     *
-     * @param accommodationsId:string
-     * @param callback
-     */
-    deleteAccommodationById = (accommodationsId:string, callback) => {
-        this.db.remove(accommodationsId, callback);
-    };
-
-    /**
-     * Delete a particular accommodations equipment by id.
-     *
-     * @param accommodationsEquipmentId:string
-     * @param callback
-     */
-    deleteAccommodationEquipmentById = (accommodationsEquipmentId:string, callback) => {
-        this.db.remove(accommodationsEquipmentId, callback);
-    };
-
+    
 }
