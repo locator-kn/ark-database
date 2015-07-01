@@ -56,8 +56,9 @@ class Database {
         // search trips
         LIST_SEARCH_TRIP: 'search/searchlist/city',
 
-        // cities with trips
+        // static data
         LIST_DATA_CITY_TRIPS: 'data/listall/cities_trips',
+        LIST_LOCATION_TAGS:'data/listall/locationTags',
 
         // trips
         LIST_TRIP_ALL: 'trip/listall/trip',
@@ -183,12 +184,9 @@ class Database {
         server.expose('getLocationsByCityAndUser', this.location.getLocationsByCityAndUser);
         server.expose('getLocationsByTripId', this.location.getLocationsByTripId);
         
-        // static data city
-        server.expose('getCities', this.staticdata.getCities);
+        // static data
         server.expose('getCitiesWithTrips', this.staticdata.getCitiesWithTrips);
-        server.expose('createCity', this.staticdata.createCity);
-        server.expose('updateCity', this.staticdata.updateCity);
-        server.expose('deleteCityById', this.staticdata.deleteCityById);
+        server.expose('getAllTagsFromLocations', this.staticdata.getAllTagsFromLocations);
 
         // attachment
         server.expose('getPicture', this.attachment.getPicture);

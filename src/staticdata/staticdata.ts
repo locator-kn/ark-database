@@ -12,16 +12,6 @@ class StaticData {
 
     // GET
 
-
-    /**
-     * Get cities from database.
-     *
-     * @param callback
-     */
-    getCities = (callback) => {
-        this.db.list(this.LISTS.LIST_DATA_CITY, callback);
-    };
-
     /**
      * Get cities with trips
      * @param callback
@@ -30,39 +20,13 @@ class StaticData {
         return this.util.retrieveAllValues(this.LISTS.LIST_DATA_CITY_TRIPS, {reduce: true, group: true});
     };
 
-
     /**
-     * Create a new City.
-     *
-     * @param city:json-object
-     * @param callback
+     * Get all tags which are used in locations
+     * @returns {*}
      */
-    createCity = (city, callback) => {
-        this.util.createDocument(city, callback);
-    };
+    getAllTagsFromLocations = () => {
+        return this.util.retrieveAllValues(this.LISTS.LIST_LOCATION_TAGS);
+    }
 
 
-    /**
-     * Update city information.
-     *
-     * @param cityId:string
-     * @param city:City
-     * @param callback
-     */
-    updateCity = (cityId:string, city, callback) => {
-        this.util.updateDocumentWithCallback(cityId, city, callback);
-    };
-
-
-    /**
-     * Delete a particular city by id.
-     *
-     * @param cityId:string
-     * @param callback
-     */
-    deleteCityById = (cityId:string, callback) => {
-        this.db.remove(cityId, callback);
-    };
-
-    
 }

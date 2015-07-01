@@ -106,6 +106,13 @@ var designData = {
     content: {
         language: 'javascript',
         views: {
+            locationTags: {
+                "map": function(doc) {
+                    if (doc.type == 'location' && !doc.delete) {
+                        emit(null,null) //TODO
+                    }
+                }
+            },
             cities_trips: {
                 "map": function (doc) {
                     if (doc.type == 'trip' && !doc.delete && doc.public) {
