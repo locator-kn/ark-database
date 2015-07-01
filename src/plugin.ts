@@ -36,11 +36,15 @@ class Database {
 
     // define Lists
     private LISTS = {
+
+        // user
         LIST_USER_ALL: 'user/listall/user',
         LIST_USER_PUBLIC: 'user/listall/user_public',
         LIST_USER_LOGIN: 'user/listall/login',
         LIST_ADMIN_LOGIN: 'user/listall/loginAdmin',
         LIST_USER_UUID: 'user/listall/uuid',
+
+        // locations
         LIST_LOCATION_USER: 'location/listall/locationByUser',
         LIST_LOCATION_LOCATION: 'location/listall/location',
         LIST_LOCATION_PRELOCATION_USER: 'location/listall/preLocationByUser',
@@ -48,6 +52,8 @@ class Database {
         LIST_PUBLIC_LOCATION_BY_CITY: 'location/listall/locationByCity',
         LIST_LOCATION_BY_CITY_AND_USER: 'location/listall/locationByCityAndUser',
         LIST_LOCATION_BY_TRIP: 'location/listall/locationByTrip',
+
+        // trips
         LIST_SEARCH_TRIP: 'search/searchlist/city',
         LIST_DATA_CITY: 'data/listall/cities',
         LIST_DATA_CITY_TRIPS: 'data/listall/cities_trips',
@@ -56,6 +62,8 @@ class Database {
         LIST_TRIP_USER: 'trip/listall/tripByUserId',
         LIST_TRIP_MY: 'trip/listall/myTrips',
         LIST_TRIP_BY_LOCATION: 'trip/listall/tripsByLocation',
+
+        // chat
         LIST_CHAT_CONVERSATIONS: 'chat/listallByUserId/conversationsByUserId',
         LIST_CHAT_CONVERSATIONBYID: 'chat/listall/conversationsById',
         LIST_CHAT_MESSAGESBYCONVERSATIONID: 'chat/listall/messagesByConversationId',
