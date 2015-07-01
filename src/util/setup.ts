@@ -106,13 +106,6 @@ var designData = {
     content: {
         language: 'javascript',
         views: {
-            cities: {
-                "map": function (doc) {
-                    if (doc.type == 'city') {
-                        emit(doc._id, doc);
-                    }
-                }
-            },
             cities_trips: {
                 "map": function (doc) {
                     if (doc.type == 'trip' && !doc.delete && doc.public) {

@@ -53,15 +53,19 @@ class Database {
         LIST_LOCATION_BY_CITY_AND_USER: 'location/listall/locationByCityAndUser',
         LIST_LOCATION_BY_TRIP: 'location/listall/locationByTrip',
 
-        // trips
+        // search trips
         LIST_SEARCH_TRIP: 'search/searchlist/city',
-        LIST_DATA_CITY: 'data/listall/cities',
+
+        // cities with trips
         LIST_DATA_CITY_TRIPS: 'data/listall/cities_trips',
+
+        // trips
         LIST_TRIP_ALL: 'trip/listall/trip',
         LIST_TRIP_CITY: 'trip/listall/city',
         LIST_TRIP_USER: 'trip/listall/tripByUserId',
         LIST_TRIP_MY: 'trip/listall/myTrips',
         LIST_TRIP_BY_LOCATION: 'trip/listall/tripsByLocation',
+        LIST_PRETRIP_BY_ID: 'trip/listall/preTripById',
 
         // chat
         LIST_CHAT_CONVERSATIONS: 'chat/listallByUserId/conversationsByUserId',
