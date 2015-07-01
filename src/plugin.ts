@@ -208,6 +208,7 @@ class Database {
         server.expose('getMessagesByConversionId', this.chat.getMessagesByConversionId);
         server.expose('saveMessage', this.chat.saveMessage);
         server.expose('getExistingConversationByTwoUsers', this.chat.getExistingConversationByTwoUsers);
+        server.expose('getPagedMessagesByConversationId', this.chat.getPagedMessagesByConversationId);
     }
 
 
