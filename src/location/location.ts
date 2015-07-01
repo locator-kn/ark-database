@@ -82,7 +82,15 @@ class Location {
     };
 
     getLocationsByTripId = (tripid:string) => {
-        return this.util.retrieveAllValues(this.LISTS.LIST_LOCATION_BY_TRIP ,{key: tripid, include_docs: true})
+        return new Promise((resolve, reject) => {
+            this.db.view('location/locationByTrip', {key: tripid, include_docs: true}, (err, result) => {
+                if(err) {
+                    return reject(this.boom.badRequest(err))
+                }
+                resolve(this.reduceData(result))
+            })
+        })
+
     };
 
     createDefaultLocation = (userid:string) => {
@@ -181,4 +189,14 @@ class Location {
     updateLocation = (locationid:string, userid:string, location) => {
         return this.util.updateDocument(locationid, userid, location, this.TYPE, true);
     };
+
+    reduceData = (data:any) => {
+        var r = [];
+
+        data.forEach(function (value) {
+            r.push(value)
+        });
+
+        return r
+    }
 }
