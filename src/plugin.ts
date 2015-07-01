@@ -174,31 +174,13 @@ class Database {
         server.expose('getLocationsByCity', this.location.getLocationsByCity);
         server.expose('getLocationsByCityAndUser', this.location.getLocationsByCityAndUser);
         server.expose('getLocationsByTripId', this.location.getLocationsByTripId);
-
-        // static data mood
-        server.expose('getMoods', this.staticdata.getMoods);
-        server.expose('createMood', this.staticdata.createMood);
-        server.expose('updateMood', this.staticdata.updateMood);
-        server.expose('deleteMoodById', this.staticdata.deleteMoodById);
-
+        
         // static data city
         server.expose('getCities', this.staticdata.getCities);
         server.expose('getCitiesWithTrips', this.staticdata.getCitiesWithTrips);
         server.expose('createCity', this.staticdata.createCity);
         server.expose('updateCity', this.staticdata.updateCity);
         server.expose('deleteCityById', this.staticdata.deleteCityById);
-
-        // static data accommodations
-        server.expose('getAccommodations', this.staticdata.getAccommodations);
-        server.expose('createAccommodation', this.staticdata.createAccommodation);
-        server.expose('updateAccommodation', this.staticdata.updateAccommodation);
-        server.expose('deleteAccommodationById', this.staticdata.deleteAccommodationById);
-
-        // static data accommodations equipment
-        server.expose('getAccommodationsEquipment', this.staticdata.getAccommodationsEquipment);
-        server.expose('createAccommodationEquipment', this.staticdata.createAccommodationEquipment);
-        server.expose('updateAccommodationEquipment', this.staticdata.updateAccommodationEquipment);
-        server.expose('deleteAccommodationEquipmentById', this.staticdata.deleteAccommodationEquipmentById);
 
         // attachment
         server.expose('getPicture', this.attachment.getPicture);
