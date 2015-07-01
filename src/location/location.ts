@@ -82,7 +82,7 @@ class Location {
     };
 
     getLocationsByTripId = (tripid:string) => {
-        return this.util.retrieveAllValues(this.LISTS.LIST_LOCATION_BY_TRIP ,{key: tripid})
+        return this.util.retrieveAllValues(this.LISTS.LIST_LOCATION_BY_TRIP ,{key: tripid, include_docs: true})
     };
 
     createDefaultLocation = (userid:string) => {
