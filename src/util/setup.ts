@@ -16,8 +16,6 @@ export function setUpDesignDocuments(database:any, callback:any) {
 
     database.save(designTrip.title, designTrip.content, callback);
 
-    database.save(designMail.title, designMail.content, callback);
-
     database.save(designChat.title, designChat.content, callback);
 
 }
@@ -251,38 +249,6 @@ var designTrip = {
                             emit(key, doc);
                         }
 
-                    }
-                }
-            }
-        },
-        lists: {
-            listall: function (head, req) {
-                var row;
-                var result = [];
-                while (row = getRow()) {
-                    result.push(row.value);
-                }
-                send(JSON.stringify(result));
-            }
-        }
-    }
-};
-
-var designMail = {
-    title: "_design/mail",
-    content: {
-        views: {
-            registration: {
-                "map": function (doc) {
-                    if (doc.type == 'mail_registration') {
-                        emit(doc._id, doc);
-                    }
-                }
-            },
-            password_forgotten: {
-                "map": function (doc) {
-                    if (doc.type == 'mail_forgotten') {
-                        emit(doc._id, doc);
                     }
                 }
             }
