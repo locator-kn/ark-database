@@ -4,13 +4,14 @@
     "googlemap": "https://maps.googleapis.com/maps/api/staticmap?zoom=15&markers=47.668906023791884,9.169710874557495"
   },
   "tags": [
-    "htwg",
+    "Strandbar",
     "konstanz",
-    "geil"
+    "Bier",
+    "Strand",
+    "Cocktails"
   ],
-  "title": "HTWG KONSTANZ",
+  "title": "Strandbar Konstanz",
   "description": "Default location, welcher jeder user am anfang zu sehen bekommt",
-  "budget": "1000 Mark",
   "city": {
     "title": "Konstanz",
     "id": "58433437e7710a957cd798b0774a79385389035b",
