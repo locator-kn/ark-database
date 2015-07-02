@@ -37,8 +37,8 @@ class Chat {
      * @param conversation:any
      * @param callback
      */
-    createConversation = (conversation, callback) => {
-        this.util.createDocument(conversation, callback);
+    createConversation = (conversation:any) => {
+        this.util.createDocument(conversation);
     };
 
     /**
@@ -47,13 +47,8 @@ class Chat {
      * @param conversationId:string
      * @param callback
      */
-    getConversationById = (conversationId:string, callback) => {
-        this.db.list(this.LISTS.LIST_CHAT_CONVERSATIONBYID, {key: conversationId}, (err, data) => {
-            if (!err && data.length) {
-                return callback(err, data[0]);
-            }
-            callback(err, data);
-        });
+    getConversationById = (conversationId:string) => {
+      return this.util.retrieveSingleValue(this.LISTS.LIST_CHAT_CONVERSATIONBYID, {key: conversationId});
     };
 
     /**
