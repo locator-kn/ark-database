@@ -5,6 +5,7 @@ declare var send:any;
 declare var sum:any;
 declare var toJSON:any;
 
+import {DEFAULT_LOCATION, DEFAULT_USER} from '../plugin';
 
 export function setUpDesignDocuments(database:any, callback:any) {
 
@@ -17,6 +18,16 @@ export function setUpDesignDocuments(database:any, callback:any) {
     database.save(designTrip.title, designTrip.content, callback);
 
     database.save(designChat.title, designChat.content, callback);
+
+}
+
+export function createDefaultLocationAndUser(database:any, callback:any) {
+
+    var defaultUser = {};
+
+    database.save(DEFAULT_USER, defaultUser, callback);
+
+    createDefaultLocation(database, callback);
 
 }
 
