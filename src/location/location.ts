@@ -1,7 +1,8 @@
 declare var Promise:any;
 
 import Util from './../util/util';
-import Attachment from './../attachment/attachment'
+import Attachment from './../attachment/attachment';
+import {DEFAULT_LOCATION} from '../plugin';
 var fse = require('fs-extra');
 var path = require('path');
 
@@ -11,7 +12,6 @@ class Location {
     private TYPE:string = 'location';
     private boom:any;
     private hoek:any;
-    private DEFAULT_LOCATION:string = '214550acff8530ec9e03f97b2903d008';
     private attachment:any;
 
     constructor(private db:any, private LISTS:any) {
@@ -84,63 +84,13 @@ class Location {
     getLocationsByTripId = (tripid:string) => {
         return new Promise((resolve, reject) => {
             this.db.view('location/locationByTrip', {key: tripid, include_docs: true}, (err, result) => {
-                if(err) {
+                if (err) {
                     return reject(this.boom.badRequest(err))
                 }
                 resolve(this.reduceData(result))
             })
         })
 
-    };
-
-    createDefaultLocation = (userid:string) => {
-        return new Promise((resolve, reject) => {
-
-            // gather informations
-            var originalPicture = path.resolve(__dirname, './../defaultlocation/default-location.jpeg');
-            var thumbnailPicture = path.resolve(__dirname, './../defaultlocation/default-location-thumb.jpeg');
-            var filename = path.basename(originalPicture);
-            var thumbnailname = path.basename(thumbnailPicture);
-            var ext = path.extname(filename).substring(1);
-
-
-            var defaultLocation = fse.readJsonSync(path.resolve(__dirname, './../defaultlocation/defaultlocation.json'));
-
-            defaultLocation.userid = userid;
-
-            return this.util.createDocument(defaultLocation)
-                .then(value => {
-
-                    // stream picture
-                    var attachmentData = {
-                        'Content-Type': 'image/' + ext,
-                        name: filename
-                    };
-                    var readstream = fse.createReadStream(originalPicture);
-
-                    return this.attachment.savePicture(value.id, attachmentData, readstream)
-
-                }).then(value => {
-
-                    // stream thumbnail
-                    var attachmentData = {
-                        'Content-Type': 'image/' + ext,
-                        name: thumbnailname
-                    };
-                    var readstream = fse.createReadStream(thumbnailPicture);
-
-                    return this.attachment.savePicture(value.id, attachmentData, readstream)
-
-                }).then(value => {
-                    var images = {
-                        images: {
-                            picture: '/api/v1/users/' + value.id + '/' + filename,
-                            thumbnail: '/api/v1/users/' + value.id + '/' + thumbnailname
-                        }
-                    };
-                    return this.util.updateDocumentWithoutCheck(value.id, images)
-                }).catch(err => reject(err))
-        });
     };
 
     isLocationNotInUse = (locationid:string) => {
@@ -188,6 +138,32 @@ class Location {
      */
     updateLocation = (locationid:string, userid:string, location) => {
         return this.util.updateDocument(locationid, userid, location, this.TYPE, true);
+    };
+
+    /**
+     * Adds the default location to a user profile
+     * @param userid
+     */
+    addDefaultLocationToUser = (userid:string) => {
+        return new Promise((resolve, reject)=> {
+            this.db.get(DEFAULT_LOCATION, (err, result) => {
+
+                if (err) {
+                    return reject(this.boom.badRequest(err))
+                }
+                var defaultLocation = {};
+                defaultLocation[DEFAULT_LOCATION] = result.images;
+
+                this.db.merge(userid, {locations: defaultLocation}, (err, data) => {
+
+                    if (err) {
+                        return reject(this.boom.badRequest(err))
+                    }
+                    resolve(data)
+                })
+            });
+
+        })
     };
 
     reduceData = (data:any) => {
