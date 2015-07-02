@@ -4,4 +4,3 @@ build/
 lib/
 coverage.html
 *.tgz
-pass.json
