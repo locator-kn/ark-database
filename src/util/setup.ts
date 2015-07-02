@@ -121,7 +121,7 @@ var designData = {
                 },
                 "reduce": function (keys, values, rereduce) {
                     if(!rereduce) {
-                        var obj = keys[0][0][0];
+                        var obj = keys[0][0];
                         return {id: obj.id, title: obj.title, total: values.length, place_id: obj.place_id};
                     } else {
                         var a = 0;
