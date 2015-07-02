@@ -5,7 +5,12 @@ declare var send:any;
 declare var sum:any;
 declare var toJSON:any;
 
+var fse = require('fs-extra');
+var path = require('path');
+
+
 import {DEFAULT_LOCATION, DEFAULT_USER} from '../plugin';
+
 
 export function setUpDesignDocuments(database:any, callback:any) {
 
@@ -350,4 +355,63 @@ var designChat = {
             }
         }
     }
+};
+
+var createDefaultLocation = (database:any, callback:any) => {
+
+    var date = new Date();
+
+    // gather image information
+    var originalPicture = path.resolve(__dirname, './../defaultData/default-location.jpeg');
+    var thumbnailPicture = path.resolve(__dirname, './../defaultData/default-location-thumb.jpeg');
+    var filename = path.basename(originalPicture);
+    var thumbnailname = path.basename(thumbnailPicture);
+    var ext = path.extname(filename).substring(1);
+
+
+    var defaultLocation = fse.readJsonSync(path.resolve(__dirname, './../defaultData/defaultData.json'));
+
+    defaultLocation.userid = DEFAULT_USER;
+    defaultLocation.images = {
+        picture: 'api/v1/users/' + DEFAULT_USER + '/' + filename,
+        thumbnail: 'api/v1/users/' + DEFAULT_USER + '/' + thumbnailname
+    };
+    defaultLocation.create_date = date.toISOString();
+    defaultLocation.isDefault = true;
+
+    database.save(DEFAULT_LOCATION, defaultLocation, (err, result) => {
+
+        if (err) {
+            return callback(err);
+        }
+
+
+        var attachmentData = {
+            'Content-Type': 'image/' + ext,
+            name: filename
+        };
+
+        var readstream = fse.createReadStream(originalPicture);
+        var writestream = database.saveAttachment(result, attachmentData, (err, result)=> {
+
+            if (err) {
+                return callback(err);
+            }
+
+
+            var attachmentData = {
+                'Content-Type': 'image/' + ext,
+                name: thumbnailname
+            };
+            var readstream = fse.createReadStream(thumbnailPicture);
+            var writestream = database.saveAttachment(result, attachmentData, callback);
+
+            // stream thumbnail
+            readstream.pipe(writestream);
+        });
+
+        // stream picture
+        readstream.pipe(writestream);
+    })
+
 };
