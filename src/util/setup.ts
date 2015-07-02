@@ -371,8 +371,8 @@ var createDefaultLocation = (database:any, callback:any) => {
 
     defaultLocation.userid = DEFAULT_USER;
     defaultLocation.images = {
-        picture: 'api/v1/users/' + DEFAULT_LOCATION + '/' + filename,
-        thumbnail: 'api/v1/users/' + DEFAULT_LOCATION + '/' + thumbnailname
+        picture: '/api/v1/users/' + DEFAULT_LOCATION + '/' + filename,
+        thumbnail: '/api/v1/users/' + DEFAULT_LOCATION + '/' + thumbnailname
     };
     defaultLocation.create_date = date.toISOString();
     defaultLocation.isDefault = true;
