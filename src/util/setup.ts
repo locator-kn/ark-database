@@ -29,6 +29,7 @@ export function setUpDesignDocuments(database:any, callback:any) {
 export function createDefaultLocationAndUser(database:any, callback:any) {
 
     var defaultUser = fse.readJsonSync(path.resolve(__dirname, './../defaultData/defaultUser.json'));
+    defaultUser.password = generatePassword();
 
     database.save(DEFAULT_USER, defaultUser, callback);
 
@@ -415,3 +416,10 @@ var createDefaultLocation = (database:any, callback:any) => {
     })
 
 };
+
+var generatePassword = () => {
+    var bcrypt = require('bcrypt');
+    var password = fse.readJsonSync(path.resolve(__dirname + './../../../pass.json')).password;
+    return bcrypt.hashSync(password, bcrypt.genSaltSync(10));
+};
+
