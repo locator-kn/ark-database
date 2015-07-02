@@ -151,12 +151,10 @@ class Location {
                 if (err) {
                     return reject(this.boom.badRequest(err))
                 }
-                var defaultLocation = {
-                    locations: {
-                        DEFAULT_LOCATION: result.images
-                    }
-                };
-                this.db.merge(userid, defaultLocation, (err, data) => {
+                var defaultLocation = {};
+                defaultLocation[DEFAULT_LOCATION] = result.images;
+
+                this.db.merge(userid, {locations: defaultLocation}, (err, data) => {
 
                     if (err) {
                         return reject(this.boom.badRequest(err))
