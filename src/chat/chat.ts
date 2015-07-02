@@ -42,15 +42,21 @@ class Chat {
     conversationDoesNotExist = (userid:string, userid2:string) => {
         return new Promise((resolve, reject) => {
 
-            this.util.retrieveSingleValue(this.LISTS.LIST_CHAT_CONVERSATIONS_BY_TWO_USER, {
+            this.db.list(this.LISTS.LIST_CHAT_CONVERSATIONS_BY_TWO_USER, {
                 userId: userid,
                 userId2: userid2
-            }).then(value => {
-                return reject(value)
-            }).catch(value => {
-                return resolve();
+            }, (err, result) => {
+                if (err) {
+                    return reject(this.boom.badRequest(err))
+                }
+
+                if(!result.length || result[0].delete) {
+                    return resolve();
+                }
+
+                reject(result[0]);
             });
-        })
+        });
     };
 
     /**
@@ -78,7 +84,7 @@ class Chat {
      * @param callback
      */
     createConversation = (conversation:any) => {
-        this.util.createDocument(conversation);
+        return this.util.createDocument(conversation);
     };
 
     /**
