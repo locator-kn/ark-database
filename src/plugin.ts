@@ -13,6 +13,9 @@ export interface IRegister {
     attributes?: any;
 }
 
+export var DEFAULT_LOCATION = 'defaultLocation_StrandbarKonstanz';
+export var DEFAULT_USER = 'locator-app';
+
 /**
  * database plugin
  *
@@ -33,6 +36,7 @@ class Database {
     private util:any;
     private mail:any;
     private chat:any;
+    private pass:string;
 
     // define Lists
     private LISTS = {
@@ -58,7 +62,7 @@ class Database {
 
         // static data
         LIST_DATA_CITY_TRIPS: 'data/listall/cities_trips',
-        LIST_LOCATION_TAGS:'data/listall/locationTags',
+        LIST_LOCATION_TAGS: 'data/listall/locationTags',
 
         // trips
         LIST_TRIP_ALL: 'trip/listall/trip',
@@ -75,6 +79,7 @@ class Database {
         LIST_CHAT_CONVERSATIONS_BY_TWO_USER: 'chat/getExistingConversationByUsers/conversationsByUserId'
     };
 
+
     /**
      * Constructor to create a database instance
      *
@@ -89,28 +94,35 @@ class Database {
      *      port to connect to the storage location
      */
     constructor(private database:string, private env:any, url?:string, port?:number) {
-        // register plugin
-        this.register.attributes = {
-            pkg: require('./../../package.json')
-        };
+
+        if (!this.env || !this.env.pass) {
+            throw new Error('Credentials needed!!')
+        }
+
+        var dbEnv = this.env.db;
 
         // import database plugin
         this.cradle = require('cradle');
 
+        this.pass = env.pass;
         // use specific setup options if committed
-        if (this.env) {
-            if (!this.env['COUCH_USERNAME'] || !this.env['COUCH_USERNAME']) {
+        if (dbEnv) {
+            if (!dbEnv['COUCH_USERNAME'] || !dbEnv['COUCH_USERNAME']) {
                 throw new Error('database: please set up credentials');
             }
             this.cradle.setup({
                 host: url || 'localhost',
                 port: port || 5984,
                 auth: {
-                    username: this.env['COUCH_USERNAME'],
-                    password: this.env['COUCH_PASSWORD']
+                    username: dbEnv['COUCH_USERNAME'],
+                    password: dbEnv['COUCH_PASSWORD']
                 }
             });
         }
+        // register plugin
+        this.register.attributes = {
+            pkg: require('./../../package.json')
+        };
         this.openDatabase(database);
     }
 
@@ -179,14 +191,15 @@ class Database {
         server.expose('isLocationNotInUse', this.location.isLocationNotInUse);
         server.expose('togglePublicLocation', this.location.togglePublicLocation);
         server.expose('getPublicLocationsByUserId', this.location.getPublicLocationsByUserId);
-        server.expose('createDefaultLocation', this.location.createDefaultLocation);
         server.expose('getLocationsByCity', this.location.getLocationsByCity);
         server.expose('getLocationsByCityAndUser', this.location.getLocationsByCityAndUser);
         server.expose('getLocationsByTripId', this.location.getLocationsByTripId);
+        server.expose('addDefaultLocationToUser', this.location.addDefaultLocationToUser);
         
         // static data
         server.expose('getCitiesWithTrips', this.staticdata.getCitiesWithTrips);
         server.expose('getAllTagsFromLocations', this.staticdata.getAllTagsFromLocations);
+        server.expose('getDefaultLocation', this.staticdata.getDefaultLocation);
 
         // attachment
         server.expose('getPicture', this.attachment.getPicture);
@@ -209,6 +222,8 @@ class Database {
         server.expose('saveMessage', this.chat.saveMessage);
         server.expose('getExistingConversationByTwoUsers', this.chat.getExistingConversationByTwoUsers);
         server.expose('getPagedMessagesByConversationId', this.chat.getPagedMessagesByConversationId);
+        server.expose('conversationDoesNotExist', this.chat.conversationDoesNotExist);
+        server.expose('updateConversation', this.chat.updateConversation);
     }
 
 
@@ -233,7 +248,7 @@ class Database {
     public setup(data, callback) {
         if (!data) {
             // intern database views
-            setup(this.db, callback);
+            setup(this.db, this.pass, callback);
         } else if (data.key) {
             // view document
             this.db.save(data.key, data.value, callback);
