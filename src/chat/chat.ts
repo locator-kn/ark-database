@@ -16,8 +16,8 @@ class Chat {
      * @param userid
      * @param callback
      */
-    getConversationsByUserId = (userid:string, callback) => {
-        this.db.list(this.LISTS.LIST_CHAT_CONVERSATIONS, {userId: userid}, callback);
+    getConversationsByUserId = (userid:string) => {
+        return this.util.retrieveAllValues(this.LISTS.LIST_CHAT_CONVERSATIONS, {userId: userid});
     };
 
     /**
@@ -27,8 +27,54 @@ class Chat {
      * @param userid2
      * @param callback
      */
-    getExistingConversationByTwoUsers = (userid:string, userid2:string, callback) => {
-        this.db.list(this.LISTS.LIST_CHAT_CONVERSATIONS_BY_TWO_USER, {userId: userid, userId2: userid2}, callback);
+    getExistingConversationByTwoUsers = (userid:string, userid2:string) => {
+        return this.util.retrieveSingleValue(this.LISTS.LIST_CHAT_CONVERSATIONS_BY_TWO_USER, {
+            userId: userid,
+            userId2: userid2
+        });
+    };
+
+    /**
+     * Checks if a conversation of two users does not exist
+     * @param userid
+     * @param userid2
+     */
+    conversationDoesNotExist = (userid:string, userid2:string) => {
+        return new Promise((resolve, reject) => {
+
+            this.db.list(this.LISTS.LIST_CHAT_CONVERSATIONS_BY_TWO_USER, {
+                userId: userid,
+                userId2: userid2
+            }, (err, result) => {
+                if (err) {
+                    return reject(this.boom.badRequest(err))
+                }
+
+                if(!result.length || result[0].delete) {
+                    return resolve();
+                }
+
+                reject(result[0]);
+            });
+        });
+    };
+
+    /**
+     * Update a conversation object with new value
+     * @param conversationid
+     * @param value
+     */
+    updateConversation = (conversationid:string, value:any) => {
+        return new Promise((resolve, reject) => {
+            this.util.updateDocumentWithCallback(conversationid, value, (err, res) => {
+
+                if (err) {
+                    return reject(err);
+                }
+
+                resolve(res);
+            });
+        })
     };
 
     /**
@@ -37,8 +83,8 @@ class Chat {
      * @param conversation:any
      * @param callback
      */
-    createConversation = (conversation, callback) => {
-        this.util.createDocument(conversation, callback);
+    createConversation = (conversation:any) => {
+        return this.util.createDocument(conversation);
     };
 
     /**
@@ -47,13 +93,8 @@ class Chat {
      * @param conversationId:string
      * @param callback
      */
-    getConversationById = (conversationId:string, callback) => {
-        this.db.list(this.LISTS.LIST_CHAT_CONVERSATIONBYID, {key: conversationId}, (err, data) => {
-            if (!err && data.length) {
-                return callback(err, data[0]);
-            }
-            callback(err, data);
-        });
+    getConversationById = (conversationId:string) => {
+        return this.util.retrieveSingleValue(this.LISTS.LIST_CHAT_CONVERSATIONBYID, {key: conversationId});
     };
 
     /**
