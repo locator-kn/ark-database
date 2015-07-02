@@ -14,6 +14,7 @@ export interface IRegister {
 }
 
 export var DEFAULT_LOCATION = 'defaultLocation_StrandbarKonstanz';
+export var DEFAULT_USER = 'locator-app';
 
 /**
  * database plugin
@@ -183,7 +184,6 @@ class Database {
         server.expose('isLocationNotInUse', this.location.isLocationNotInUse);
         server.expose('togglePublicLocation', this.location.togglePublicLocation);
         server.expose('getPublicLocationsByUserId', this.location.getPublicLocationsByUserId);
-        server.expose('createDefaultLocation', this.location.createDefaultLocation);
         server.expose('getLocationsByCity', this.location.getLocationsByCity);
         server.expose('getLocationsByCityAndUser', this.location.getLocationsByCityAndUser);
         server.expose('getLocationsByTripId', this.location.getLocationsByTripId);

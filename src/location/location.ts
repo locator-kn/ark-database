@@ -93,56 +93,6 @@ class Location {
 
     };
 
-    createDefaultLocation = (userid:string) => {
-        return new Promise((resolve, reject) => {
-
-            // gather informations
-            var originalPicture = path.resolve(__dirname, './../defaultlocation/default-location.jpeg');
-            var thumbnailPicture = path.resolve(__dirname, './../defaultlocation/default-location-thumb.jpeg');
-            var filename = path.basename(originalPicture);
-            var thumbnailname = path.basename(thumbnailPicture);
-            var ext = path.extname(filename).substring(1);
-
-
-            var defaultLocation = fse.readJsonSync(path.resolve(__dirname, './../defaultlocation/defaultlocation.json'));
-
-            defaultLocation.userid = userid;
-
-            return this.util.createDocument(defaultLocation)
-                .then(value => {
-
-                    // stream picture
-                    var attachmentData = {
-                        'Content-Type': 'image/' + ext,
-                        name: filename
-                    };
-                    var readstream = fse.createReadStream(originalPicture);
-
-                    return this.attachment.savePicture(value.id, attachmentData, readstream)
-
-                }).then(value => {
-
-                    // stream thumbnail
-                    var attachmentData = {
-                        'Content-Type': 'image/' + ext,
-                        name: thumbnailname
-                    };
-                    var readstream = fse.createReadStream(thumbnailPicture);
-
-                    return this.attachment.savePicture(value.id, attachmentData, readstream)
-
-                }).then(value => {
-                    var images = {
-                        images: {
-                            picture: '/api/v1/users/' + value.id + '/' + filename,
-                            thumbnail: '/api/v1/users/' + value.id + '/' + thumbnailname
-                        }
-                    };
-                    return this.util.updateDocumentWithoutCheck(value.id, images)
-                }).catch(err => reject(err))
-        });
-    };
-
     isLocationNotInUse = (locationid:string) => {
         return new Promise((resolve, reject) => {
 
