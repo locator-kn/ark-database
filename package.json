@@ -20,6 +20,7 @@
     "lab": "5.x.x"
   },
   "dependencies": {
+    "bcrypt": "^0.8.3",
     "boom": "^2.7.1",
     "cradle": "^0.6.9",
     "fs-extra": "^0.20.0",
