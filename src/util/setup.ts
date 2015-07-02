@@ -28,7 +28,7 @@ export function setUpDesignDocuments(database:any, callback:any) {
 
 export function createDefaultLocationAndUser(database:any, callback:any) {
 
-    var defaultUser = {};
+    var defaultUser = fse.readJsonSync(path.resolve(__dirname, './../defaultData/defaultUser.json'));
 
     database.save(DEFAULT_USER, defaultUser, callback);
 
@@ -369,7 +369,7 @@ var createDefaultLocation = (database:any, callback:any) => {
     var ext = path.extname(filename).substring(1);
 
 
-    var defaultLocation = fse.readJsonSync(path.resolve(__dirname, './../defaultData/defaultData.json'));
+    var defaultLocation = fse.readJsonSync(path.resolve(__dirname, './../defaultData/defaultlocation.json'));
 
     defaultLocation.userid = DEFAULT_USER;
     defaultLocation.images = {

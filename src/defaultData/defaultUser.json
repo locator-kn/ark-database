@@ -1,3 +1,14 @@
 {
-
+  "password": "$2a$10$c6RQUipxUCNowIghuMXfmOcds/T/0LbkxoCvLsOusagYZpuesxQ5G",
+  "strategy": "default",
+  "uuid": "fc769dbe-45e3-4ae6-ab4a-5c34173602e7",
+  "verified": true,
+  "type": "user",
+  "birthdate": "1990-06-05T22:00:00.000Z",
+  "residence": "Konstanz, Deutschland",
+  "description": "Locator",
+  "mail": "team@locator-app.com",
+  "surname": "weiss",
+  "name": "locator-app",
+  "isAdmin": true
 }
