@@ -61,7 +61,7 @@ class Database {
 
         // static data
         LIST_DATA_CITY_TRIPS: 'data/listall/cities_trips',
-        LIST_LOCATION_TAGS:'data/listall/locationTags',
+        LIST_LOCATION_TAGS: 'data/listall/locationTags',
 
         // trips
         LIST_TRIP_ALL: 'trip/listall/trip',
@@ -77,7 +77,6 @@ class Database {
         LIST_CHAT_MESSAGESBYCONVERSATIONID: 'chat/listall/messagesByConversationId',
         LIST_CHAT_CONVERSATIONS_BY_TWO_USER: 'chat/getExistingConversationByUsers/conversationsByUserId'
     };
-
 
 
     /**
