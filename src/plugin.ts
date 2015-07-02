@@ -36,6 +36,7 @@ class Database {
     private util:any;
     private mail:any;
     private chat:any;
+    private pass:string;
 
     // define Lists
     private LISTS = {
@@ -93,28 +94,35 @@ class Database {
      *      port to connect to the storage location
      */
     constructor(private database:string, private env:any, url?:string, port?:number) {
-        // register plugin
-        this.register.attributes = {
-            pkg: require('./../../package.json')
-        };
+
+        if (!this.env || !this.env.pass) {
+            throw new Error('Credentials needed!!')
+        }
+
+        var dbEnv = this.env.db;
 
         // import database plugin
         this.cradle = require('cradle');
 
+        this.pass = env.pass;
         // use specific setup options if committed
-        if (this.env) {
-            if (!this.env['COUCH_USERNAME'] || !this.env['COUCH_USERNAME']) {
+        if (dbEnv) {
+            if (!dbEnv['COUCH_USERNAME'] || !dbEnv['COUCH_USERNAME']) {
                 throw new Error('database: please set up credentials');
             }
             this.cradle.setup({
                 host: url || 'localhost',
                 port: port || 5984,
                 auth: {
-                    username: this.env['COUCH_USERNAME'],
-                    password: this.env['COUCH_PASSWORD']
+                    username: dbEnv['COUCH_USERNAME'],
+                    password: dbEnv['COUCH_PASSWORD']
                 }
             });
         }
+        // register plugin
+        this.register.attributes = {
+            pkg: require('./../../package.json')
+        };
         this.openDatabase(database);
     }
 
@@ -240,7 +248,7 @@ class Database {
     public setup(data, callback) {
         if (!data) {
             // intern database views
-            setup(this.db, callback);
+            setup(this.db, this.pass, callback);
         } else if (data.key) {
             // view document
             this.db.save(data.key, data.value, callback);
