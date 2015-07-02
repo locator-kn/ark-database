@@ -146,17 +146,19 @@ class Location {
      */
     addDefaultLocationToUser = (userid:string) => {
         return new Promise((resolve, reject)=> {
-            this.db.get(DEFAULT_LOCATION, (err,result) => {
+            this.db.get(DEFAULT_LOCATION, (err, result) => {
 
                 if (err) {
                     return reject(this.boom.badRequest(err))
                 }
                 var defaultLocation = {
-                    locations: result.images
+                    locations: {
+                        DEFAULT_LOCATION: result.images
+                    }
                 };
                 this.db.merge(userid, defaultLocation, (err, data) => {
 
-                    if(err) {
+                    if (err) {
                         return reject(this.boom.badRequest(err))
                     }
                     resolve(data)
