@@ -27,8 +27,8 @@ class Chat {
      * @param userid2
      * @param callback
      */
-    getExistingConversationByTwoUsers = (userid:string, userid2:string, callback) => {
-        this.db.list(this.LISTS.LIST_CHAT_CONVERSATIONS_BY_TWO_USER, {userId: userid, userId2: userid2}, callback);
+    getExistingConversationByTwoUsers = (userid:string, userid2:string) => {
+       return this.util.retrieveSingleValue(this.LISTS.LIST_CHAT_CONVERSATIONS_BY_TWO_USER , {userId: userid, userId2: userid2});
     };
 
     /**
