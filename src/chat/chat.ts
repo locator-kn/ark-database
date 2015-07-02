@@ -17,7 +17,7 @@ class Chat {
      * @param callback
      */
     getConversationsByUserId = (userid:string) => {
-       return this.util.retrieveAllValues(this.LISTS.LIST_CHAT_CONVERSATIONS, {userId: userid});
+        return this.util.retrieveAllValues(this.LISTS.LIST_CHAT_CONVERSATIONS, {userId: userid});
     };
 
     /**
@@ -28,7 +28,47 @@ class Chat {
      * @param callback
      */
     getExistingConversationByTwoUsers = (userid:string, userid2:string) => {
-       return this.util.retrieveSingleValue(this.LISTS.LIST_CHAT_CONVERSATIONS_BY_TWO_USER , {userId: userid, userId2: userid2});
+        return this.util.retrieveSingleValue(this.LISTS.LIST_CHAT_CONVERSATIONS_BY_TWO_USER, {
+            userId: userid,
+            userId2: userid2
+        });
+    };
+
+    /**
+     * Checks if a conversation of two users does not exist
+     * @param userid
+     * @param userid2
+     */
+    conversationDoesNotExist = (userid:string, userid2:string) => {
+        return new Promise((resolve, reject) => {
+
+            this.util.retrieveSingleValue(this.LISTS.LIST_CHAT_CONVERSATIONS_BY_TWO_USER, {
+                userId: userid,
+                userId2: userid2
+            }).then(value => {
+                return reject(value)
+            }).catch(value => {
+                return resolve();
+            });
+        })
+    };
+
+    /**
+     * Update a conversation object with new value
+     * @param conversationid
+     * @param value
+     */
+    updateConversation = (conversationid:string, value:any) => {
+        return new Promise((resolve, reject) => {
+            this.util.updateDocumentWithCallback(conversationid, value, (err, res) => {
+
+                if (err) {
+                    return reject(err);
+                }
+
+                resolve(res);
+            });
+        })
     };
 
     /**
@@ -48,7 +88,7 @@ class Chat {
      * @param callback
      */
     getConversationById = (conversationId:string) => {
-      return this.util.retrieveSingleValue(this.LISTS.LIST_CHAT_CONVERSATIONBYID, {key: conversationId});
+        return this.util.retrieveSingleValue(this.LISTS.LIST_CHAT_CONVERSATIONBYID, {key: conversationId});
     };
 
     /**
