@@ -28,10 +28,7 @@ export function setUpDesignDocuments(database:any, callback:any) {
 
 export function createDefaultLocationAndUser(database:any, password, callback:any) {
 
-    var defaultUser = fse.readJsonSync(path.resolve(__dirname, './../defaultData/defaultUser.json'));
-    defaultUser.password = generatePassword(password);
-
-    database.save(DEFAULT_USER, defaultUser, callback);
+    createDefaultUser(database, password, callback);
 
     createDefaultLocation(database, callback);
 
@@ -415,6 +412,60 @@ var createDefaultLocation = (database:any, callback:any) => {
         readstream.pipe(writestream);
     })
 
+};
+
+var createDefaultUser = (database:any, password:string, callback:any) => {
+
+    var date = new Date();
+
+    // gather image information
+    var originalPicture = path.resolve(__dirname, './../defaultData/profile.jpeg');
+    var thumbnailPicture = path.resolve(__dirname, './../defaultData/profile-thumb.jpeg');
+    var filename = path.basename(originalPicture);
+    var thumbnailname = path.basename(thumbnailPicture);
+    var ext = path.extname(filename).substring(1);
+
+    var defaultUser = fse.readJsonSync(path.resolve(__dirname, './../defaultData/defaultUser.json'));
+    defaultUser.password = generatePassword(password);
+    defaultUser.create_date = date.toISOString();
+    defaultUser.picture = {
+        picture: '/api/v1/users/' + DEFAULT_USER + '/' + filename,
+        thumbnail: '/api/v1/users/' + DEFAULT_USER + '/' + thumbnailname
+    };
+
+    database.save(DEFAULT_USER, defaultUser, (err, result) => {
+
+        if (err) {
+            return callback(err);
+        }
+
+
+        var attachmentData = {
+            'Content-Type': 'image/' + ext,
+            name: filename
+        };
+
+        var readstream = fse.createReadStream(originalPicture);
+        var writestream = database.saveAttachment(result, attachmentData, (err, result)=> {
+
+            if (err) {
+                return callback(err);
+            }
+
+            var attachmentData = {
+                'Content-Type': 'image/' + ext,
+                name: thumbnailname
+            };
+            var readstream = fse.createReadStream(thumbnailPicture);
+            var writestream = database.saveAttachment(result, attachmentData, callback);
+
+            // stream thumbnail
+            readstream.pipe(writestream);
+        });
+
+        // stream picture
+        readstream.pipe(writestream);
+    });
 };
 
 var generatePassword = (password:string) => {
