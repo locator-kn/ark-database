@@ -107,9 +107,9 @@ var designData = {
         language: 'javascript',
         views: {
             locationTags: {
-                "map": function(doc) {
+                "map": function (doc) {
                     if (doc.type == 'location' && !doc.delete) {
-                        emit(null,null) //TODO
+                        emit(null, null) //TODO
                     }
                 }
             },
@@ -120,13 +120,13 @@ var designData = {
                     }
                 },
                 "reduce": function (keys, values, rereduce) {
-                    if(!rereduce) {
+                    if (!rereduce) {
                         var obj = keys[0][0][0];
                         return {id: obj.id, title: obj.title, total: values.length, place_id: obj.place_id};
                     } else {
                         var a = 0;
                         var curr = values[values.length - 1];
-                        for(var i=0; i<values.length; i++)  {
+                        for (var i = 0; i < values.length; i++) {
                             a += values[i].total
                         }
                         return {id: curr.id, title: curr.title, total: a, place_id: curr.place_id}
@@ -195,7 +195,7 @@ var designLocation = {
                 }
             },
             locationByTrip: {
-                "map": function(doc) {
+                "map": function (doc) {
                     if (doc.type == 'trip' && !doc.delete) {
                         for (var location in doc.locations) {
                             emit(doc._id, {_id: location})
