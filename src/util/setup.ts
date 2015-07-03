@@ -134,7 +134,7 @@ var designData = {
                     }
                 },
                 "reduce": function (keys, values, rereduce) {
-                    if(!rereduce) {
+                    if (!rereduce) {
                         var obj = keys[0][0];
                         return {id: obj.id, title: obj.title, total: values.length, place_id: obj.place_id};
                     } else {
@@ -197,14 +197,14 @@ var designLocation = {
             locationByCity: {
                 "map": function (doc) {
                     if (doc.type == 'location' && !doc.preLocation && !doc.delete && doc.public) {
-                        emit(doc.city.title, doc);
+                        emit(doc.city.place_id, doc);
                     }
                 }
             },
             locationByCityAndUser: {
                 "map": function (doc) {
                     if (doc.type == 'location' && !doc.preLocation && !doc.delete) {
-                        emit([doc.city.title, doc.userid], doc);
+                        emit([doc.city.place_id, doc.userid], doc);
                     }
                 }
             },
