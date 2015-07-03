@@ -1,4 +1,5 @@
 import Util from './../util/util';
+import {log} from './../logging/logging'
 declare var Promise:any;
 
 export default
@@ -81,7 +82,38 @@ class Trip {
      * @param callback
      */
     deleteTripById = (tripId:string, userid:string) => {
-        return this.util.deleteDocument(tripId, userid, this.TYPE);
+        var promise = this.util.deleteDocument(tripId, userid, this.TYPE);
+
+        // async delete trip from other referenced documents
+        this.db.view('chat/conversationsByTripId', {key: tripId}, (err, res) => {
+            if (err) {
+                log('Error: could not delete trip id from other document: ' + err);
+            } else {
+
+                // iterate over each document (conversation) and delete the trip
+                res.forEach((value:any) => {
+                    var id = value._id;
+                    var rev = value._rev;
+
+                    if (value.trip) {
+                        delete value.trip;
+                        delete value._id;
+                        delete value._rev;
+
+                        this.db.save(id, rev, value, (err, result)=> {
+                            if (err) {
+                                log('Error: could not delete trip from document id:' + id +
+                                    'Because of: ' + err);
+                            } else {
+                                log('Successfully trip deleted')
+                            }
+                        })
+                    }
+                })
+            }
+        });
+
+        return promise;
     };
 
     /**
