@@ -320,6 +320,13 @@ var designChat = {
                         emit(doc.conversation_id, doc);
                     }
                 }
+            },
+            conversationsByTripId: {
+                "map": function (doc) {
+                    if (doc.trip && doc.type === 'conversation') {
+                        emit(doc.trip, doc);
+                    }
+                }
             }
         },
         lists: {
