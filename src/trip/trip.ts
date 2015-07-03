@@ -172,7 +172,7 @@ class Trip {
     getUserTrips = (userid:string, date:any) => {
         return new Promise((resolve, reject)=> {
             var opt = {
-                startkey: [userid, date || ''],
+                startkey: [userid, date || null],
                 endkey: [userid, {}]
             };
 
@@ -188,7 +188,7 @@ class Trip {
 
     getMyTrips = (userid:string, date:any, callback) => {
         var opt = {
-            startkey: [userid, date || ''],
+            startkey: [userid, date || null],
             endkey: [userid, {}]
         };
         this.db.view('trip/myTrips/', opt, (err, data) => {
