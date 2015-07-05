@@ -27,7 +27,18 @@ class Location {
      * @param callback
      */
     getLocationsByUserId = (userid:string) => {
-        return this.util.retrieveAllValues(this.LISTS.LIST_LOCATION_USER, {key: userid});
+        return new Promise((resolve, reject) => {
+            var options = {
+                key: userid,
+                include_docs: true
+            };
+            this.db.view('location/locationByUser', options, (err, res)=> {
+                if (err) {
+                    return reject(this.boom.badRequest(err));
+                }
+                resolve(this.reduceData(res))
+            })
+        });
     };
 
     /**
