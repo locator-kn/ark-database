@@ -13,8 +13,8 @@ export interface IRegister {
     attributes?: any;
 }
 
-export var DEFAULT_LOCATION = 'defaultLocation_StrandbarKonstanz';
-export var DEFAULT_USER = 'locator-app';
+export var DEFAULT_LOCATION = 'StrandbarKonstanz';
+export var DEFAULT_USER = 'locator';
 
 /**
  * database plugin
