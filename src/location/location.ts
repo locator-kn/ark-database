@@ -209,6 +209,38 @@ class Location {
         });
     };
 
+    deleteDefaultLocationFromUser = (userid:string) => {
+        return new Promise((resolve, reject) => {
+
+            this.db.get(userid, (err, result) => {
+
+                if (err) {
+                    return reject(this.boom.badRequest(err));
+                }
+
+                if (!result.defaultLocation) {
+                    return reject(this.boom.notFound('already deleted'));
+                }
+
+                var id = result._id;
+                var rev = result._rev;
+
+                delete result.defaultLocation;
+                delete result._id;
+                delete result._rev;
+
+                this.db.save(id, rev, result, (err, result) => {
+
+                    if (err) {
+                        return reject(this.boom.badRequest(err));
+                    }
+
+                    resolve(result);
+                })
+            })
+        })
+    };
+
     reduceData = (data:any) => {
         var r = [];
 
