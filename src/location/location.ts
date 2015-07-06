@@ -45,7 +45,15 @@ class Location {
      * Returns THE defaultlocation.
      */
     getDefaultLocation = () => {
+        return new Promise((resolve,reject) => {
+            this.db.get(DEFAULT_LOCATION, (err,res) => {
 
+                if (err) {
+                    return reject(this.boom.badRequest(err))
+                }
+                resolve(res);
+            })
+        })
     };
 
     /**
