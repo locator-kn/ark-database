@@ -42,6 +42,13 @@ class Location {
     };
 
     /**
+     * Returns THE defaultlocation.
+     */
+    getDefaultLocation = () => {
+
+    };
+
+    /**
      * Get all location of a user, which are public
      * @param userid
      * @returns {*}
@@ -50,6 +57,11 @@ class Location {
         return this.util.retrieveAllValues(this.LISTS.LIST_PUBLIC_LOCATION_BY_USER, {key: userid})
     };
 
+    /**
+     * Get all preLocation (unfinished) of a certain user
+     * @param userid
+     * @returns {*}
+     */
     getPreLocationsByUserId = (userid:string) => {
         return this.util.retrieveAllValues(this.LISTS.LIST_LOCATION_PRELOCATION_USER, {key: userid});
     };
@@ -84,14 +96,30 @@ class Location {
         });
     };
 
+    /**
+     * Returns a Promise with all locations from a certain city.
+     * @param city
+     * @returns {*}
+     */
     getLocationsByCity = (city:string) => {
         return this.util.retrieveAllValues(this.LISTS.LIST_PUBLIC_LOCATION_BY_CITY, {key: city});
     };
 
+    /**
+     * Get all "my" locations from a city (including private ones)
+     * @param city
+     * @param userid
+     * @returns {*}
+     */
     getLocationsByCityAndUser = (city:string, userid:string) => {
         return this.util.retrieveAllValues(this.LISTS.LIST_LOCATION_BY_CITY_AND_USER, {key: [city, userid]})
     };
 
+    /**
+     * Returns all location, which are in a certain trip
+     * @param tripid
+     * @returns {any}
+     */
     getLocationsByTripId = (tripid:string) => {
         return new Promise((resolve, reject) => {
             this.db.view('location/locationByTrip', {key: tripid, include_docs: true}, (err, result) => {
@@ -104,6 +132,11 @@ class Location {
 
     };
 
+    /**
+     * Checks if the location is in any trip and returns true if not.
+     * @param locationid
+     * @returns {any}
+     */
     isLocationNotInUse = (locationid:string) => {
         return new Promise((resolve, reject) => {
 
