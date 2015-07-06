@@ -36,7 +36,7 @@ class Chat {
                     return reject(this.boom.badRequest(err))
                 }
 
-                if(!result.length || result[0].delete) {
+                if (!result.length || result[0].delete) {
                     return resolve();
                 }
 
@@ -80,7 +80,7 @@ class Chat {
      * @param callback
      */
     getConversationById = (conversationId:string) => {
-        return this.util.retrieveSingleValue(this.LISTS.LIST_CHAT_CONVERSATIONBYID, {key: conversationId});
+        return this.util.retrieveSingleValue(this.LISTS.LIST_CHAT_CONVERSATIONBYID, conversationId);
     };
 
     /**

@@ -81,7 +81,7 @@ class Location {
      */
     getLocationById = (locationid:string) => {
         // don't return deleted locations
-        return this.util.retrieveSingleValue(locationid, this.LISTS.LIST_LOCATION_LOCATION);
+        return this.util.retrieveSingleValue(this.LISTS.LIST_LOCATION_LOCATION,locationid);
     };
 
     /**

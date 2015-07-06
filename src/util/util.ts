@@ -278,7 +278,7 @@ class Util {
      * @param list
      * @returns {any}
      */
-    retrieveSingleValue = (keyValue:any, list:string) => {
+    retrieveSingleValue = (list:string, keyValue:any) => {
         return new Promise((resolve, reject) => {
 
             this.db.list(list, {key: keyValue}, (err, result) => {

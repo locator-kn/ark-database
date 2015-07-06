@@ -30,7 +30,7 @@ class Trip {
      * @param callback
      */
     getTripById = (tripid:string) => {
-        return this.util.retrieveSingleValue(tripid, this.LISTS.LIST_TRIP_ALL);
+        return this.util.retrieveSingleValue(this.LISTS.LIST_TRIP_ALL, tripid);
     };
 
     /**
