@@ -169,7 +169,39 @@ class Location {
      * @param callback
      */
     deleteLocationById = (locationid:string, userid:string) => {
-        return this.util.deleteDocument(locationid, userid, this.TYPE)
+        return new Promise((resolve, reject) => {
+
+            this.db.get(locationid, (err, res) => {
+
+                if (err) {
+                    return reject(this.boom.badRequest(err));
+                }
+
+                if (!res.type || res.type !== this.TYPE) {
+                    return reject(this.boom.notAcceptable('Wrong document type'));
+                }
+
+                if (!res.userid || res.userid !== userid) {
+                    // check if it is the default Location
+                    if (locationid === DEFAULT_LOCATION) {
+                        return this.deleteDefaultLocationFromUser(userid);
+                    }
+                    return reject(this.boom.forbidden('Wrong user'));
+                }
+
+                if (res.delete) {
+                    return reject(this.boom.notFound('deleted'));
+                }
+
+                this.db.merge(locationid, {delete: true, deleteDate: new Date()}, (err, result) => {
+
+                    if (err) {
+                        return reject(this.boom.badRequest(err));
+                    }
+                    return resolve(result);
+                });
+            });
+        });
     };
 
     /**
