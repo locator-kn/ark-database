@@ -179,6 +179,7 @@ class Database {
         server.expose('updateTripsWithLocationImage', this.trip.updateTripsWithLocationImage);
         server.expose('togglePublicTrip', this.trip.togglePublicTrip);
         server.expose('removeLocationFromTrips', this.trip.removeLocationFromTrips);
+        server.expose('getAllTrips', this.trip.getAllTrips);
 
         // location
         server.expose('getLocationsByUserId', this.location.getLocationsByUserId);

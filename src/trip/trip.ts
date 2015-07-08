@@ -14,6 +14,13 @@ class Trip {
     }
 
     /**
+     * get all trip documents, which are not deleted
+     */
+    getAllTrips = () => {
+        return this.util.retrieveAllValues(this.LISTS.LIST_TRIP_ALL, undefined);
+    };
+
+    /**
      * Get trips from database.
      *
      * @param paginationOptions
