@@ -195,8 +195,9 @@ class Database {
         server.expose('getLocationsByCityAndUser', this.location.getLocationsByCityAndUser);
         server.expose('getLocationsByTripId', this.location.getLocationsByTripId);
         server.expose('addDefaultLocationToUser', this.location.addDefaultLocationToUser);
-        server.expose('getDefaultLocation',this.location.getDefaultLocation);
-        
+        server.expose('getDefaultLocation', this.location.getDefaultLocation);
+        server.expose('getAllLocations', this.location.getAllLocations);
+
         // static data
         server.expose('getCitiesWithTrips', this.staticdata.getCitiesWithTrips);
         server.expose('getAllTagsFromLocations', this.staticdata.getAllTagsFromLocations);

@@ -22,6 +22,13 @@ class Location {
     }
 
     /**
+     * Returns all locations, which are not deleted
+     * @returns {*}
+     */
+    getAllLocations = () => {
+        return this.util.retrieveAllValues(this.LISTS.LIST_LOCATION_LOCATION, undefined);
+    };
+    /**
      * Returns a list of location from a particular  user.
      * @param userid
      * @param callback
@@ -81,7 +88,7 @@ class Location {
      */
     getLocationById = (locationid:string) => {
         // don't return deleted locations
-        return this.util.retrieveSingleValue(this.LISTS.LIST_LOCATION_LOCATION,locationid);
+        return this.util.retrieveSingleValue(this.LISTS.LIST_LOCATION_LOCATION, locationid);
     };
 
     /**
