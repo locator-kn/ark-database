@@ -489,7 +489,6 @@ var createDefaultUser = (database:any, password:string, callback:any) => {
     var defaultUser = fse.readJsonSync(path.resolve(__dirname, './../defaultData/defaultUser.json'));
     defaultUser.password = generatePassword(password);
     defaultUser.create_date = date.toISOString();
-        picture: '/api/v1/users/' + DEFAULT_USER + '/' + filename,
     defaultUser.picture = '/api/v1/users/' + DEFAULT_USER + '/' + filename;
 
     database.save(DEFAULT_USER, defaultUser, (err, result) => {
