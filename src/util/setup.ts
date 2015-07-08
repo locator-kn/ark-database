@@ -7,6 +7,7 @@ declare var toJSON:any;
 
 var fse = require('fs-extra');
 var path = require('path');
+var imageUtil = require('locator-image-utility');
 
 
 import {DEFAULT_LOCATION, DEFAULT_USER} from '../plugin';
@@ -368,24 +369,44 @@ var designChat = {
 
 var createDefaultLocation = (database:any, callback:any) => {
 
-    var date = new Date();
-
     // gather image information
     var originalPicture = path.resolve(__dirname, './../defaultData/default-location.jpeg');
-    var thumbnailPicture = path.resolve(__dirname, './../defaultData/default-location-thumb.jpeg');
-    var filename = path.basename(originalPicture);
-    var thumbnailname = path.basename(thumbnailPicture);
-    var ext = path.extname(filename).substring(1);
+    var ext = path.extname(path.basename(originalPicture)).substring(1);
+    var readstreamPicture = fse.createReadStream(originalPicture);
 
+    // simulate request
+    var options = {
+        path: '/api/v1/',
+        id: DEFAULT_LOCATION,
+        contentType: 'image/' + ext,
+        stream: readstreamPicture,
+    };
 
+    var cropping = {
+        x: 0,
+        y: 0,
+        width: 1389,
+        height: 819
+    };
+
+    var imageProcessor = imageUtil.image.processor(options);
+    if (imageProcessor.error) {
+        return callback(imageProcessor.error);
+    }
+
+    var pictureData = imageProcessor.createFileInformation(DEFAULT_LOCATION, 'locations');
+    var attachmentData = pictureData.attachmentData;
+
+    // location document
     var defaultLocation = fse.readJsonSync(path.resolve(__dirname, './../defaultData/defaultlocation.json'));
 
+    // decorate default location
     defaultLocation.userid = DEFAULT_USER;
     defaultLocation.images = {
-        picture: '/api/v1/users/' + DEFAULT_LOCATION + '/' + filename,
-        thumbnail: '/api/v1/users/' + DEFAULT_LOCATION + '/' + thumbnailname
+        picture: pictureData.url,
+        googlemap: 'https://maps.googleapis.com/maps/api/staticmap?zoom=15&markers=47.66841743450943,9.170437082648277'
     };
-    defaultLocation.create_date = date.toISOString();
+    defaultLocation.create_date = new Date().toISOString();
     defaultLocation.isDefault = true;
 
     database.save(DEFAULT_LOCATION, defaultLocation, (err, result) => {
@@ -394,33 +415,62 @@ var createDefaultLocation = (database:any, callback:any) => {
             return callback(err);
         }
 
+        // create streams
+        var max = imageProcessor.createCroppedStream(cropping, imageUtil.size.max.size);  // max
+        var mid = imageProcessor.createCroppedStream(cropping, imageUtil.size.mid.size);  // mid
+        var small = imageProcessor.createCroppedStream(cropping, imageUtil.size.small.size); //small
+        var mobile = imageProcessor.createCroppedStream(cropping, imageUtil.size.mobile.size);  // mobile
+        var mobilethumb = imageProcessor.createCroppedStream(cropping, imageUtil.size.mobileThumb.size);  // mobileThumb
 
-        var attachmentData = {
-            'Content-Type': 'image/' + ext,
-            name: filename
-        };
-
-        var readstream = fse.createReadStream(originalPicture);
+        attachmentData.name = imageUtil.size.max.name;
         var writestream = database.saveAttachment(result, attachmentData, (err, result)=> {
 
             if (err) {
                 return callback(err);
             }
 
+            attachmentData.name = imageUtil.size.mid.name;
+            var writestream = database.saveAttachment(result, attachmentData, (err, result)=> {
 
-            var attachmentData = {
-                'Content-Type': 'image/' + ext,
-                name: thumbnailname
-            };
-            var readstream = fse.createReadStream(thumbnailPicture);
-            var writestream = database.saveAttachment(result, attachmentData, callback);
+                if (err) {
+                    return callback(err);
+                }
 
-            // stream thumbnail
-            readstream.pipe(writestream);
+                attachmentData.name = imageUtil.size.small.name;
+                var writestream = database.saveAttachment(result, attachmentData, (err, result)=> {
+
+                    if (err) {
+                        return callback(err);
+                    }
+
+                    attachmentData.name = imageUtil.size.mobile.name;
+                    var writestream = database.saveAttachment(result, attachmentData, (err, result)=> {
+
+                        if (err) {
+                            return callback(err);
+                        }
+
+                        attachmentData.name = imageUtil.size.mobileThumb.name;
+                        var writestream = database.saveAttachment(result, attachmentData, callback);
+
+                        // stream mobilethumb
+                        mobilethumb.pipe(writestream);
+                    });
+
+                    // stream mobile
+                    mobile.pipe(writestream);
+                });
+
+                // stream small
+                small.pipe(writestream);
+            });
+
+            // stream mid
+            mid.pipe(writestream);
         });
 
         // stream picture
-        readstream.pipe(writestream);
+        max.pipe(writestream);
     })
 
 };
@@ -439,10 +489,8 @@ var createDefaultUser = (database:any, password:string, callback:any) => {
     var defaultUser = fse.readJsonSync(path.resolve(__dirname, './../defaultData/defaultUser.json'));
     defaultUser.password = generatePassword(password);
     defaultUser.create_date = date.toISOString();
-    defaultUser.picture = {
         picture: '/api/v1/users/' + DEFAULT_USER + '/' + filename,
-        thumbnail: '/api/v1/users/' + DEFAULT_USER + '/' + thumbnailname
-    };
+    defaultUser.picture = '/api/v1/users/' + DEFAULT_USER + '/' + filename;
 
     database.save(DEFAULT_USER, defaultUser, (err, result) => {
 
@@ -453,7 +501,7 @@ var createDefaultUser = (database:any, password:string, callback:any) => {
 
         var attachmentData = {
             'Content-Type': 'image/' + ext,
-            name: filename
+            name: 'user'
         };
 
         var readstream = fse.createReadStream(originalPicture);
@@ -465,7 +513,7 @@ var createDefaultUser = (database:any, password:string, callback:any) => {
 
             var attachmentData = {
                 'Content-Type': 'image/' + ext,
-                name: thumbnailname
+                name: 'userThumb'
             };
             var readstream = fse.createReadStream(thumbnailPicture);
             var writestream = database.saveAttachment(result, attachmentData, callback);
