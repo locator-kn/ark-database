@@ -32,6 +32,7 @@
     "gulp-tsc": "^0.9.3",
     "gulp-typescript": "^2.5.0",
     "hoek": "^2.14.0",
+    "locator-image-utility": "^4.1.0",
     "merge2": "^0.3.1",
     "node-notifier": "^4.1.2",
     "readable-stream": "^1.0.33",
