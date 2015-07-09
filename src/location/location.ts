@@ -43,7 +43,18 @@ class Location {
                 if (err) {
                     return reject(this.boom.badRequest(err));
                 }
-                resolve(this.reduceData(res))
+                var result = this.reduceData(res);
+
+                // provide default location on top
+                result.sort((a, b)=> {
+                    if (a._id === DEFAULT_LOCATION) {
+                        return 0;
+                    } else {
+                        return 1;
+                    }
+                });
+
+                resolve(result)
             })
         });
     };
