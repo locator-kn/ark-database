@@ -90,17 +90,24 @@ class Chat {
      * @param callback
      */
     getMessagesByConversionId = (conversationId:string, query:any)=> {
-        var options:any = {
-            startkey: [conversationId],
-            endkey: [conversationId, {}],
-            include_docs: true,
-            descending: true
-        };
-
+        var options:any = {};
         if (query && query.elements) {
-            options.limit = query.elements;
-            options.skip = query.elements * query.page;
+            options = {
+                startkey: [conversationId, {}],
+                endkey: [conversationId],
+                include_docs: true,
+                descending: true,
+                limit: query.elements,
+                skip: query.elements * query.page
+            };
+        } else {
+            options = {
+                endkey: [conversationId, {}],
+                startkey: [conversationId],
+                include_docs: true,
+            };
         }
+
 
         return new Promise((resolve, reject) => {
             this.db.view('chat/messagesByConversationIdPage', options, (err, res) => {
@@ -113,7 +120,8 @@ class Chat {
             })
 
         })
-    };
+    }
+        ;
 
     /**
      * Check if user is part of the conversation
