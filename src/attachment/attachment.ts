@@ -1,7 +1,7 @@
-declare
-var Promise:any;
+declare var Promise:any;
 
 import Util from './../util/util';
+import {logError} from './../logging/logging'
 
 export default
 class Attachment {
@@ -23,12 +23,10 @@ class Attachment {
      * @param filename
      * @param callback
      */
-    getPicture = (documentid:string, filename:string, callback) => {
-        // TODO: callback?
+    getPicture = (documentid:string, filename:string) => {
         return new this.Readable().wrap(this.db.getAttachment(documentid, filename, (err) => {
-            //TODO: log error with good
             if (err) {
-                console.log(err)
+                logError(err)
             }
         }));
 
