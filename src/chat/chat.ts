@@ -94,7 +94,7 @@ class Chat {
             if (err) {
                 return callback(err);
             }
-            data.sort((a, b) => {
+            data.sort((a:any, b:any) => {
                 return a.timestamp - b.timestamp;
             });
             callback(null, data);
