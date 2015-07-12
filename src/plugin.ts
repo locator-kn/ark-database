@@ -223,7 +223,6 @@ class Database {
         server.expose('getConversationById', this.chat.getConversationById);
         server.expose('getMessagesByConversionId', this.chat.getMessagesByConversionId);
         server.expose('saveMessage', this.chat.saveMessage);
-        server.expose('getPagedMessagesByConversationId', this.chat.getPagedMessagesByConversationId);
         server.expose('conversationDoesNotExist', this.chat.conversationDoesNotExist);
         server.expose('updateConversation', this.chat.updateConversation);
         server.expose('iAmPartOfThisConversation', this.chat.iAmPartOfThisConversation);

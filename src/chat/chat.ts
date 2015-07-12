@@ -89,25 +89,18 @@ class Chat {
      * @param conversationId:string
      * @param callback
      */
-    getMessagesByConversionId = (conversationId:string, callback) => {
-        this.db.list(this.LISTS.LIST_CHAT_MESSAGESBYCONVERSATIONID, {key: conversationId}, (err, data) => {
-            if (err) {
-                return callback(err);
-            }
-            data.sort((a:any, b:any) => {
-                return a.timestamp - b.timestamp;
-            });
-            callback(null, data);
-        });
-    };
-
-    getPagedMessagesByConversationId = (conversationId:string, query:any)=> {
-        var options = {
-            limit: query.elements,
-            skip: query.elements * query.page,
-            key: conversationId,
+    getMessagesByConversionId = (conversationId:string, query:any)=> {
+        var options:any = {
+            startkey: [conversationId],
+            endkey: [conversationId, {}],
             include_docs: true
         };
+
+        if (query && query.elements) {
+            options.limit = query.elements;
+            options.skip = query.elements * query.page;
+        }
+
         return new Promise((resolve, reject) => {
             this.db.view('chat/messagesByConversationIdPage', options, (err, res) => {
 
