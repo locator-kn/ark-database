@@ -93,7 +93,8 @@ class Chat {
         var options:any = {
             startkey: [conversationId],
             endkey: [conversationId, {}],
-            include_docs: true
+            include_docs: true,
+            descending: true
         };
 
         if (query && query.elements) {
