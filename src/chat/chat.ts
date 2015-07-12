@@ -122,6 +122,30 @@ class Chat {
     };
 
     /**
+     * Check if user is part of the conversation
+     * @param userid
+     * @param conversationid
+     * @returns {any}
+     */
+    iAmPartOfThisConversation = (userid:string, conversationid:string) => {
+        return new Promise((resolve, reject) => {
+            this.db.get(conversationid, (err, res) => {
+
+                if (err) {
+                    return reject(this.boom.badRequest(err))
+                }
+
+                if (userid != res.user_1 && userid != res.user_2) {
+                    return reject(this.boom.forbidden('you are not a fellow of this conversation'))
+                }
+
+                return resolve();
+            })
+
+        })
+    };
+
+    /**
      * Save new message
      *
      * @param messageObj
