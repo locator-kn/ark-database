@@ -332,7 +332,14 @@ var designChat = {
                         emit(doc.trip, doc);
                     }
                 }
+            }, messagesByConversationIdPage: {
+                "map": function (doc) {
+                    if (doc.type == 'message') {
+                        emit(doc.conversation_id, {_id: doc._id});
+                    }
+                }
             }
+
         },
         lists: {
             listall: function (head, req) {
