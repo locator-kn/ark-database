@@ -132,6 +132,33 @@ class Location {
     };
 
     /**
+     * Returns a location paginated with elements and page
+     * @param city
+     * @param query
+     */
+    getPagedLocationsByCity =(city:string, query:any) => {
+       var  options = {
+            key: city,
+            include_docs: true,
+            limit: query.elements,
+            skip: query.elements * query.page
+        };
+
+        return new Promise((resolve, reject) => {
+            this.db.view('locations/pagedLocationsByCity', options, (err, res) => {
+
+                if (err) {
+                    return reject(this.boom.badRequest(err));
+                }
+
+                resolve(this.reduceData(res));
+            })
+
+        })
+
+    };
+
+    /**
      * Get all "my" locations from a city (including private ones)
      * @param city
      * @param userid
