@@ -221,6 +221,13 @@ var designLocation = {
                         }
                     }
                 }
+            },
+            pagedLocationsByCity: {
+                "map": function (doc) {
+                    if (doc.type == 'location' && !doc.preLocation && !doc.delete && doc.public) {
+                        emit(doc.city.place_id, {_id: doc._id});
+                    }
+                }
             }
         },
         lists: {
