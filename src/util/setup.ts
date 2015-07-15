@@ -124,7 +124,7 @@ var designData = {
             locationTags: {
                 "map": function (doc) {
                     if (doc.type == 'location' && !doc.delete) {
-                        emit(null, null) //TODO
+                        emit(null, null); // v2 feature
                     }
                 }
             },
