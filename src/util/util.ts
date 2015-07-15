@@ -413,6 +413,19 @@ class Util {
 
         })
     };
+
+    getDocument = (documentId) => {
+      return new Promise((resolve,reject) => {
+          this.db.get(documentId, (err,res) => {
+
+              if (err) {
+                  return reject(this.boom.badRequest);
+              }
+
+              resolve(res);
+          })
+      })
+    };
     /**
      * empty pseudo callback
      */
