@@ -52,14 +52,18 @@ class Chat {
      */
     updateConversation = (conversationid:string, value:any) => {
         return new Promise((resolve, reject) => {
-            this.util.updateDocumentWithCallback(conversationid, value, (err, res) => {
+            this.db.get(conversationid, (err, res) => {
 
                 if (err) {
-                    return reject(err);
+                    return reject(this.boom.badRequest(err))
                 }
 
+                if (value.trip && res.trip && value.trip === res.trip) {
+                    res.duplicateTrip = true;
+                }
                 resolve(res);
-            });
+
+            })
         })
     };
 
