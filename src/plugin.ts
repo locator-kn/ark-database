@@ -217,6 +217,7 @@ class Database {
         server.expose('updateDocumentWithoutCheck', this.util.updateDocumentWithoutCheck);
         server.expose('updateDocumentWithCallback', this.util.updateDocumentWithCallback);
         server.expose('copyDocument', this.util.copyDocument);
+        server.expose('getDocument', this.util.getDocument);
 
         // chat
         server.expose('getConversationsByUserId', this.chat.getConversationsByUserId);
