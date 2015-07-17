@@ -102,6 +102,9 @@ class User {
     };
 
     private getLogin = (mail:string, list:string) => {
+        if(!mail) {
+            return Promise.reject(this.boom.badRequest('missing mail'));
+        }
         return new Promise((resolve, reject) => {
             this.db.list(list, {key: mail}, (err, result) => {
                 if (err || !result[0]) {
