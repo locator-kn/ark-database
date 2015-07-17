@@ -343,7 +343,7 @@ var designChat = {
             messagesByConversationIdPage: {
                 "map": function (doc) {
                     if (doc.type == 'message') {
-                        emit(doc.conversation_id, {_id: doc._id});
+                        emit([doc.conversation_id, doc.timestamp], {_id: doc._id});
                     }
                 }
             }
