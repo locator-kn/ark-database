@@ -60,8 +60,15 @@ class Chat {
 
                 if (value.trip && res.trip && value.trip === res.trip) {
                     res.duplicateTrip = true;
+                    return resolve(res)
                 }
-                resolve(res);
+                this.db.merge(conversationid, value, (err,res) => {
+
+                    if (err) {
+                        reject(this.boom.badRequest(err))
+                    }
+                    resolve(res);
+                });
 
             })
         })
