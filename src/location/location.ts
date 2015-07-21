@@ -33,8 +33,33 @@ class Location {
      * Returns all locations, which are not deleted
      * @returns {*}
      */
-    getAllLocationsPaged = (options) => {
-        return this.util.retrieveAllValues(this.LISTS.LIST_LOCATION_LOCATION, options);
+    getAllLocationsPaged = (query) => {
+        var options:any = {};
+        if (query && query.elements) {
+            options = {
+                startkey: [{}],
+                endkey: [],
+                include_docs: true,
+                descending: true,
+                limit: query.elements,
+                skip: query.elements * query.page
+            };
+        } else {
+            options = {
+                endkey: [{}],
+                startkey: [],
+                include_docs: true
+            };
+        }
+
+        return new Promise(function (resolve, reject) {
+            this.db.view('location/getAllLocationsPaged', options, function (err, res) {
+                if (err) {
+                    return reject(this.boom.badRequest(err));
+                }
+                resolve(this.reduceData(res));
+            });
+        });
     };
 
     /**
