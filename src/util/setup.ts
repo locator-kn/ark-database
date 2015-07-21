@@ -228,6 +228,13 @@ var designLocation = {
                         emit(doc.city.place_id, {_id: doc._id});
                     }
                 }
+            },
+            getAllLocationsPaged: {
+                "map": function (doc) {
+                    if (doc.type == 'location' && !doc.delete) {
+                        emit([doc._id, doc.create_date], { _id: doc._id });
+                    }
+                }
             }
         },
         lists: {

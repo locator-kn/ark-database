@@ -54,6 +54,7 @@ class Database {
         LIST_LOCATION_PRELOCATION_USER: 'location/listall/preLocationByUser',
         LIST_PUBLIC_LOCATION_BY_USER: 'location/listall/publicLocationByUser',
         LIST_PUBLIC_LOCATION_BY_CITY: 'location/listall/locationByCity',
+        LIST_LOCATION_PAGED: 'location/listall/getAllLocationsPaged',
         LIST_LOCATION_BY_CITY_AND_USER: 'location/listall/locationByCityAndUser',
         LIST_LOCATION_BY_TRIP: 'location/listall/locationByTrip',
 
