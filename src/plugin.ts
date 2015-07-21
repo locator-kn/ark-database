@@ -198,6 +198,7 @@ class Database {
         server.expose('addDefaultLocationToUser', this.location.addDefaultLocationToUser);
         server.expose('getDefaultLocation', this.location.getDefaultLocation);
         server.expose('getAllLocations', this.location.getAllLocations);
+        server.expose('getAllLocationsPaged', this.location.getAllLocationsPaged);
         server.expose('getPagedLocationsByCity', this.location.getPagedLocationsByCity);
 
         // static data
