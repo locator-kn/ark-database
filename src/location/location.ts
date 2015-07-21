@@ -28,6 +28,15 @@ class Location {
     getAllLocations = () => {
         return this.util.retrieveAllValues(this.LISTS.LIST_LOCATION_LOCATION, undefined);
     };
+
+    /**
+     * Returns all locations, which are not deleted
+     * @returns {*}
+     */
+    getAllLocationsPaged = (options) => {
+        return this.util.retrieveAllValues(this.LISTS.LIST_LOCATION_LOCATION, options);
+    };
+
     /**
      * Returns a list of location from a particular  user.
      * @param userid
