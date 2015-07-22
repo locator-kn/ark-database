@@ -176,7 +176,6 @@ class Database {
         server.expose('createTrip', this.trip.createTrip);
         server.expose('deleteTripById', this.trip.deleteTripById);
         server.expose('getUserTrips', this.trip.getUserTrips);
-        server.expose('getMyTrips', this.trip.getMyTrips);
         server.expose('updateTripsWithLocationImage', this.trip.updateTripsWithLocationImage);
         server.expose('togglePublicTrip', this.trip.togglePublicTrip);
         server.expose('removeLocationFromTrips', this.trip.removeLocationFromTrips);

@@ -205,34 +205,13 @@ class Trip {
     };
 
     /**
-     * Get all trips for this user id.
-     * @param userid
-     */
-    getUserTrips = (userid:string, date:any) => {
-        return new Promise((resolve, reject)=> {
-            var opt = {
-                startkey: [userid, date || null],
-                endkey: [userid, {}]
-            };
-
-            this.db.view('trip/tripByUserId/', opt, (err, data) => {
-
-                if (err) {
-                    return reject(this.boom.badRequest(err));
-                }
-                resolve(this.reduceData(data));
-            });
-        });
-    };
-
-    /**
      * Get all trips of with the specific userid, optional paged and within a certain date
      * @param userid
      * @param date
      * @param query
      * @returns {Promise<U>|Promise<Promise<void>|Promise<R>|Promise<Array>|void|string|string[]>|Thenable<U>|Thenable<Promise<void>|Promise<R>|Promise<Array>|void|string|string[]>}
      */
-    getMyTrips = (userid:string, date:any, query:any) => {
+    getUserTrips = (userid:string, date:any, query:any) => {
         var opt = {
             startkey: [userid, date || null],
             endkey: [userid, {}]
