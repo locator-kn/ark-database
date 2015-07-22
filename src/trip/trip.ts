@@ -208,20 +208,16 @@ class Trip {
      * Get all trips for this user id.
      * @param userid
      */
-    getUserTrips = (userid:string, date:any) => {
+    getUserTrips = (userid:string, date:any, query:any) => {
         return new Promise((resolve, reject)=> {
             var opt = {
                 startkey: [userid, date || null],
                 endkey: [userid, {}]
             };
-
-            this.db.view('trip/tripByUserId/', opt, (err, data) => {
-
-                if (err) {
-                    return reject(this.boom.badRequest(err));
-                }
-                resolve(this.reduceData(data));
-            });
+            return this.util.getPagedResults('trip/tripByUserId/', query.elements, query.page, opt)
+                .then(val => {
+                    return Promise.resolve(this.reduceData(val));
+                });
         });
     };
 
