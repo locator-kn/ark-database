@@ -231,7 +231,7 @@ var designLocation = {
             },
             getAllLocationsPaged: {
                 "map": function (doc) {
-                    if (doc.type == 'location' && !doc.delete) {
+                    if (doc.type == 'location' && doc.public && !doc.delete) {
                         emit([doc._id, doc.create_date], { _id: doc._id });
                     }
                 }
