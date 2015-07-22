@@ -50,20 +50,19 @@ class Location {
      * @param userid
      * @param callback
      */
-    getLocationsByUserId = (userid:string) => {
-        return new Promise((resolve, reject) => {
-            var options = {
-                key: userid,
-                include_docs: true
-            };
-            this.db.view('location/locationByUser', options, (err, res)=> {
-                if (err) {
-                    return reject(this.boom.badRequest(err));
-                }
-                var result = this.reduceData(res);
+    getLocationsByUserId = (userid:string, query:any) => {
+        var options = {
+            key: userid,
+            include_docs: true
+        };
+
+        return this.util.getPagedResults('location/locationByUser', query.elements, query.page, options)
+            .then(val => {
+                var result = this.reduceData(val);
 
                 // provide default location on top
-                result.sort((a, b)=> {
+                // TODO: needs to discussed
+                result.sort((a:any, b)=> {
                     if (a._id === DEFAULT_LOCATION) {
                         return 0;
                     } else {
@@ -71,9 +70,8 @@ class Location {
                     }
                 });
 
-                resolve(result)
+                return Promise.resolve(result)
             })
-        });
     };
 
     /**
