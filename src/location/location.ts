@@ -52,7 +52,7 @@ class Location {
             };
         }
 
-        return new Promise(function (resolve, reject) {
+        return new Promise((resolve, reject) => {
             this.db.view('location/getAllLocationsPaged', options, function (err, res) {
                 if (err) {
                     return reject(this.boom.badRequest(err));
