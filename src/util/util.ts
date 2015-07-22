@@ -137,8 +137,11 @@ class Util {
      */
     getPagedResults = (view:string, elements:any, page:any, options:any) => {
         var requestOptions:any = {};
-        requestOptions.limit = elements;
-        requestOptions.skip = elements * page;
+
+        if (page >= 0) {
+            requestOptions.limit = elements;
+            requestOptions.skip = elements * page;
+        }
 
         this.hoek.merge(requestOptions, options);
 
