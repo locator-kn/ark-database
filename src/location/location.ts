@@ -96,8 +96,18 @@ class Location {
      * @param userid
      * @returns {*}
      */
-    getPublicLocationsByUserId = (userid:string) => {
-        return this.util.retrieveAllValues(this.LISTS.LIST_PUBLIC_LOCATION_BY_USER, {key: userid})
+    getPublicLocationsByUserId = (userid:string, query) => {
+        if (!query.elements) {
+            return this.util.retrieveAllValues(this.LISTS.LIST_PUBLIC_LOCATION_BY_USER, {key: userid})
+        } else {
+            var options:any = {
+                key: userid
+            };
+            return this.util.getPagedResults('location/publicLocationByUser', query.elements, query.page, options)
+                .then(val => {
+                    return Promise.resolve(this.reduceData(val));
+                })
+        }
     };
 
     /**
