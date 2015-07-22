@@ -53,7 +53,7 @@ class Location {
         }
 
         return new Promise((resolve, reject) => {
-            this.db.view('location/getAllLocationsPaged', options, function (err, res) {
+            this.db.view('location/getAllLocationsPaged', options, (err, res) => {
                 if (err) {
                     return reject(this.boom.badRequest(err));
                 }
