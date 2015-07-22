@@ -34,32 +34,15 @@ class Location {
      * @returns {*}
      */
     getAllLocationsPaged = (query) => {
-        var options:any = {};
-        if (query && query.elements) {
-            options = {
-                startkey: [{}],
-                endkey: [],
-                include_docs: true,
-                descending: true,
-                limit: query.elements,
-                skip: query.elements * query.page
-            };
-        } else {
-            options = {
-                endkey: [{}],
-                startkey: [],
-                include_docs: true
-            };
-        }
+        var options = {
+            include_docs: true,
+            descending: true,
+        };
 
-        return new Promise((resolve, reject) => {
-            this.db.view('location/getAllLocationsPaged', options, (err, res) => {
-                if (err) {
-                    return reject(this.boom.badRequest(err));
-                }
-                resolve(this.reduceData(res));
+        return this.util.getPagedResults('location/getAllLocationsPaged', query.elements, query.page, options)
+            .then(val => {
+                return Promise.resolve(this.reduceData(val));
             });
-        });
     };
 
     /**
@@ -170,8 +153,8 @@ class Location {
      * @param city
      * @param query
      */
-    getPagedLocationsByCity =(city:string, query:any) => {
-       var  options = {
+    getPagedLocationsByCity = (city:string, query:any) => {
+        var options = {
             key: city,
             include_docs: true,
             limit: query.elements,
