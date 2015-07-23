@@ -1,5 +1,4 @@
-declare
-var Promise:any;
+declare var Promise:any;
 
 import Util from './../util/util';
 
@@ -20,8 +19,8 @@ class User {
      * @param userId:string
      * @param callback
      */
-    getUserById = (userId:string, callback) => {
-        this.util.getObjectOf(userId, this.LISTS.LIST_USER_PUBLIC, callback);
+    getUserById = (userId:string) => {
+        return this.util.retrieveSingleValue(this.LISTS.LIST_USER_PUBLIC, userId);
     };
 
     /**
@@ -102,7 +101,7 @@ class User {
     };
 
     private getLogin = (mail:string, list:string) => {
-        if(!mail) {
+        if (!mail) {
             return Promise.reject(this.boom.badRequest('missing mail'));
         }
         return new Promise((resolve, reject) => {
@@ -146,7 +145,7 @@ class User {
      * @param callback
      */
     deleteUserById = (userId:string) => {
-       return this.util.deleteDocument(userId, userId, this.TYPE);
+        return this.util.deleteDocument(userId, userId, this.TYPE);
     };
 
 }
