@@ -208,35 +208,35 @@ class Trip {
      * Get all trips for this user id.
      * @param userid
      */
-    getUserTrips = (userid:string, date:any) => {
+    getUserTrips = (userid:string, date:any, query:any) => {
         return new Promise((resolve, reject)=> {
             var opt = {
                 startkey: [userid, date || null],
                 endkey: [userid, {}]
             };
-
-            this.db.view('trip/tripByUserId/', opt, (err, data) => {
-
-                if (err) {
-                    return reject(this.boom.badRequest(err));
-                }
-                resolve(this.reduceData(data));
-            });
+            return this.util.getPagedResults('trip/tripByUserId/', query.elements, query.page, opt)
+                .then(val => {
+                    return Promise.resolve(this.reduceData(val));
+                });
         });
     };
 
-    getMyTrips = (userid:string, date:any, callback) => {
+    /**
+     * Get all trips of with the specific userid, optional paged and within a certain date
+     * @param userid
+     * @param date
+     * @param query
+     * @returns {Promise<U>|Promise<Promise<void>|Promise<R>|Promise<Array>|void|string|string[]>|Thenable<U>|Thenable<Promise<void>|Promise<R>|Promise<Array>|void|string|string[]>}
+     */
+    getMyTrips = (userid:string, date:any, query:any) => {
         var opt = {
             startkey: [userid, date || null],
             endkey: [userid, {}]
         };
-        this.db.view('trip/myTrips/', opt, (err, data) => {
-
-            if (err) {
-                return callback(err);
-            }
-            callback(null, this.reduceData(data))
-        });
+        return this.util.getPagedResults('trip/myTrips/', query.elements, query.page, opt)
+            .then(val => {
+                return Promise.resolve(this.reduceData(val));
+            });
     };
 
     reduceData = (data:any) => {

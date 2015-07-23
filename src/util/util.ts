@@ -130,6 +130,34 @@ class Util {
     };
 
     /**
+     * Get paginated results from a certain view, according to elements & page
+     * @param view
+     * @param elements
+     * @param page
+     */
+    getPagedResults = (view:string, elements:any, page:any, options:any) => {
+        var requestOptions:any = {};
+
+        if (page >= 0) {
+            requestOptions.limit = elements;
+            requestOptions.skip = elements * page;
+        }
+
+        this.hoek.merge(requestOptions, options);
+
+        return new Promise((resolve, reject) => {
+            this.db.view(view, requestOptions, (err, res) => {
+
+                if (err) {
+                    return reject(this.boom.badRequest(err))
+                }
+                resolve(res);
+            })
+        })
+
+    };
+
+    /**
      * Create a view or list
      * @param name
      * @param views
@@ -415,16 +443,16 @@ class Util {
     };
 
     getDocument = (documentId) => {
-      return new Promise((resolve,reject) => {
-          this.db.get(documentId, (err,res) => {
+        return new Promise((resolve, reject) => {
+            this.db.get(documentId, (err, res) => {
 
-              if (err) {
-                  return reject(this.boom.badRequest);
-              }
+                if (err) {
+                    return reject(this.boom.badRequest);
+                }
 
-              resolve(res);
-          })
-      })
+                resolve(res);
+            })
+        })
     };
     /**
      * empty pseudo callback
