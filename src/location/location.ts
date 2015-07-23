@@ -34,32 +34,15 @@ class Location {
      * @returns {*}
      */
     getAllLocationsPaged = (query) => {
-        var options:any = {};
-        if (query && query.elements) {
-            options = {
-                startkey: [{}],
-                endkey: [],
-                include_docs: true,
-                descending: true,
-                limit: query.elements,
-                skip: query.elements * query.page
-            };
-        } else {
-            options = {
-                endkey: [{}],
-                startkey: [],
-                include_docs: true
-            };
-        }
+        var options = {
+            include_docs: true,
+            descending: true,
+        };
 
-        return new Promise((resolve, reject) => {
-            this.db.view('location/getAllLocationsPaged', options, (err, res) => {
-                if (err) {
-                    return reject(this.boom.badRequest(err));
-                }
-                resolve(this.reduceData(res));
+        return this.util.getPagedResults('location/getAllLocationsPaged', query.elements, query.page, options)
+            .then(val => {
+                return Promise.resolve(this.reduceData(val));
             });
-        });
     };
 
     /**
@@ -67,20 +50,19 @@ class Location {
      * @param userid
      * @param callback
      */
-    getLocationsByUserId = (userid:string) => {
-        return new Promise((resolve, reject) => {
-            var options = {
-                key: userid,
-                include_docs: true
-            };
-            this.db.view('location/locationByUser', options, (err, res)=> {
-                if (err) {
-                    return reject(this.boom.badRequest(err));
-                }
-                var result = this.reduceData(res);
+    getLocationsByUserId = (userid:string, query:any) => {
+        var options = {
+            key: userid,
+            include_docs: true
+        };
+
+        return this.util.getPagedResults('location/locationByUser', query.elements, query.page, options)
+            .then(val => {
+                var result = this.reduceData(val);
 
                 // provide default location on top
-                result.sort((a, b)=> {
+                // TODO: needs to discussed
+                result.sort((a:any, b)=> {
                     if (a._id === DEFAULT_LOCATION) {
                         return 0;
                     } else {
@@ -88,9 +70,8 @@ class Location {
                     }
                 });
 
-                resolve(result)
+                return Promise.resolve(result)
             })
-        });
     };
 
     /**
@@ -113,8 +94,18 @@ class Location {
      * @param userid
      * @returns {*}
      */
-    getPublicLocationsByUserId = (userid:string) => {
-        return this.util.retrieveAllValues(this.LISTS.LIST_PUBLIC_LOCATION_BY_USER, {key: userid})
+    getPublicLocationsByUserId = (userid:string, query) => {
+        if (!query.elements) {
+            return this.util.retrieveAllValues(this.LISTS.LIST_PUBLIC_LOCATION_BY_USER, {key: userid})
+        } else {
+            var options:any = {
+                key: userid
+            };
+            return this.util.getPagedResults('location/publicLocationByUser', query.elements, query.page, options)
+                .then(val => {
+                    return Promise.resolve(this.reduceData(val));
+                })
+        }
     };
 
     /**
@@ -170,8 +161,8 @@ class Location {
      * @param city
      * @param query
      */
-    getPagedLocationsByCity =(city:string, query:any) => {
-       var  options = {
+    getPagedLocationsByCity = (city:string, query:any) => {
+        var options = {
             key: city,
             include_docs: true,
             limit: query.elements,
