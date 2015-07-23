@@ -232,7 +232,7 @@ var designLocation = {
             getAllLocationsPaged: {
                 "map": function (doc) {
                     if (doc.type == 'location' && !doc.delete && !doc.preLocation && doc.public) {
-                        emit([doc._id, doc.create_date], { _id: doc._id });
+                        emit([doc.create_date, doc._id], { _id: doc._id });
                     }
                 }
             }
