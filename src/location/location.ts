@@ -41,7 +41,7 @@ class Location {
 
         return this.util.getPagedResults('location/getAllLocationsPaged', query.elements, query.page, options)
             .then(val => {
-                return Promise.resolve(this.reduceData(val));
+                return Promise.resolve(this._reduceData(val));
             });
     };
 
@@ -58,7 +58,7 @@ class Location {
 
         return this.util.getPagedResults('location/locationByUser', query.elements, query.page, options)
             .then(val => {
-                var result = this.reduceData(val);
+                var result = this._reduceData(val);
 
                 // provide default location on top
                 // TODO: needs to discussed
@@ -103,7 +103,7 @@ class Location {
             };
             return this.util.getPagedResults('location/publicLocationByUser', query.elements, query.page, options)
                 .then(val => {
-                    return Promise.resolve(this.reduceData(val));
+                    return Promise.resolve(this._reduceData(val));
                 })
         }
     };
@@ -176,7 +176,7 @@ class Location {
                     return reject(this.boom.badRequest(err));
                 }
 
-                resolve(this.reduceData(res));
+                resolve(this._reduceData(res));
             })
 
         })
@@ -204,7 +204,7 @@ class Location {
                 if (err) {
                     return reject(this.boom.badRequest(err))
                 }
-                resolve(this.reduceData(result))
+                resolve(this._reduceData(result))
             })
         })
 
@@ -284,7 +284,7 @@ class Location {
                 if (!res.userid || res.userid !== userid) {
                     // check if it is the default Location
                     if (locationid === DEFAULT_LOCATION) {
-                        return this.deleteDefaultLocationFromUser(userid);
+                        return this._deleteDefaultLocationFromUser(userid);
                     }
                     return reject(this.boom.forbidden('Wrong user'));
                 }
@@ -341,7 +341,7 @@ class Location {
         });
     };
 
-    deleteDefaultLocationFromUser = (userid:string) => {
+    _deleteDefaultLocationFromUser = (userid:string) => {
         return new Promise((resolve, reject) => {
 
             this.db.get(userid, (err, result) => {
@@ -373,7 +373,7 @@ class Location {
         })
     };
 
-    reduceData = (data:any) => {
+    _reduceData = (data:any) => {
         var r = [];
 
         data.forEach(function (value) {
