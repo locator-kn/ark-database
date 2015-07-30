@@ -211,6 +211,36 @@ class Location {
     };
 
     /**
+     * Returns related location to the given one
+     * @param locationid
+     * @param number
+     */
+    getRelatedLocations = (locationid:string, number:number) => {
+
+        // first get the city of location
+        return this.util.getDocument(locationid)
+            .then(value => {
+                // get all locations from city TODO: find better solution, not scalable
+                return this.getLocationsByCity(value.city.place_id);
+            }).then(locations => {
+                // get "number" random elements and return them
+
+                var length = locations.length;
+                var resultArray = [];
+
+                for (var i = 0; i < number; i++) {
+                    var randomIndex = Math.floor(Math.random() * (length - i - 1));
+                    resultArray.push(locations[randomIndex]);
+
+                    // remove entry to avoid duplicate entries in result array
+                    locations.splice(randomIndex, 1);
+                }
+
+                return Promise.resolve(resultArray)
+            })
+    };
+
+    /**
      * Checks if the location is in any trip and returns true if not.
      * @param locationid
      * @returns {any}

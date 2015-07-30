@@ -201,6 +201,7 @@ class Database {
         server.expose('getAllLocations', this.location.getAllLocations);
         server.expose('getAllLocationsPaged', this.location.getAllLocationsPaged);
         server.expose('getPagedLocationsByCity', this.location.getPagedLocationsByCity);
+        server.expose('getRelatedLocations', this.location.getRelatedLocations);
 
         // static data
         server.expose('getCitiesWithTrips', this.staticdata.getCitiesWithTrips);

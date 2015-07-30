@@ -209,16 +209,14 @@ class Trip {
      * @param userid
      */
     getUserTrips = (userid:string, date:any, query:any) => {
-        return new Promise((resolve, reject)=> {
-            var opt = {
-                startkey: [userid, date || null],
-                endkey: [userid, {}]
-            };
-            return this.util.getPagedResults('trip/tripByUserId/', query.elements, query.page, opt)
-                .then(val => {
-                    return Promise.resolve(this.reduceData(val));
-                });
-        });
+        var opt = {
+            startkey: [userid, date || null],
+            endkey: [userid, {}]
+        };
+        return this.util.getPagedResults('trip/tripByUserId/', query.elements, query.page, opt)
+            .then(val => {
+                return Promise.resolve(this.reduceData(val));
+            });
     };
 
     /**
