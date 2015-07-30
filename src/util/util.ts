@@ -447,7 +447,7 @@ class Util {
             this.db.get(documentId, (err, res) => {
 
                 if (err) {
-                    return reject(this.boom.badRequest);
+                    return reject(this.boom.badRequest(err));
                 }
 
                 resolve(res);
