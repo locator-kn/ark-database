@@ -211,6 +211,18 @@ class Location {
     };
 
     /**
+     * Returns related location to the given one
+     * @param locationid
+     * @param number
+     */
+    getRelatedLocations = (locationid:string, number:number) => {
+        return new Promise((resolve, reject) => {
+
+            
+        })
+    };
+
+    /**
      * Checks if the location is in any trip and returns true if not.
      * @param locationid
      * @returns {any}
