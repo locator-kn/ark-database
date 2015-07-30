@@ -17,8 +17,7 @@ class Util {
      * @param element
      * @param callback
      */
-    createDocument = (element, callback) => {
-        callback = callback || this.noop;
+    createDocument = (element) => {
         var date = new Date();
         element.create_date = date.toISOString();
 
@@ -26,7 +25,6 @@ class Util {
 
             this.db.save(element, (err, data) => {
 
-                callback(err, data);
                 if (err) {
                     return reject(Boom.badRequest(err));
                 }
@@ -452,10 +450,5 @@ class Util {
                 resolve(res);
             })
         })
-    };
-    /**
-     * empty pseudo callback
-     */
-    noop = () => {
     };
 }
