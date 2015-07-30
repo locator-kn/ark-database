@@ -121,9 +121,9 @@ class User {
      * @param password:string
      * @param callback
      */
-    updateUserPassword = (userId:string, password:string, callback) => {
+    updateUserPassword = (userId:string, password:string) => {
         // redirect to update method
-        this.updateUser(userId, {'password': password}, callback);
+        return this.updateUser(userId, {'password': password});
     };
 
     /**
