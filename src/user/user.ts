@@ -60,7 +60,7 @@ class User {
      * @param callback
      */
     createUser = (user) => {
-        this.util.createDocument(user);
+        return this.util.createDocument(user);
     };
 
 
