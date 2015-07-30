@@ -59,8 +59,8 @@ class User {
      * @param user:IUser
      * @param callback
      */
-    createUser = (user, callback) => {
-        this.util.createDocument(user, callback);
+    createUser = (user) => {
+        this.util.createDocument(user);
     };
 
 
