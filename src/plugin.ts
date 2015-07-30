@@ -183,25 +183,26 @@ class Database {
         server.expose('getAllTrips', this.trip.getAllTrips);
 
         // location
+        server.expose('getAllLocations', this.location.getAllLocations);
+        server.expose('getAllLocationsPaged', this.location.getAllLocationsPaged);
         server.expose('getLocationsByUserId', this.location.getLocationsByUserId);
+        server.expose('getDefaultLocation', this.location.getDefaultLocation);
+        server.expose('getPublicLocationsByUserId', this.location.getPublicLocationsByUserId);
+        server.expose('getPreLocationsByUserId', this.location.getPreLocationsByUserId);
         server.expose('getLocationById', this.location.getLocationById);
+        server.expose('togglePublicLocation', this.location.togglePublicLocation);
         server.expose('deleteLocationsByUserId', this.location.deleteLocationsByUserId);
+        server.expose('getLocationsByCity', this.location.getLocationsByCity);
+        server.expose('getPagedLocationsByCity', this.location.getPagedLocationsByCity);
+        server.expose('getLocationsByCityAndUser', this.location.getLocationsByCityAndUser);
+        server.expose('getLocationsByTripId', this.location.getLocationsByTripId);
+        server.expose('getRelatedLocations', this.location.getRelatedLocations);
+        server.expose('isLocationNotInUse', this.location.isLocationNotInUse);
         server.expose('deleteLocationById', this.location.deleteLocationById);
         server.expose('createLocation', this.location.createLocation);
         server.expose('updateLocation', this.location.updateLocation);
-        server.expose('getPreLocationsByUserId', this.location.getPreLocationsByUserId);
-        server.expose('isLocationNotInUse', this.location.isLocationNotInUse);
-        server.expose('togglePublicLocation', this.location.togglePublicLocation);
-        server.expose('getPublicLocationsByUserId', this.location.getPublicLocationsByUserId);
-        server.expose('getLocationsByCity', this.location.getLocationsByCity);
-        server.expose('getLocationsByCityAndUser', this.location.getLocationsByCityAndUser);
-        server.expose('getLocationsByTripId', this.location.getLocationsByTripId);
         server.expose('addDefaultLocationToUser', this.location.addDefaultLocationToUser);
-        server.expose('getDefaultLocation', this.location.getDefaultLocation);
-        server.expose('getAllLocations', this.location.getAllLocations);
-        server.expose('getAllLocationsPaged', this.location.getAllLocationsPaged);
-        server.expose('getPagedLocationsByCity', this.location.getPagedLocationsByCity);
-        server.expose('getRelatedLocations', this.location.getRelatedLocations);
+
 
         // static data
         server.expose('getCitiesWithTrips', this.staticdata.getCitiesWithTrips);
