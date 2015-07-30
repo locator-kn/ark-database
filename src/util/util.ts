@@ -2,14 +2,13 @@ declare var Promise:any;
 
 import {log} from './../logging/logging'
 
+var Boom = require('boom');
+var Hoek = require('hoek');
+
 export default
 class Util {
-    private boom:any;
-    private hoek:any;
 
     constructor(private db:any) {
-        this.boom = require('boom');
-        this.hoek = require('hoek');
     }
 
     /**
@@ -29,7 +28,7 @@ class Util {
 
                 callback(err, data);
                 if (err) {
-                    return reject(this.boom.badRequest(err));
+                    return reject(Boom.badRequest(err));
                 }
                 return resolve(data);
             });
@@ -50,20 +49,20 @@ class Util {
             this.db.get(documentId, (err, res) => {
 
                 if (err) {
-                    return reject(this.boom.badRequest(err));
+                    return reject(Boom.badRequest(err));
                 }
 
                 if (!res.type || res.type !== type) {
                     log('User ' + userid + ' tried to update ' + res.type + ' with ' + type);
-                    return reject(this.boom.notAcceptable('Wrong document type'));
+                    return reject(Boom.notAcceptable('Wrong document type'));
                 }
 
                 if (!res.userid || res.userid !== userid) {
-                    return reject(this.boom.forbidden());
+                    return reject(Boom.forbidden());
                 }
 
                 if (res.delete) {
-                    return reject(this.boom.notFound('deleted'));
+                    return reject(Boom.notFound('deleted'));
                 }
 
                 // update modified_date
@@ -78,12 +77,12 @@ class Util {
                     }
 
                     // deep merge of values before merge into database
-                    object = this.hoek.merge(res, object);
+                    object = Hoek.merge(res, object);
                 }
 
                 this.db.merge(documentId, object, (err, result) => {
                     if (err) {
-                        return reject(this.boom.badRequest(err));
+                        return reject(Boom.badRequest(err));
                     }
                     return resolve(result);
                 });
@@ -103,25 +102,25 @@ class Util {
             this.db.get(documentid, (err, res) => {
 
                 if (err) {
-                    return reject(this.boom.badRequest(err));
+                    return reject(Boom.badRequest(err));
                 }
 
                 if (!res.type || res.type !== type) {
-                    return reject(this.boom.notAcceptable('Wrong document type'));
+                    return reject(Boom.notAcceptable('Wrong document type'));
                 }
 
                 if (!res.userid || res.userid !== userid) {
-                    return reject(this.boom.forbidden('Wrong user'));
+                    return reject(Boom.forbidden('Wrong user'));
                 }
 
                 if (res.delete) {
-                    return reject(this.boom.notFound('deleted'));
+                    return reject(Boom.notFound('deleted'));
                 }
 
                 this.db.merge(documentid, {delete: true, deleteDate: new Date()}, (err, result) => {
 
                     if (err) {
-                        return reject(this.boom.badRequest(err));
+                        return reject(Boom.badRequest(err));
                     }
                     return resolve(result);
                 });
@@ -143,13 +142,13 @@ class Util {
             requestOptions.skip = elements * page;
         }
 
-        this.hoek.merge(requestOptions, options);
+        Hoek.merge(requestOptions, options);
 
         return new Promise((resolve, reject) => {
             this.db.view(view, requestOptions, (err, res) => {
 
                 if (err) {
-                    return reject(this.boom.badRequest(err))
+                    return reject(Boom.badRequest(err))
                 }
                 resolve(res);
             })
@@ -178,11 +177,11 @@ class Util {
         this.db.get(documentid, (err, result) => {
 
             if (err) {
-                return callback(this.boom.badRequest(err));
+                return callback(Boom.badRequest(err));
             }
 
             if (result.delete) {
-                return callback(this.boom.notFound('deleted'));
+                return callback(Boom.notFound('deleted'));
             }
 
             var toUpdate = {};
@@ -212,19 +211,19 @@ class Util {
             this.db.get(documentId, (err, res) => {
 
                 if (err) {
-                    return reject(this.boom.badRequest(err));
+                    return reject(Boom.badRequest(err));
                 }
 
                 if (!res.type || res.type !== type) {
-                    return reject(this.boom.notAcceptable('Wrong document type'));
+                    return reject(Boom.notAcceptable('Wrong document type'));
                 }
 
                 if (!res.userid || res.userid !== userid) {
-                    return reject(this.boom.forbidden());
+                    return reject(Boom.forbidden());
                 }
 
                 if (res.delete) {
-                    return reject(this.boom.notFound('deleted'));
+                    return reject(Boom.notFound('deleted'));
                 }
 
                 // update modified_date
@@ -239,7 +238,7 @@ class Util {
 
                 this.db.merge(documentId, res, (err, result) => {
                     if (err) {
-                        return reject(this.boom.badRequest(err));
+                        return reject(Boom.badRequest(err));
                     }
                     result.value = res.public;
                     return resolve(result);
@@ -274,10 +273,10 @@ class Util {
             this.db.query(options, (err, data, response) => {
 
                 if (err) {
-                    return reject(this.boom.badRequest(err));
+                    return reject(Boom.badRequest(err));
                 }
                 if (response !== 200) {
-                    return reject(this.boom.notFound('entry in database was not found'));
+                    return reject(Boom.notFound('entry in database was not found'));
                 }
 
                 return resolve(true);
@@ -297,10 +296,10 @@ class Util {
             this.db.list(list, {key: keyValue}, (err, result) => {
 
                 if (err) {
-                    return reject(this.boom.badRequest(err));
+                    return reject(Boom.badRequest(err));
                 }
                 if (!result.length || result[0].delete) {
-                    return reject(this.boom.notFound('Database entry not found'))
+                    return reject(Boom.notFound('Database entry not found'))
                 }
                 // return first entry from array
                 return resolve(result[0]);
@@ -320,7 +319,7 @@ class Util {
             this.db.list(list, options, (err, data) => {
 
                 if (err) {
-                    return reject(this.boom.badRequest(err));
+                    return reject(Boom.badRequest(err));
                 }
                 resolve(data);
             });
@@ -340,12 +339,11 @@ class Util {
         document.modified_date = date.toISOString();
         this.db.merge(documentId, document, (err, data) => {
             if (err) {
-                return callback(this.boom.badRequest(err))
+                return callback(Boom.badRequest(err))
             }
             return callback(null, data);
         });
     };
-
 
 
     /**
@@ -363,20 +361,20 @@ class Util {
             this.db.get(documentId, (err, res) => {
 
                 if (err) {
-                    return reject(this.boom.badRequest(err));
+                    return reject(Boom.badRequest(err));
                 }
 
                 if (res.delete) {
-                    return reject(this.boom.notFound('deleted'));
+                    return reject(Boom.notFound('deleted'));
                 }
 
                 // deep merge of values before merge into database
-                var mergedLocation = this.hoek.merge(res, document);
+                var mergedLocation = Hoek.merge(res, document);
 
                 this.db.merge(documentId, mergedLocation, (err, data) => {
 
                     if (err) {
-                        return reject(this.boom.badRequest(err));
+                        return reject(Boom.badRequest(err));
                     }
                     return resolve(data);
                 });
@@ -401,11 +399,11 @@ class Util {
             this.db.query(createOptions, (err, data, response) => {
 
                 if (err) {
-                    return reject(this.boom.badRequest(err))
+                    return reject(Boom.badRequest(err))
                 }
 
                 if (response >= 400) {
-                    return reject(this.boom.create(response))
+                    return reject(Boom.create(response))
                 }
 
                 var options = {
@@ -419,11 +417,11 @@ class Util {
                 this.db.query(options, (err, data, response)=> {
 
                     if (err) {
-                        return reject(this.boom.badRequest(err))
+                        return reject(Boom.badRequest(err))
                     }
 
                     if (response >= 400) {
-                        return reject(this.boom.create(response))
+                        return reject(Boom.create(response))
                     }
 
                     resolve(data)
@@ -443,10 +441,12 @@ class Util {
         return new Promise((resolve, reject) => {
             this.db.get(documentId, (err, res) => {
 
-                // TODO: check if deleted
-
                 if (err) {
-                    return reject(this.boom.badRequest(err));
+                    return reject(Boom.badRequest(err));
+                }
+
+                if (res.delete) {
+                    return reject(Boom.notFound('deleted'))
                 }
 
                 resolve(res);
