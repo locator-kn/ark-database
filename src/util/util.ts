@@ -199,6 +199,13 @@ class Util {
         });
     };
 
+    /**
+     * Inverts the boolean value of the public field of a document and return the new value.
+     * @param documentId
+     * @param userid
+     * @param type
+     * @returns {any}
+     */
     togglePublic = (documentId:string, userid:string, type:string) => {
         return new Promise((resolve, reject) => {
 
@@ -242,10 +249,10 @@ class Util {
     };
 
     /**
-     * Utiliy method for checking if a entry in the database exist.
+     * Utility method for checking if a entry in the database exist.
      * If an attachment name is emitted, this method is going to check if this file
      * exists in the database.
-     * @param documentid
+     * @param documentID
      * @param attachmentName (optional)
      * @returns a resolved promise, if the entry exit, rejected promise otherwise.
      */
@@ -339,6 +346,8 @@ class Util {
         });
     };
 
+
+
     /**
      * USE WITH CAUTION!! This method updates a document without checking for correct type or possessing user.
      * Use only if you are absolutely certain what are you doing. If not, use updateDocument().
@@ -375,6 +384,11 @@ class Util {
         });
     };
 
+    /**
+     * Function for copying a document
+     * @param documentid
+     * @returns {any}
+     */
     copyDocument = (documentid:string) => {
         return new Promise((resolve, reject)=> {
 
@@ -420,9 +434,16 @@ class Util {
         })
     };
 
+    /**
+     * Retrieve a document from database. Doesn't return deleted ones
+     * @param documentId
+     * @returns {any}
+     */
     getDocument = (documentId) => {
         return new Promise((resolve, reject) => {
             this.db.get(documentId, (err, res) => {
+
+                // TODO: check if deleted
 
                 if (err) {
                     return reject(this.boom.badRequest(err));
