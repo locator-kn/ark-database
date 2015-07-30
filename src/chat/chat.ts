@@ -14,7 +14,6 @@ class Chat {
     /**
      * Returns a list of conversations by userid.
      * @param userid
-     * @param callback
      */
     getConversationsByUserId = (userid:string) => {
         return this.util.retrieveAllValues(this.LISTS.LIST_CHAT_CONVERSATIONS, {userId: userid});
