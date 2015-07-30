@@ -164,8 +164,8 @@ class Chat {
      * @param messageObj
      * @param callback
      */
-    saveMessage = (messageObj, callback) => {
-        this.util.createDocument(messageObj, callback);
+    saveMessage = (messageObj) => {
+        return this.util.createDocument(messageObj);
     };
 
     reduceData = (data:any) => {
