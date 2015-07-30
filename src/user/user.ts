@@ -38,8 +38,8 @@ class User {
      *
      * @param callback
      */
-    getUsers = (callback) => {
-        this.db.list(this.LISTS.LIST_USER_ALL, callback);
+    getUsers = () => {
+        return this.util.retrieveAllValues(this.LISTS.LIST_USER_ALL);
     };
 
     /**
