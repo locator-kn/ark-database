@@ -49,8 +49,8 @@ class User {
      * @param user:IUser
      * @param callback
      */
-    updateUser = (userId:string, user:any, callback) => {
-        this.util.updateDocumentWithCallback(userId, user, callback);
+    updateUser = (userId:string, user:any) => {
+        return this.util.updateDocumentWithoutCheck(userId, user);
     };
 
     /**
