@@ -173,29 +173,32 @@ class Util {
      * @param valueToAppend
      * @param callback
      */
-    appendFieldValue = (documentid:string, field:string, valueToAppend:any, callback) => {
-        this.db.get(documentid, (err, result) => {
+    appendFieldValue = (documentid:string, field:string, valueToAppend:any, type:string) => {
+        return Promise((resolve, reject) => {
 
-            if (err) {
-                return callback(Boom.badRequest(err));
-            }
+            this.db.get(documentid, (err, result) => {
 
-            if (result.delete) {
-                return callback(Boom.notFound('deleted'));
-            }
+                if (err) {
+                    return reject(Boom.badRequest(err));
+                }
 
-            var toUpdate = {};
-            var fieldValue = result.field;
+                if (result.delete) {
+                    return reject(Boom.notFound('deleted'));
+                }
 
-            // if field is not present create a new one
-            if (!fieldValue) {
-                toUpdate[field] = valueToAppend;
-            } else {
-                toUpdate[field] = fieldValue.concat(valueToAppend);
-            }
+                var toUpdate = {};
+                var fieldValue = result.field;
 
-            this.updateDocumentWithCallback(documentid, toUpdate, callback);
-        });
+                // if field is not present create a new one
+                if (!fieldValue) {
+                    toUpdate[field] = valueToAppend;
+                } else {
+                    toUpdate[field] = fieldValue.concat(valueToAppend);
+                }
+
+                return this.updateDocument(documentid, documentid, toUpdate, type, false);
+            });
+        })
     };
 
     /**
