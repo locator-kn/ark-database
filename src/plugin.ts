@@ -156,16 +156,17 @@ class Database {
 
         // user
         server.expose('getUserById', this.user.getUserById);
-        server.expose('getUsers', this.user.getUsers);
         server.expose('getUserByUUID', this.user.getUserByUUID);
-        server.expose('getUserLogin', this.user.getUserLogin);
-        server.expose('getAdminLogin', this.user.getAdminLogin);
-        server.expose('createUser', this.user.createUser);
+        server.expose('getUsers', this.user.getUsers);
         server.expose('updateUser', this.user.updateUser);
-        server.expose('updateUserPassword', this.user.updateUserPassword);
-        server.expose('deleteUserById', this.user.deleteUserById);
-        server.expose('updateUserMail', this.user.updateUserMail);
+        server.expose('createUser', this.user.createUser);
+        server.expose('getUserLogin', this.user.getUserLogin);
         server.expose('isMailAvailable', this.user.isMailAvailable);
+        server.expose('getAdminLogin', this.user.getAdminLogin);
+        server.expose('updateUserPassword', this.user.updateUserPassword);
+        server.expose('updateUserMail', this.user.updateUserMail);
+        server.expose('deleteUserById', this.user.deleteUserById);
+
 
         // trip
         server.expose('getTrips', this.trip.getTrips);
