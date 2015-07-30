@@ -133,9 +133,10 @@ class User {
      * @param mail
      * @param callback
      */
-    updateUserMail = (userId:string, mail:any, callback) => {
-        // append new mail to field of user
-        this.util.appendFieldValue(userId, 'mail', mail, callback);
+    updateUserMail = (userId:string, mail:any) => {
+        return Promise.reject(this.boom.wrap('not implemented yet', 501));
+        /* // append new mail to field of user
+         this.util.appendFieldValue(userId, 'mail', mail,this.TYPE);*/
     };
 
     /**
