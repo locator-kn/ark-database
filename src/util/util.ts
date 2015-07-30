@@ -56,7 +56,9 @@ class Util {
                 }
 
                 if (!res.userid || res.userid !== userid) {
-                    return reject(Boom.forbidden());
+                    if (userid !== documentId) {
+                        return reject(Boom.forbidden());
+                    }
                 }
 
                 if (res.delete) {
