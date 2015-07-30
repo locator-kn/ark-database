@@ -15,7 +15,6 @@ class Util {
      * Create document with Timestamp.
      *
      * @param element
-     * @param callback
      */
     createDocument = (element) => {
         var date = new Date();
@@ -171,7 +170,6 @@ class Util {
      * @param documentid
      * @param field
      * @param valueToAppend
-     * @param callback
      */
     appendFieldValue = (documentid:string, field:string, valueToAppend:any, type:string) => {
         return Promise((resolve, reject) => {

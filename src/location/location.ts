@@ -48,7 +48,6 @@ class Location {
     /**
      * Returns a list of location from a particular  user.
      * @param userid
-     * @param callback
      */
     getLocationsByUserId = (userid:string, query:any) => {
         var options = {
@@ -120,7 +119,6 @@ class Location {
     /**
      * Returns a particular location from a location pool of a user.
      * @param locationid
-     * @param callback
      */
     getLocationById = (locationid:string) => {
         // don't return deleted locations
@@ -134,17 +132,6 @@ class Location {
      */
     togglePublicLocation = (locationid:string, userid:string) => {
         return this.util.togglePublic(locationid, userid, this.TYPE);
-    };
-
-    /**
-     * Deletes the entire location pool of a user.
-     * @param userid
-     * @param callback
-     */
-    deleteLocationsByUserId = (userid:string, callback) => {
-        callback({
-            error: 'not implemented yet!'
-        });
     };
 
     /**
@@ -265,8 +252,6 @@ class Location {
 
     /**
      * Deletes a particular location
-     * @param locationid
-     * @param callback
      */
     deleteLocationById = (locationid:string, userid:string) => {
         return new Promise((resolve, reject) => {
@@ -308,7 +293,6 @@ class Location {
      * Creates a new location and adds it to the location pool of a user.
      * @param userid
      * @param location
-     * @param callback
      */
     createLocation = (location) => {
         return this.util.createDocument(location);
@@ -318,7 +302,6 @@ class Location {
      * Updates a location of a user.
      * @param locationId
      * @param location
-     * @param callback
      */
     updateLocation = (locationid:string, userid:string, location) => {
         return this.util.updateDocument(locationid, userid, location, this.TYPE, true);

@@ -17,7 +17,6 @@ class StaticData {
 
     /**
      * Get cities with trips
-     * @param callback
      */
     getCitiesWithTrips = () => {
         return this.util.retrieveAllValues(this.LISTS.LIST_DATA_CITY_TRIPS, {reduce: true, group: true});

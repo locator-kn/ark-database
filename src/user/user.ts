@@ -17,7 +17,6 @@ class User {
      * Get user from database by specific user id.
      *
      * @param userId:string
-     * @param callback
      */
     getUserById = (userId:string) => {
         return this.util.retrieveSingleValue(this.LISTS.LIST_USER_PUBLIC, userId);
@@ -26,7 +25,6 @@ class User {
     /**
      * get user by UUID
      * @param uuid
-     * @param callback
      */
     getUserByUUID = (uuid:string) => {
         return this.util.retrieveSingleValue(this.LISTS.LIST_USER_UUID, uuid);
@@ -34,9 +32,8 @@ class User {
 
 
     /**
-     * Get user from database by specific user id.
+     * Get all users.
      *
-     * @param callback
      */
     getUsers = () => {
         return this.util.retrieveAllValues(this.LISTS.LIST_USER_ALL);
@@ -47,7 +44,6 @@ class User {
      *
      * @param userId:string
      * @param user:IUser
-     * @param callback
      */
     updateUser = (userId:string, user:any) => {
         return this.util.updateDocument(userId, userId, user, this.TYPE);
@@ -57,7 +53,6 @@ class User {
      * Create a new user.
      *
      * @param user:IUser
-     * @param callback
      */
     createUser = (user) => {
         return this.util.createDocument(user);
@@ -119,7 +114,6 @@ class User {
      *
      * @param userId:string
      * @param password:string
-     * @param callback
      */
     updateUserPassword = (userId:string, password:string) => {
         // redirect to update method
@@ -131,7 +125,6 @@ class User {
      *
      * @param userId
      * @param mail
-     * @param callback
      */
     updateUserMail = (userId:string, mail:any) => {
         return Promise.reject(this.boom.wrap('not implemented yet', 501));
@@ -143,7 +136,6 @@ class User {
      * Delete a particular user by id.
      *
      * @param userId:string
-     * @param callback
      */
     deleteUserById = (userId:string) => {
         return this.util.deleteDocument(userId, userId, this.TYPE);

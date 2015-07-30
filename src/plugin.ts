@@ -199,7 +199,6 @@ class Database {
         server.expose('getLocationsByTripId', this.location.getLocationsByTripId);
         server.expose('getRelatedLocations', this.location.getRelatedLocations);
         server.expose('isLocationNotInUse', this.location.isLocationNotInUse);
-        server.expose('deleteLocationById', this.location.deleteLocationById);
         server.expose('createLocation', this.location.createLocation);
         server.expose('updateLocation', this.location.updateLocation);
         server.expose('addDefaultLocationToUser', this.location.addDefaultLocationToUser);

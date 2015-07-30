@@ -21,7 +21,6 @@ class Attachment {
      * Returns the picture (attachment) with that name to that corresponding document
      * @param documentid
      * @param filename
-     * @param callback
      */
     getPicture = (documentid:string, filename:string) => {
         return new this.Readable().wrap(this.db.getAttachment(documentid, filename, (err) => {
