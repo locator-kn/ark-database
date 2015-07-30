@@ -28,8 +28,8 @@ class User {
      * @param uuid
      * @param callback
      */
-    getUserByUUID = (uuid:string, callback) => {
-        this.util.getObjectOf(uuid, this.LISTS.LIST_USER_UUID, callback);
+    getUserByUUID = (uuid:string) => {
+        return this.util.retrieveSingleValue(this.LISTS.LIST_USER_UUID, uuid);
     };
 
 
