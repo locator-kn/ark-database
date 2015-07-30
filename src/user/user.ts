@@ -50,7 +50,7 @@ class User {
      * @param callback
      */
     updateUser = (userId:string, user:any) => {
-        return this.util.updateDocumentWithoutCheck(userId, user);
+        return this.util.updateDocument(userId, userId, user, this.TYPE);
     };
 
     /**
