@@ -279,29 +279,7 @@ class Util {
     };
 
     /**
-     * function to get only one object instead of an array.
-     *
-     * @param keyValue
-     * @param listName
-     * @param callback
-     *
-     */
-    getObjectOf = (keyValue, listName, callback) => {
-        this.db.list(listName, {key: keyValue}, (err, result) => {
-
-            if (err) {
-                return callback(this.boom.badRequest(err));
-            }
-            if (!result.length) {
-                return callback(this.boom.notFound('Database entry not found'))
-            }
-            // return first entry from array
-            return callback(null, result[0]);
-        });
-    };
-
-    /**
-     * Same function as getObjectOf but with a returned promise
+     * Retrieve a single value from a list with given key
      * @param keyValue
      * @param list
      * @returns {any}
