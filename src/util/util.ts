@@ -178,16 +178,6 @@ class Util {
     };
 
     /**
-     * Create a view or list
-     * @param name
-     * @param views
-     * @param callback
-     */
-    createView = (name:string, views, callback) => {
-        this.db.save(name, views, callback);
-    };
-
-    /**
      * Appends value to already existing value in a document.
      * @param documentid
      * @param field
@@ -464,7 +454,7 @@ class Util {
     /**
      * Function for copying a document
      * @param documentid
-     * @returns {any}
+     * @returns Promise
      */
     copyDocument = (documentid:string) => {
         return new Promise((resolve, reject)=> {
@@ -506,12 +496,18 @@ class Util {
                     resolve(data)
                 });
             })
-
-
         })
     };
 
+
     /**
+     * Create a view or list
+     * @param name
+     * @param views
+     * @param callback
      */
+    createView = (name:string, views, callback) => {
+        this.db.save(name, views, callback);
     };
+
 }
