@@ -46,7 +46,7 @@ class User {
      * @param user:IUser
      */
     updateUser = (userId:string, user:any) => {
-        return this.util.updateDocument(userId, userId, user, this.TYPE);
+        return this.util.updateDocument(userId, undefined, user, this.TYPE);
     };
 
     /**
@@ -136,7 +136,7 @@ class User {
      * @param userId:string
      */
     deleteUserById = (userId:string) => {
-        return this.util.deleteDocument(userId, userId, this.TYPE);
+        return this.util.deleteDocument(userId, undefined, this.TYPE);
     };
 
 }

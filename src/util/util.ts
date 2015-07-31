@@ -291,7 +291,7 @@ class Util {
                     return reject(Boom.notFound('deleted'));
                 }
 
-                // check on correct possession, userid is given
+                // check on correct possession, if userid is given
                 if (userid && (!document.userid || document.userid !== userid)) {
                     return reject(Boom.forbidden());
                 }
