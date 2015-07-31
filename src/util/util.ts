@@ -64,52 +64,20 @@ class Util {
      * @param type
      */
     updateDocument = (documentId:string, userid:string, object:any, type:string, deepMerge:boolean) => {
-        return new Promise((resolve, reject) => {
 
-            this.db.get(documentId, (err, res) => {
+        return this._preCheck(documentId, type, userid)
+            .then((document:any) => {
 
-                if (err) {
-                    return reject(Boom.badRequest(err));
-                }
-
-                if (!res.type || res.type !== type) {
-                    log('User ' + userid + ' tried to update ' + res.type + ' with ' + type);
-                    return reject(Boom.notAcceptable('Wrong document type'));
-                }
-
-                if (!res.userid || res.userid !== userid) {
-                    if (userid !== documentId) {
-                        return reject(Boom.forbidden());
-                    }
-                }
-
-                if (res.delete) {
-                    return reject(Boom.notFound('deleted'));
-                }
-
-                // update modified_date
-                var date = new Date();
-                object.modified_date = date.toISOString();
-
+                // remove old tags, if present HACK
                 if (deepMerge) {
-
-                    // remove old tags
-                    if (res.tags) {
-                        res.tags = [];
+                    if (document.tags) {
+                        document.tags = [];
                     }
-
-                    // deep merge of values before merge into database
-                    object = Hoek.merge(res, object);
                 }
 
-                this.db.merge(documentId, object, (err, result) => {
-                    if (err) {
-                        return reject(Boom.badRequest(err));
-                    }
-                    return resolve(result);
-                });
+                // merge Document into database
+                return this._mergeDocument(documentId, document, object, deepMerge);
             });
-        });
     };
 
 
