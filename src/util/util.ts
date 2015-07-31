@@ -129,40 +129,6 @@ class Util {
     };
 
     /**
-     * Appends value to already existing value in a document.
-     * @param documentid
-     * @param field
-     * @param valueToAppend
-     */
-    appendFieldValue = (documentid:string, field:string, valueToAppend:any, type:string) => {
-        return Promise((resolve, reject) => {
-
-            this.db.get(documentid, (err, result) => {
-
-                if (err) {
-                    return reject(Boom.badRequest(err));
-                }
-
-                if (result.delete) {
-                    return reject(Boom.notFound('deleted'));
-                }
-
-                var toUpdate = {};
-                var fieldValue = result.field;
-
-                // if field is not present create a new one
-                if (!fieldValue) {
-                    toUpdate[field] = valueToAppend;
-                } else {
-                    toUpdate[field] = fieldValue.concat(valueToAppend);
-                }
-
-                return this.updateDocument(documentid, documentid, toUpdate, type, false);
-            });
-        })
-    };
-
-    /**
      * Inverts the boolean value of the public field of a document and return the new value.
      * @param documentId
      * @param userid

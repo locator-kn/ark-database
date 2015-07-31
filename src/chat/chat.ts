@@ -50,6 +50,7 @@ class Chat {
      * @param value
      */
     updateConversation = (conversationid:string, value:any) => {
+
         return new Promise((resolve, reject) => {
             this.db.get(conversationid, (err, res) => {
 
@@ -61,6 +62,7 @@ class Chat {
                     res.duplicateTrip = true;
                     return resolve(res)
                 }
+
                 this.db.merge(conversationid, value, (err, res) => {
 
                     if (err) {
