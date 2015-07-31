@@ -12,6 +12,28 @@ class Util {
     }
 
     /**
+     * Retrieve a document from database. Doesn't return deleted ones
+     * @param documentId
+     * @returns Promise
+     */
+    getDocument = (documentId) => {
+        return new Promise((resolve, reject) => {
+            this.db.get(documentId, (err, res) => {
+
+                if (err) {
+                    return reject(Boom.badRequest(err));
+                }
+
+                if (res.delete) {
+                    return reject(Boom.notFound('deleted'))
+                }
+
+                resolve(res);
+            })
+        })
+    };
+
+    /**
      * Create document with Timestamp.
      *
      * @param element
@@ -490,24 +512,6 @@ class Util {
     };
 
     /**
-     * Retrieve a document from database. Doesn't return deleted ones
-     * @param documentId
-     * @returns {any}
      */
-    getDocument = (documentId) => {
-        return new Promise((resolve, reject) => {
-            this.db.get(documentId, (err, res) => {
-
-                if (err) {
-                    return reject(Boom.badRequest(err));
-                }
-
-                if (res.delete) {
-                    return reject(Boom.notFound('deleted'))
-                }
-
-                resolve(res);
-            })
-        })
     };
 }
