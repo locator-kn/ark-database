@@ -383,6 +383,62 @@ class Util {
         });
     };
 
+
+    _preCheck = (documentId:string, type:string, userid:string) => {
+        return new Promise((resolve, reject) => {
+            this.db.get(documentId, (err, document) => {
+
+                if (err) {
+                    return reject(Boom.badRequest(err));
+                }
+
+                if (document.delete) {
+                    return reject(Boom.notFound('deleted'));
+                }
+
+                if (!document.type || document.type !== type) {
+                    return reject(Boom.notAcceptable('Wrong document type'));
+                }
+
+                if (document.delete) {
+                    return reject(Boom.notFound('deleted'));
+                }
+
+                // check on correct possession, userid is given
+                if (userid && (!document.userid || document.userid !== userid)) {
+                    return Promise.reject(Boom.forbidden());
+                }
+
+
+                resolve(document)
+            })
+        })
+    };
+
+    _mergeDocument = (documentId:string, originalDoc:any, newDoc:any, deepMerge:boolean) => {
+
+        // update modified_date
+        var date = new Date();
+        newDoc.modified_date = date.toISOString();
+
+        if (deepMerge) {
+            // deep merge of values before merge into database
+            newDoc = Hoek.merge(originalDoc, newDoc);
+        }
+
+        return new Promise((resolve, reject) => {
+
+            this.db.merge(documentId, newDoc, (err, data) => {
+
+                if (err) {
+                    return reject(Boom.badRequest(err));
+                }
+                return resolve(data);
+            });
+        })
+    };
+
+
     /**
      * Function for copying a document
      * @param documentid
