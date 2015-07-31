@@ -235,25 +235,6 @@ class Util {
 
 
     /**
-     * Update document by id and update modified_date.
-     *
-     * @param documentId
-     * @param document
-     * @param callback
-     */
-    updateDocumentWithCallback = (documentId:string, document:any, callback) => {
-        var date = new Date();
-        document.modified_date = date.toISOString();
-        this.db.merge(documentId, document, (err, data) => {
-            if (err) {
-                return callback(Boom.badRequest(err))
-            }
-            return callback(null, data);
-        });
-    };
-
-
-    /**
      * USE WITH CAUTION!! This method updates a document without checking for correct type or possessing user.
      * Use only if you are absolutely certain what are you doing. If not, use updateDocument().
      * @param documentId

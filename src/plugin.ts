@@ -219,7 +219,6 @@ class Database {
         server.expose('entryExist', this.util.entryExist);
         server.expose('deleteDocument', this.util.deleteDocument);
         server.expose('updateDocumentWithoutCheck', this.util.updateDocumentWithoutCheck);
-        server.expose('updateDocumentWithCallback', this.util.updateDocumentWithCallback);
         server.expose('copyDocument', this.util.copyDocument);
         server.expose('getDocument', this.util.getDocument);
 
