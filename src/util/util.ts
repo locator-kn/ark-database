@@ -220,45 +220,22 @@ class Util {
      * @returns {any}
      */
     togglePublic = (documentId:string, userid:string, type:string) => {
-        return new Promise((resolve, reject) => {
+        var publicValue;
 
-            this.db.get(documentId, (err, res) => {
+        this._preCheck(documentId, type, userid)
+            .then((document:any)=> {
 
-                if (err) {
-                    return reject(Boom.badRequest(err));
-                }
+                // switch public value
+                publicValue = !document.public;
+                document.public = publicValue;
 
-                if (!res.type || res.type !== type) {
-                    return reject(Boom.notAcceptable('Wrong document type'));
-                }
+                return this._mergeDocument(documentId, document, document, false)
+            }).then((res:any) => {
 
-                if (!res.userid || res.userid !== userid) {
-                    return reject(Boom.forbidden());
-                }
-
-                if (res.delete) {
-                    return reject(Boom.notFound('deleted'));
-                }
-
-                // update modified_date
-                var date = new Date();
-                res.modified_date = date.toISOString();
-
-
-                // update public
-                var oldPublic = res.public;
-                res.public = !oldPublic;
-
-
-                this.db.merge(documentId, res, (err, result) => {
-                    if (err) {
-                        return reject(Boom.badRequest(err));
-                    }
-                    result.value = res.public;
-                    return resolve(result);
-                });
+                // return new public value
+                res.value = publicValue;
+                return Promise.resolve(res);
             });
-        });
     };
 
     /**
