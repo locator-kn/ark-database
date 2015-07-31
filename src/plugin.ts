@@ -214,23 +214,24 @@ class Database {
         server.expose('savePicture', this.attachment.savePicture);
 
         // utility methods
+        server.expose('getDocument', this.util.getDocument);
         server.expose('updateDocument', this.util.updateDocument);
         server.expose('createView', this.util.createView);
         server.expose('entryExist', this.util.entryExist);
         server.expose('deleteDocument', this.util.deleteDocument);
         server.expose('updateDocumentWithoutCheck', this.util.updateDocumentWithoutCheck);
         server.expose('copyDocument', this.util.copyDocument);
-        server.expose('getDocument', this.util.getDocument);
 
         // chat
         server.expose('getConversationsByUserId', this.chat.getConversationsByUserId);
+        server.expose('conversationDoesNotExist', this.chat.conversationDoesNotExist);
+        server.expose('updateConversation', this.chat.updateConversation);
         server.expose('createConversation', this.chat.createConversation);
         server.expose('getConversationById', this.chat.getConversationById);
         server.expose('getMessagesByConversionId', this.chat.getMessagesByConversionId);
-        server.expose('saveMessage', this.chat.saveMessage);
-        server.expose('conversationDoesNotExist', this.chat.conversationDoesNotExist);
-        server.expose('updateConversation', this.chat.updateConversation);
         server.expose('iAmPartOfThisConversation', this.chat.iAmPartOfThisConversation);
+        server.expose('saveMessage', this.chat.saveMessage);
+
     }
 
 
