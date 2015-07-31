@@ -41,6 +41,7 @@ class Util {
     createDocument = (element) => {
         var date = new Date();
         element.create_date = date.toISOString();
+        element.modified_date = date.toISOString();
 
         return new Promise((resolve, reject) => {
 
