@@ -293,7 +293,7 @@ class Util {
 
                 // check on correct possession, userid is given
                 if (userid && (!document.userid || document.userid !== userid)) {
-                    return Promise.reject(Boom.forbidden());
+                    return reject(Boom.forbidden());
                 }
 
 
