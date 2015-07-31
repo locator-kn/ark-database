@@ -87,35 +87,17 @@ class Util {
      * @param type
      */
     deleteDocument = (documentid:string, userid:string, type:string) => {
-        return new Promise((resolve, reject) => {
 
-            this.db.get(documentid, (err, res) => {
+        return this._preCheck(documentid, type, userid)
+            .then((document:any) => {
 
-                if (err) {
-                    return reject(Boom.badRequest(err));
-                }
+                var deleteFlag = {
+                    delete: true,
+                    deleteDate: new Date()
+                };
 
-                if (!res.type || res.type !== type) {
-                    return reject(Boom.notAcceptable('Wrong document type'));
-                }
-
-                if (!res.userid || res.userid !== userid) {
-                    return reject(Boom.forbidden('Wrong user'));
-                }
-
-                if (res.delete) {
-                    return reject(Boom.notFound('deleted'));
-                }
-
-                this.db.merge(documentid, {delete: true, deleteDate: new Date()}, (err, result) => {
-
-                    if (err) {
-                        return reject(Boom.badRequest(err));
-                    }
-                    return resolve(result);
-                });
+                return this._mergeDocument(documentid, document, deleteFlag, false)
             });
-        });
     };
 
     /**
