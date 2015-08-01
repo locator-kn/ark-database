@@ -138,7 +138,7 @@ class Util {
     togglePublic = (documentId:string, userid:string, type:string) => {
         var publicValue;
 
-        this._preCheck(documentId, type, userid)
+        return this._preCheck(documentId, type, userid)
             .then((document:any)=> {
 
                 // switch public value
