@@ -156,16 +156,17 @@ class Database {
 
         // user
         server.expose('getUserById', this.user.getUserById);
-        server.expose('getUsers', this.user.getUsers);
         server.expose('getUserByUUID', this.user.getUserByUUID);
-        server.expose('getUserLogin', this.user.getUserLogin);
-        server.expose('getAdminLogin', this.user.getAdminLogin);
-        server.expose('createUser', this.user.createUser);
+        server.expose('getUsers', this.user.getUsers);
         server.expose('updateUser', this.user.updateUser);
-        server.expose('updateUserPassword', this.user.updateUserPassword);
-        server.expose('deleteUserById', this.user.deleteUserById);
-        server.expose('updateUserMail', this.user.updateUserMail);
+        server.expose('createUser', this.user.createUser);
+        server.expose('getUserLogin', this.user.getUserLogin);
         server.expose('isMailAvailable', this.user.isMailAvailable);
+        server.expose('getAdminLogin', this.user.getAdminLogin);
+        server.expose('updateUserPassword', this.user.updateUserPassword);
+        server.expose('updateUserMail', this.user.updateUserMail);
+        server.expose('deleteUserById', this.user.deleteUserById);
+
 
         // trip
         server.expose('getTrips', this.trip.getTrips);
@@ -183,25 +184,25 @@ class Database {
         server.expose('getAllTrips', this.trip.getAllTrips);
 
         // location
-        server.expose('getLocationsByUserId', this.location.getLocationsByUserId);
-        server.expose('getLocationById', this.location.getLocationById);
-        server.expose('deleteLocationsByUserId', this.location.deleteLocationsByUserId);
-        server.expose('deleteLocationById', this.location.deleteLocationById);
-        server.expose('createLocation', this.location.createLocation);
-        server.expose('updateLocation', this.location.updateLocation);
-        server.expose('getPreLocationsByUserId', this.location.getPreLocationsByUserId);
-        server.expose('isLocationNotInUse', this.location.isLocationNotInUse);
-        server.expose('togglePublicLocation', this.location.togglePublicLocation);
-        server.expose('getPublicLocationsByUserId', this.location.getPublicLocationsByUserId);
-        server.expose('getLocationsByCity', this.location.getLocationsByCity);
-        server.expose('getLocationsByCityAndUser', this.location.getLocationsByCityAndUser);
-        server.expose('getLocationsByTripId', this.location.getLocationsByTripId);
-        server.expose('addDefaultLocationToUser', this.location.addDefaultLocationToUser);
-        server.expose('getDefaultLocation', this.location.getDefaultLocation);
         server.expose('getAllLocations', this.location.getAllLocations);
         server.expose('getAllLocationsPaged', this.location.getAllLocationsPaged);
+        server.expose('getLocationsByUserId', this.location.getLocationsByUserId);
+        server.expose('getDefaultLocation', this.location.getDefaultLocation);
+        server.expose('getPublicLocationsByUserId', this.location.getPublicLocationsByUserId);
+        server.expose('getPreLocationsByUserId', this.location.getPreLocationsByUserId);
+        server.expose('getLocationById', this.location.getLocationById);
+        server.expose('togglePublicLocation', this.location.togglePublicLocation);
+        server.expose('deleteLocationsByUserId', this.location.deleteLocationsByUserId);
+        server.expose('getLocationsByCity', this.location.getLocationsByCity);
         server.expose('getPagedLocationsByCity', this.location.getPagedLocationsByCity);
+        server.expose('getLocationsByCityAndUser', this.location.getLocationsByCityAndUser);
+        server.expose('getLocationsByTripId', this.location.getLocationsByTripId);
         server.expose('getRelatedLocations', this.location.getRelatedLocations);
+        server.expose('isLocationNotInUse', this.location.isLocationNotInUse);
+        server.expose('createLocation', this.location.createLocation);
+        server.expose('updateLocation', this.location.updateLocation);
+        server.expose('addDefaultLocationToUser', this.location.addDefaultLocationToUser);
+
 
         // static data
         server.expose('getCitiesWithTrips', this.staticdata.getCitiesWithTrips);
@@ -213,24 +214,23 @@ class Database {
         server.expose('savePicture', this.attachment.savePicture);
 
         // utility methods
-        server.expose('updateDocument', this.util.updateDocument);
+        server.expose('getDocument', this.util.getDocument);
         server.expose('createView', this.util.createView);
         server.expose('entryExist', this.util.entryExist);
         server.expose('deleteDocument', this.util.deleteDocument);
         server.expose('updateDocumentWithoutCheck', this.util.updateDocumentWithoutCheck);
-        server.expose('updateDocumentWithCallback', this.util.updateDocumentWithCallback);
         server.expose('copyDocument', this.util.copyDocument);
-        server.expose('getDocument', this.util.getDocument);
 
         // chat
         server.expose('getConversationsByUserId', this.chat.getConversationsByUserId);
+        server.expose('conversationDoesNotExist', this.chat.conversationDoesNotExist);
+        server.expose('updateConversation', this.chat.updateConversation);
         server.expose('createConversation', this.chat.createConversation);
         server.expose('getConversationById', this.chat.getConversationById);
         server.expose('getMessagesByConversionId', this.chat.getMessagesByConversionId);
-        server.expose('saveMessage', this.chat.saveMessage);
-        server.expose('conversationDoesNotExist', this.chat.conversationDoesNotExist);
-        server.expose('updateConversation', this.chat.updateConversation);
         server.expose('iAmPartOfThisConversation', this.chat.iAmPartOfThisConversation);
+        server.expose('saveMessage', this.chat.saveMessage);
+
     }
 
 

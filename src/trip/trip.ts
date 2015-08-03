@@ -34,7 +34,6 @@ class Trip {
      * Get trip from database by specific trip id.
      *
      * @param tripid:string
-     * @param callback
      */
     getTripById = (tripid:string) => {
         return this.util.retrieveSingleValue(this.LISTS.LIST_TRIP_ALL, tripid);
@@ -65,7 +64,6 @@ class Trip {
      *
      * @param tripId:string
      * @param trip:Trip
-     * @param callback
      */
     updateTrip = (tripId:string, userid:string, trip) => {
         return this.util.updateDocument(tripId, userid, trip, this.TYPE);
@@ -75,7 +73,6 @@ class Trip {
      * Create a new trip.
      *
      * @param trip:json-object
-     * @param callback
      */
     createTrip = (trip) => {
         return this.util.createDocument(trip);
@@ -86,7 +83,6 @@ class Trip {
      * Delete a particular trip by id and returns a Promise
      *
      * @param tripId:string
-     * @param callback
      */
     deleteTripById = (tripId:string, userid:string) => {
         var promise = this.util.deleteDocument(tripId, userid, this.TYPE);

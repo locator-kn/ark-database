@@ -1,5 +1,4 @@
-declare
-var Promise:any;
+declare var Promise:any;
 
 import Util from './../util/util';
 
@@ -18,29 +17,26 @@ class User {
      * Get user from database by specific user id.
      *
      * @param userId:string
-     * @param callback
      */
-    getUserById = (userId:string, callback) => {
-        this.util.getObjectOf(userId, this.LISTS.LIST_USER_PUBLIC, callback);
+    getUserById = (userId:string) => {
+        return this.util.retrieveSingleValue(this.LISTS.LIST_USER_PUBLIC, userId);
     };
 
     /**
      * get user by UUID
      * @param uuid
-     * @param callback
      */
-    getUserByUUID = (uuid:string, callback) => {
-        this.util.getObjectOf(uuid, this.LISTS.LIST_USER_UUID, callback);
+    getUserByUUID = (uuid:string) => {
+        return this.util.retrieveSingleValue(this.LISTS.LIST_USER_UUID, uuid);
     };
 
 
     /**
-     * Get user from database by specific user id.
+     * Get all users.
      *
-     * @param callback
      */
-    getUsers = (callback) => {
-        this.db.list(this.LISTS.LIST_USER_ALL, callback);
+    getUsers = () => {
+        return this.util.retrieveAllValues(this.LISTS.LIST_USER_ALL);
     };
 
     /**
@@ -48,20 +44,18 @@ class User {
      *
      * @param userId:string
      * @param user:IUser
-     * @param callback
      */
-    updateUser = (userId:string, user:any, callback) => {
-        this.util.updateDocumentWithCallback(userId, user, callback);
+    updateUser = (userId:string, user:any) => {
+        return this.util.updateDocument(userId, undefined, user, this.TYPE);
     };
 
     /**
      * Create a new user.
      *
      * @param user:IUser
-     * @param callback
      */
-    createUser = (user, callback) => {
-        this.util.createDocument(user, callback);
+    createUser = (user) => {
+        return this.util.createDocument(user);
     };
 
 
@@ -102,7 +96,7 @@ class User {
     };
 
     private getLogin = (mail:string, list:string) => {
-        if(!mail) {
+        if (!mail) {
             return Promise.reject(this.boom.badRequest('missing mail'));
         }
         return new Promise((resolve, reject) => {
@@ -120,11 +114,10 @@ class User {
      *
      * @param userId:string
      * @param password:string
-     * @param callback
      */
-    updateUserPassword = (userId:string, password:string, callback) => {
+    updateUserPassword = (userId:string, password:string) => {
         // redirect to update method
-        this.updateUser(userId, {'password': password}, callback);
+        return this.updateUser(userId, {'password': password});
     };
 
     /**
@@ -132,21 +125,18 @@ class User {
      *
      * @param userId
      * @param mail
-     * @param callback
      */
-    updateUserMail = (userId:string, mail:any, callback) => {
-        // append new mail to field of user
-        this.util.appendFieldValue(userId, 'mail', mail, callback);
+    updateUserMail = (userId:string, mail:any) => {
+        return Promise.reject(this.boom.wrap('not implemented yet', 501));
     };
 
     /**
      * Delete a particular user by id.
      *
      * @param userId:string
-     * @param callback
      */
     deleteUserById = (userId:string) => {
-       return this.util.deleteDocument(userId, userId, this.TYPE);
+        return this.util.deleteDocument(userId, undefined, this.TYPE);
     };
 
 }

@@ -14,7 +14,6 @@ class Chat {
     /**
      * Returns a list of conversations by userid.
      * @param userid
-     * @param callback
      */
     getConversationsByUserId = (userid:string) => {
         return this.util.retrieveAllValues(this.LISTS.LIST_CHAT_CONVERSATIONS, {userId: userid});
@@ -51,6 +50,7 @@ class Chat {
      * @param value
      */
     updateConversation = (conversationid:string, value:any) => {
+
         return new Promise((resolve, reject) => {
             this.db.get(conversationid, (err, res) => {
 
@@ -62,7 +62,8 @@ class Chat {
                     res.duplicateTrip = true;
                     return resolve(res)
                 }
-                this.db.merge(conversationid, value, (err,res) => {
+
+                this.db.merge(conversationid, value, (err, res) => {
 
                     if (err) {
                         reject(this.boom.badRequest(err))
@@ -78,7 +79,6 @@ class Chat {
      * Create a new conversation.
      *
      * @param conversation:any
-     * @param callback
      */
     createConversation = (conversation:any) => {
         return this.util.createDocument(conversation);
@@ -88,7 +88,6 @@ class Chat {
      * Get conversation by conversationId
      *
      * @param conversationId:string
-     * @param callback
      */
     getConversationById = (conversationId:string) => {
         return this.util.retrieveSingleValue(this.LISTS.LIST_CHAT_CONVERSATIONBYID, conversationId);
@@ -98,7 +97,6 @@ class Chat {
      * Get messages by conversationId
      *
      * @param conversationId:string
-     * @param callback
      */
     getMessagesByConversionId = (conversationId:string, query:any)=> {
         var options:any = {};
@@ -162,10 +160,9 @@ class Chat {
      * Save new message
      *
      * @param messageObj
-     * @param callback
      */
-    saveMessage = (messageObj, callback) => {
-        this.util.createDocument(messageObj, callback);
+    saveMessage = (messageObj) => {
+        return this.util.createDocument(messageObj);
     };
 
     reduceData = (data:any) => {

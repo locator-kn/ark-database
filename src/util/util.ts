@@ -2,34 +2,53 @@ declare var Promise:any;
 
 import {log} from './../logging/logging'
 
+var Boom = require('boom');
+var Hoek = require('hoek');
+
 export default
 class Util {
-    private boom:any;
-    private hoek:any;
 
     constructor(private db:any) {
-        this.boom = require('boom');
-        this.hoek = require('hoek');
     }
+
+    /**
+     * Retrieve a document from database. Doesn't return deleted ones
+     * @param documentId
+     * @returns Promise
+     */
+    getDocument = (documentId) => {
+        return new Promise((resolve, reject) => {
+            this.db.get(documentId, (err, res) => {
+
+                if (err) {
+                    return reject(Boom.badRequest(err));
+                }
+
+                if (res.delete) {
+                    return reject(Boom.notFound('deleted'))
+                }
+
+                resolve(res);
+            })
+        })
+    };
 
     /**
      * Create document with Timestamp.
      *
      * @param element
-     * @param callback
      */
-    createDocument = (element, callback) => {
-        callback = callback || this.noop;
+    createDocument = (element) => {
         var date = new Date();
         element.create_date = date.toISOString();
+        element.modified_date = date.toISOString();
 
         return new Promise((resolve, reject) => {
 
             this.db.save(element, (err, data) => {
 
-                callback(err, data);
                 if (err) {
-                    return reject(this.boom.badRequest(err));
+                    return reject(Boom.badRequest(err));
                 }
                 return resolve(data);
             });
@@ -45,50 +64,20 @@ class Util {
      * @param type
      */
     updateDocument = (documentId:string, userid:string, object:any, type:string, deepMerge:boolean) => {
-        return new Promise((resolve, reject) => {
 
-            this.db.get(documentId, (err, res) => {
+        return this._preCheck(documentId, type, userid)
+            .then((document:any) => {
 
-                if (err) {
-                    return reject(this.boom.badRequest(err));
-                }
-
-                if (!res.type || res.type !== type) {
-                    log('User ' + userid + ' tried to update ' + res.type + ' with ' + type);
-                    return reject(this.boom.notAcceptable('Wrong document type'));
-                }
-
-                if (!res.userid || res.userid !== userid) {
-                    return reject(this.boom.forbidden());
-                }
-
-                if (res.delete) {
-                    return reject(this.boom.notFound('deleted'));
-                }
-
-                // update modified_date
-                var date = new Date();
-                object.modified_date = date.toISOString();
-
+                // remove old tags, if present HACK
                 if (deepMerge) {
-
-                    // remove old tags
-                    if (res.tags) {
-                        res.tags = [];
+                    if (document.tags) {
+                        document.tags = [];
                     }
-
-                    // deep merge of values before merge into database
-                    object = this.hoek.merge(res, object);
                 }
 
-                this.db.merge(documentId, object, (err, result) => {
-                    if (err) {
-                        return reject(this.boom.badRequest(err));
-                    }
-                    return resolve(result);
-                });
+                // merge Document into database
+                return this._mergeDocument(documentId, document, object, deepMerge);
             });
-        });
     };
 
 
@@ -98,35 +87,17 @@ class Util {
      * @param type
      */
     deleteDocument = (documentid:string, userid:string, type:string) => {
-        return new Promise((resolve, reject) => {
 
-            this.db.get(documentid, (err, res) => {
+        return this._preCheck(documentid, type, userid)
+            .then((document:any) => {
 
-                if (err) {
-                    return reject(this.boom.badRequest(err));
-                }
+                var deleteFlag = {
+                    delete: true,
+                    deleteDate: new Date()
+                };
 
-                if (!res.type || res.type !== type) {
-                    return reject(this.boom.notAcceptable('Wrong document type'));
-                }
-
-                if (!res.userid || res.userid !== userid) {
-                    return reject(this.boom.forbidden('Wrong user'));
-                }
-
-                if (res.delete) {
-                    return reject(this.boom.notFound('deleted'));
-                }
-
-                this.db.merge(documentid, {delete: true, deleteDate: new Date()}, (err, result) => {
-
-                    if (err) {
-                        return reject(this.boom.badRequest(err));
-                    }
-                    return resolve(result);
-                });
+                return this._mergeDocument(documentid, document, deleteFlag, false)
             });
-        });
     };
 
     /**
@@ -143,13 +114,13 @@ class Util {
             requestOptions.skip = elements * page;
         }
 
-        this.hoek.merge(requestOptions, options);
+        Hoek.merge(requestOptions, options);
 
         return new Promise((resolve, reject) => {
             this.db.view(view, requestOptions, (err, res) => {
 
                 if (err) {
-                    return reject(this.boom.badRequest(err))
+                    return reject(Boom.badRequest(err))
                 }
                 resolve(res);
             })
@@ -158,94 +129,36 @@ class Util {
     };
 
     /**
-     * Create a view or list
-     * @param name
-     * @param views
-     * @param callback
+     * Inverts the boolean value of the public field of a document and return the new value.
+     * @param documentId
+     * @param userid
+     * @param type
+     * @returns {any}
      */
-    createView = (name:string, views, callback) => {
-        this.db.save(name, views, callback);
-    };
-
-    /**
-     * Appends value to already existing value in a document.
-     * @param documentid
-     * @param field
-     * @param valueToAppend
-     * @param callback
-     */
-    appendFieldValue = (documentid:string, field:string, valueToAppend:any, callback) => {
-        this.db.get(documentid, (err, result) => {
-
-            if (err) {
-                return callback(this.boom.badRequest(err));
-            }
-
-            if (result.delete) {
-                return callback(this.boom.notFound('deleted'));
-            }
-
-            var toUpdate = {};
-            var fieldValue = result.field;
-
-            // if field is not present create a new one
-            if (!fieldValue) {
-                toUpdate[field] = valueToAppend;
-            } else {
-                toUpdate[field] = fieldValue.concat(valueToAppend);
-            }
-
-            this.updateDocumentWithCallback(documentid, toUpdate, callback);
-        });
-    };
-
     togglePublic = (documentId:string, userid:string, type:string) => {
-        return new Promise((resolve, reject) => {
+        var publicValue;
 
-            this.db.get(documentId, (err, res) => {
+        return this._preCheck(documentId, type, userid)
+            .then((document:any)=> {
 
-                if (err) {
-                    return reject(this.boom.badRequest(err));
-                }
+                // switch public value
+                publicValue = !document.public;
+                document.public = publicValue;
 
-                if (!res.type || res.type !== type) {
-                    return reject(this.boom.notAcceptable('Wrong document type'));
-                }
+                return this._mergeDocument(documentId, document, document, false)
+            }).then((res:any) => {
 
-                if (!res.userid || res.userid !== userid) {
-                    return reject(this.boom.forbidden());
-                }
-
-                if (res.delete) {
-                    return reject(this.boom.notFound('deleted'));
-                }
-
-                // update modified_date
-                var date = new Date();
-                res.modified_date = date.toISOString();
-
-
-                // update public
-                var oldPublic = res.public;
-                res.public = !oldPublic;
-
-
-                this.db.merge(documentId, res, (err, result) => {
-                    if (err) {
-                        return reject(this.boom.badRequest(err));
-                    }
-                    result.value = res.public;
-                    return resolve(result);
-                });
+                // return new public value
+                res.value = publicValue;
+                return Promise.resolve(res);
             });
-        });
     };
 
     /**
-     * Utiliy method for checking if a entry in the database exist.
+     * Utility method for checking if a entry in the database exist.
      * If an attachment name is emitted, this method is going to check if this file
      * exists in the database.
-     * @param documentid
+     * @param documentID
      * @param attachmentName (optional)
      * @returns a resolved promise, if the entry exit, rejected promise otherwise.
      */
@@ -267,10 +180,10 @@ class Util {
             this.db.query(options, (err, data, response) => {
 
                 if (err) {
-                    return reject(this.boom.badRequest(err));
+                    return reject(Boom.badRequest(err));
                 }
                 if (response !== 200) {
-                    return reject(this.boom.notFound('entry in database was not found'));
+                    return reject(Boom.notFound('entry in database was not found'));
                 }
 
                 return resolve(true);
@@ -279,29 +192,7 @@ class Util {
     };
 
     /**
-     * function to get only one object instead of an array.
-     *
-     * @param keyValue
-     * @param listName
-     * @param callback
-     *
-     */
-    getObjectOf = (keyValue, listName, callback) => {
-        this.db.list(listName, {key: keyValue}, (err, result) => {
-
-            if (err) {
-                return callback(this.boom.badRequest(err));
-            }
-            if (!result.length) {
-                return callback(this.boom.notFound('Database entry not found'))
-            }
-            // return first entry from array
-            return callback(null, result[0]);
-        });
-    };
-
-    /**
-     * Same function as getObjectOf but with a returned promise
+     * Retrieve a single value from a list with given key
      * @param keyValue
      * @param list
      * @returns {any}
@@ -312,10 +203,10 @@ class Util {
             this.db.list(list, {key: keyValue}, (err, result) => {
 
                 if (err) {
-                    return reject(this.boom.badRequest(err));
+                    return reject(Boom.badRequest(err));
                 }
                 if (!result.length || result[0].delete) {
-                    return reject(this.boom.notFound('Database entry not found'))
+                    return reject(Boom.notFound('Database entry not found'))
                 }
                 // return first entry from array
                 return resolve(result[0]);
@@ -335,31 +226,13 @@ class Util {
             this.db.list(list, options, (err, data) => {
 
                 if (err) {
-                    return reject(this.boom.badRequest(err));
+                    return reject(Boom.badRequest(err));
                 }
                 resolve(data);
             });
         });
     };
 
-
-    /**
-     * Update document by id and update modified_date.
-     *
-     * @param documentId
-     * @param document
-     * @param callback
-     */
-    updateDocumentWithCallback = (documentId:string, document:any, callback) => {
-        var date = new Date();
-        document.modified_date = date.toISOString();
-        this.db.merge(documentId, document, (err, data) => {
-            if (err) {
-                return callback(this.boom.badRequest(err))
-            }
-            return callback(null, data);
-        });
-    };
 
     /**
      * USE WITH CAUTION!! This method updates a document without checking for correct type or possessing user.
@@ -376,20 +249,20 @@ class Util {
             this.db.get(documentId, (err, res) => {
 
                 if (err) {
-                    return reject(this.boom.badRequest(err));
+                    return reject(Boom.badRequest(err));
                 }
 
                 if (res.delete) {
-                    return reject(this.boom.notFound('deleted'));
+                    return reject(Boom.notFound('deleted'));
                 }
 
                 // deep merge of values before merge into database
-                var mergedLocation = this.hoek.merge(res, document);
+                var mergedLocation = Hoek.merge(res, document);
 
                 this.db.merge(documentId, mergedLocation, (err, data) => {
 
                     if (err) {
-                        return reject(this.boom.badRequest(err));
+                        return reject(Boom.badRequest(err));
                     }
                     return resolve(data);
                 });
@@ -397,6 +270,67 @@ class Util {
         });
     };
 
+
+    _preCheck = (documentId:string, type:string, userid:string) => {
+        return new Promise((resolve, reject) => {
+            this.db.get(documentId, (err, document) => {
+
+                if (err) {
+                    return reject(Boom.badRequest(err));
+                }
+
+                if (document.delete) {
+                    return reject(Boom.notFound('deleted'));
+                }
+
+                if (!document.type || document.type !== type) {
+                    return reject(Boom.notAcceptable('Wrong document type'));
+                }
+
+                if (document.delete) {
+                    return reject(Boom.notFound('deleted'));
+                }
+
+                // check on correct possession, if userid is given
+                if (userid && (!document.userid || document.userid !== userid)) {
+                    return reject(Boom.forbidden());
+                }
+
+
+                resolve(document)
+            })
+        })
+    };
+
+    _mergeDocument = (documentId:string, originalDoc:any, newDoc:any, deepMerge:boolean) => {
+
+        // update modified_date
+        var date = new Date();
+        newDoc.modified_date = date.toISOString();
+
+        if (deepMerge) {
+            // deep merge of values before merge into database
+            newDoc = Hoek.merge(originalDoc, newDoc);
+        }
+
+        return new Promise((resolve, reject) => {
+
+            this.db.merge(documentId, newDoc, (err, data) => {
+
+                if (err) {
+                    return reject(Boom.badRequest(err));
+                }
+                return resolve(data);
+            });
+        })
+    };
+
+
+    /**
+     * Function for copying a document
+     * @param documentid
+     * @returns Promise
+     */
     copyDocument = (documentid:string) => {
         return new Promise((resolve, reject)=> {
 
@@ -409,11 +343,11 @@ class Util {
             this.db.query(createOptions, (err, data, response) => {
 
                 if (err) {
-                    return reject(this.boom.badRequest(err))
+                    return reject(Boom.badRequest(err))
                 }
 
                 if (response >= 400) {
-                    return reject(this.boom.create(response))
+                    return reject(Boom.create(response))
                 }
 
                 var options = {
@@ -427,36 +361,28 @@ class Util {
                 this.db.query(options, (err, data, response)=> {
 
                     if (err) {
-                        return reject(this.boom.badRequest(err))
+                        return reject(Boom.badRequest(err))
                     }
 
                     if (response >= 400) {
-                        return reject(this.boom.create(response))
+                        return reject(Boom.create(response))
                     }
 
                     resolve(data)
                 });
             })
-
-
         })
     };
 
-    getDocument = (documentId) => {
-        return new Promise((resolve, reject) => {
-            this.db.get(documentId, (err, res) => {
 
-                if (err) {
-                    return reject(this.boom.badRequest(err));
-                }
-
-                resolve(res);
-            })
-        })
-    };
     /**
-     * empty pseudo callback
+     * Create a view or list
+     * @param name
+     * @param views
+     * @param callback
      */
-    noop = () => {
+    createView = (name:string, views, callback) => {
+        this.db.save(name, views, callback);
     };
+
 }
