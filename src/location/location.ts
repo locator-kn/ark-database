@@ -235,6 +235,11 @@ class Location {
     isLocationNotInUse = (locationid:string) => {
         return new Promise((resolve, reject) => {
 
+            // resolve if its the default location (special case)
+            if (locationid === DEFAULT_LOCATION) {
+                return resolve();
+            }
+
             this.db.list(this.LISTS.LIST_TRIP_BY_LOCATION, {key: locationid}, (err, result)=> {
 
                 if (err) {
@@ -254,6 +259,12 @@ class Location {
      * Deletes a particular location
      */
     deleteLocationById = (locationid:string, userid:string) => {
+
+        // check if it is the default Location
+        if (locationid === DEFAULT_LOCATION) {
+            return this._deleteDefaultLocationFromUser(userid);
+        }
+
         return new Promise((resolve, reject) => {
 
             this.db.get(locationid, (err, res) => {
@@ -267,10 +278,6 @@ class Location {
                 }
 
                 if (!res.userid || res.userid !== userid) {
-                    // check if it is the default Location
-                    if (locationid === DEFAULT_LOCATION) {
-                        return this._deleteDefaultLocationFromUser(userid);
-                    }
                     return reject(this.boom.forbidden('Wrong user'));
                 }
 
