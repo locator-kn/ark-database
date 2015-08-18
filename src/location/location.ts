@@ -225,9 +225,9 @@ class Location {
 
                     if (locations[randomIndex]._id === locationid) {
                         if (randomIndex === 0) {
-                            randomIndex--;
-                        } else {
                             randomIndex++;
+                        } else {
+                            randomIndex--;
                         }
                     }
 
