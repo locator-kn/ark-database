@@ -235,6 +235,13 @@ var designLocation = {
                         emit([doc.create_date, doc._id], { _id: doc._id });
                     }
                 }
+            },
+            locationIds: {
+                "map": function (doc) {
+                    if (doc.type == 'location' && !doc.delete && !doc.preLocation && doc.public) {
+                        emit(doc._id);
+                    }
+                }
             }
         },
         lists: {
