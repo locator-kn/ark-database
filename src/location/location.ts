@@ -215,6 +215,16 @@ class Location {
                 var length = locations.length;
                 var resultArray = [];
 
+                // remove original location and return array without random selections
+                if (length <= number + 1) {
+                    for (var j = 0; j < number; j++) {
+                        if (locations[j]._id === locationid) {
+                            locations.splice(j, 1)
+                        }
+                    }
+                    return Promise.resolve(locations)
+                }
+
                 for (var i = 0; i < number; i++) {
                     var randomIndex = Math.floor(Math.random() * (length - i - 1));
                     resultArray.push(locations[randomIndex]);
