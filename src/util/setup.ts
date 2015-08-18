@@ -306,6 +306,13 @@ var designTrip = {
 
                     }
                 }
+            },
+            tripIds: {
+                "map": function (doc) {
+                    if (doc.type == 'trip' && doc.public && !doc.delete) {
+                        emit(doc._id);
+                    }
+                }
             }
         },
         lists: {
