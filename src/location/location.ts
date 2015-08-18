@@ -222,6 +222,15 @@ class Location {
 
                 for (var i = 0; i < number; i++) {
                     var randomIndex = Math.floor(Math.random() * (length - i - 1));
+
+                    if (locations[randomIndex]._id === locationid) {
+                        if (randomIndex === 0) {
+                            randomIndex--;
+                        } else {
+                            randomIndex++;
+                        }
+                    }
+
                     resultArray.push(locations[randomIndex]);
 
                     // remove entry to avoid duplicate entries in result array
