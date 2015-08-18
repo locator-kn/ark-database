@@ -217,12 +217,7 @@ class Location {
 
                 // remove original location and return array without random selections
                 if (length <= number + 1) {
-                    for (var j = 0; j < number; j++) {
-                        if (locations[j]._id === locationid) {
-                            locations.splice(j, 1)
-                        }
-                    }
-                    return Promise.resolve(locations)
+                    return Promise.resolve(this._removeEntryById(locations, locationid));
                 }
 
                 for (var i = 0; i < number; i++) {
@@ -381,5 +376,14 @@ class Location {
         });
 
         return r
+    };
+
+    _removeEntryById = (array:any, id:string) => {
+        for (var j = 0; j < array.length; j++) {
+            if (array[j]._id === id) {
+                array.splice(j, 1)
+            }
+        }
+        return array;
     }
 }
