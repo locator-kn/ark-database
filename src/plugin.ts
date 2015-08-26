@@ -3,6 +3,7 @@ import Trip from './trip/trip';
 import Location from './location/location';
 import StaticData from './staticdata/staticdata';
 import Attachment from './attachment/attachment';
+import SchoenHier from './schoenhier/schoenhier';
 import Util from './util/util'
 import Chat from './chat/chat'
 import {setup} from './setup';
@@ -33,6 +34,7 @@ class Database {
     private location:any;
     private staticdata:any;
     private attachment:any;
+    private schoenhier:any;
     private util:any;
     private mail:any;
     private chat:any;
@@ -143,6 +145,7 @@ class Database {
         this.location = new Location(this.db, this.LISTS);
         this.staticdata = new StaticData(this.db, this.LISTS);
         this.attachment = new Attachment(this.db);
+        this.schoenhier = new SchoenHier(this.db, this.LISTS);
         this.util = new Util(this.db);
         this.chat = new Chat(this.db, this.LISTS);
     };
@@ -230,6 +233,10 @@ class Database {
         server.expose('getMessagesByConversionId', this.chat.getMessagesByConversionId);
         server.expose('iAmPartOfThisConversation', this.chat.iAmPartOfThisConversation);
         server.expose('saveMessage', this.chat.saveMessage);
+
+        // schoenhier
+        server.expose('schoenHier', this.schoenhier.schoenHier);
+        server.expose('nichtMehrSchoenHier', this.schoenhier.nichtMehrSchoenHier);
 
     }
 
