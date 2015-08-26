@@ -241,6 +241,7 @@ class Database {
         // schoenhier
         server.expose('schoenHier', this.schoenhier.schoenHier);
         server.expose('nichtMehrSchoenHier', this.schoenhier.nichtMehrSchoenHier);
+        server.expose('getSchoenHiersByUserId', this.schoenhier.getSchoenHiersByUserId);
 
     }
 

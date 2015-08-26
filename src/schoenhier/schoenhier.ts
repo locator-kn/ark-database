@@ -69,17 +69,18 @@ class Location {
     };
 
     _createSchoenHierDocumentIfNotExists = (userId:string) => {
-        return new Promise((resolve, reject) => {
-            this.util.retrieveSingleValue(this.LISTS.LIST_SCHOENHIER_BYUSERID, userId)
-                .then(resolve)
-                .catch(err => {
-                    var newDoc = {
-                        userid: userId,
-                        type: this.TYPE
-                    };
-                    return this.util.createDocument(newDoc).then(resolve).catch(reject);
-                })
-        });
+        return this.util.retrieveSingleValue(this.LISTS.LIST_SCHOENHIER_BYUSERID, userId)
+            .catch(err => {
+                var newDoc = {
+                    userid: userId,
+                    type: this.TYPE
+                };
+                return this.util.createDocument(newDoc);
+            });
     };
+
+    getSchoenHiersByUserId(userId:string) {
+        return this.util.retrieveSingleValue(this.LISTS.LIST_SCHOENHIER_BYUSERID, userId);
+    }
 
 }
