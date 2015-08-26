@@ -49,7 +49,7 @@ class Location {
     };
 
     nichtMehrSchoenHier = (docIdtoBeMarked:string, userId:string, schoenhierEntity:string) => {
-        return this.util.retrieveSingleValue('schoenhiers/listall/schoenhiersByUserId', userId)
+        return this.util.retrieveSingleValue(this.LISTS.LIST_SCHOENHIER_BYUSERID, userId)
             .then((schoenhierDoc:any) => {
                 if(schoenhierDoc[schoenhierEntity][docIdtoBeMarked]) {
                     schoenhierDoc[schoenhierEntity][docIdtoBeMarked] = false;
@@ -70,7 +70,7 @@ class Location {
 
     _createSchoenHierDocumentIfNotExists = (userId:string) => {
         return new Promise((resolve, reject) => {
-            this.util.retrieveSingleValue('schoenhiers/listall/schoenhiersByUserId', userId)
+            this.util.retrieveSingleValue(this.LISTS.LIST_SCHOENHIER_BYUSERID, userId)
                 .then(resolve)
                 .catch(err => {
                     var newDoc = {

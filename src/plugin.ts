@@ -79,7 +79,11 @@ class Database {
         LIST_CHAT_CONVERSATIONS: 'chat/listallByUserId/conversationsByUserId',
         LIST_CHAT_CONVERSATIONBYID: 'chat/listall/conversationsById',
         LIST_CHAT_MESSAGESBYCONVERSATIONID: 'chat/listall/messagesByConversationId',
-        LIST_CHAT_CONVERSATIONS_BY_TWO_USER: 'chat/getExistingConversationByUsers/conversationsByUserId'
+        LIST_CHAT_CONVERSATIONS_BY_TWO_USER: 'chat/getExistingConversationByUsers/conversationsByUserId',
+
+        // schoenhier
+
+        LIST_SCHOENHIER_BYUSERID: 'schoenhiers/listall/schoenhiersByUserId'
     };
 
 
