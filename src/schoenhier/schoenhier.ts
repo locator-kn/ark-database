@@ -79,8 +79,8 @@ class Location {
             });
     };
 
-    getSchoenHiersByUserId(userId:string) {
+    getSchoenHiersByUserId = (userId:string) => {
         return this.util.retrieveSingleValue(this.LISTS.LIST_SCHOENHIER_BYUSERID, userId);
-    }
+    };
 
 }
