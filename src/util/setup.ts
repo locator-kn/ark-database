@@ -328,6 +328,59 @@ var designTrip = {
     }
 };
 
+var designSchoenhier = {
+    title: "_design/schoenhiers",
+    content: {
+        language: "javascript",
+        views: {
+            schoenhiersByUserId: {
+                "map": function (doc) {
+                    if (doc.type === 'schoenhiers') {
+                        emit(doc.userid, doc);
+                    }
+                }
+            },
+            schoenhiersByLocationId: {
+                "map": function (doc) {
+                    if (doc.type === 'schoenhiers') {
+                        emit(doc.locations, doc.userid);
+                    }
+                }
+            }
+        },
+        lists: {
+            listall: function (head, req) {
+                var row;
+                var result = [];
+                while (row = getRow()) {
+                    result.push(row.value);
+                }
+                send(JSON.stringify(result));
+            },
+            listallByUserId: function (head, req) {
+                var result = [];
+                var row;
+                while (row = getRow()) {
+                    if (row.key == req.query.userid) {
+                        result.push(row.value);
+                    }
+                }
+                send(JSON.stringify(result));
+            },
+            listallByLocationId: function (head, req) {
+                var result = [];
+                var row;
+                while (row = getRow()) {
+                    if (row.key[req.query.locationId]) {
+                        result.push(row.value);
+                    }
+                }
+                send(JSON.stringify(result));
+            }
+        }
+    }
+};
+
 var designChat = {
     title: "_design/chat",
     content: {
