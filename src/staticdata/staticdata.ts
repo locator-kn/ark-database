@@ -22,6 +22,11 @@ class StaticData {
         return this.util.retrieveAllValues(this.LISTS.LIST_DATA_CITY_TRIPS, {reduce: true, group: true});
     };
 
+
+    getCitiesWithLocations = () => {
+        return this.util.retrieveAllValues(this.LISTS.LIST_DATA_CITY_LOCATIONS, {reduce: true, group: true});
+    };
+
     /**
      * Get all tags which are used in locations
      * @returns {*}

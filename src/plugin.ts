@@ -65,6 +65,7 @@ class Database {
 
         // static data
         LIST_DATA_CITY_TRIPS: 'data/listall/cities_trips',
+        LIST_DATA_CITY_LOCATIONS: 'data/listall/cities_locations',
         LIST_LOCATION_TAGS: 'data/listall/locationTags',
 
         // trips
@@ -214,6 +215,7 @@ class Database {
 
         // static data
         server.expose('getCitiesWithTrips', this.staticdata.getCitiesWithTrips);
+        server.expose('getCitiesWithLocations', this.staticdata.getCitiesWithLocations);
         server.expose('getAllTagsFromLocations', this.staticdata.getAllTagsFromLocations);
         server.expose('getDefaultLocation', this.staticdata.getDefaultLocation);
 
