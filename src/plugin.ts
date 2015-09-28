@@ -209,6 +209,7 @@ class Database {
         server.expose('createLocation', this.location.createLocation);
         server.expose('updateLocation', this.location.updateLocation);
         server.expose('addDefaultLocationToUser', this.location.addDefaultLocationToUser);
+        server.expose('getLocationsBySearchQuery', this.location.getLocationsBySearchQuery);
 
 
         // static data

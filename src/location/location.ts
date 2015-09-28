@@ -45,6 +45,14 @@ class Location {
             });
     };
 
+
+    getLocationsBySearchQuery = (place_id, category_query_name) => {
+        if(!category_query_name) {
+            category_query_name = null;
+        }
+        return this.util.retrieveAllValues('location/placeIdCategoryId');
+    };
+
     /**
      * Returns a list of location from a particular  user.
      * @param userid
