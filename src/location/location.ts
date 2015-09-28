@@ -54,7 +54,12 @@ class Location {
             key: [place_id, category_query_name],
             include_docs: true
         };
-        return this.util.retrieveAllValues('location/listall/placeIdCategoryId', options);
+
+        return this.util.getPagedResults('location/placeIdCategoryId', null, -1, options)
+            .then(val => {
+                return this._reduceData(val);
+            });
+        //return this.util.retrieveAllValues('location/listall/placeIdCategoryId', options);
     };
 
     /**
