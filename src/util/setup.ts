@@ -147,6 +147,26 @@ var designData = {
                         return {id: curr.id, title: curr.title, total: a, place_id: curr.place_id}
                     }
                 }
+            },
+            cities_locations: {
+                "map": function (doc) {
+                    if (doc.type == 'location' && !doc.delete && doc.public) {
+                        emit(doc.city, 1);
+                    }
+                },
+                "reduce": function (keys, values, rereduce) {
+                    if (!rereduce) {
+                        var obj = keys[0][0];
+                        return {id: obj.id, title: obj.title, total: values.length, place_id: obj.place_id};
+                    } else {
+                        var a = 0;
+                        var curr = values[values.length - 1];
+                        for (var i = 0; i < values.length; i++) {
+                            a += values[i].total
+                        }
+                        return {id: curr.id, title: curr.title, total: a, place_id: curr.place_id}
+                    }
+                }
             }
         },
         lists: {
