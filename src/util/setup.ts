@@ -232,7 +232,7 @@ var designLocation = {
             getAllLocationsPaged: {
                 "map": function (doc) {
                     if (doc.type == 'location' && !doc.delete && !doc.preLocation && doc.public) {
-                        emit([doc.create_date, doc._id], { _id: doc._id });
+                        emit([doc.create_date, doc._id], {_id: doc._id});
                     }
                 }
             },
@@ -240,6 +240,17 @@ var designLocation = {
                 "map": function (doc) {
                     if (doc.type == 'location' && !doc.delete && !doc.preLocation && doc.public) {
                         emit(doc._id);
+                    }
+                }
+            },
+            placeIdCategoryId: {
+                "map": function (doc) {
+                    if (doc.type == 'location' && doc.public && !doc.preLocation && !doc.delete) {
+                        if (doc.category) {
+                            emit([doc.city.place_id, doc.category.main.query_name], {_id: doc._id});
+                        } else {
+                            emit([doc.city.place_id, null], {_id: doc._id});
+                        }
                     }
                 }
             }
