@@ -47,10 +47,14 @@ class Location {
 
 
     getLocationsBySearchQuery = (place_id, category_query_name) => {
-        if(!category_query_name) {
+        if (!category_query_name) {
             category_query_name = null;
         }
-        return this.util.retrieveAllValues('location/placeIdCategoryId', {key: [place_id, category_query_name]});
+        var options = {
+            key: [place_id, category_query_name],
+            include_docs: true
+        };
+        return this.util.retrieveAllValues('location/listall/placeIdCategoryId', options);
     };
 
     /**
