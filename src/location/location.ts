@@ -50,7 +50,7 @@ class Location {
         if(!category_query_name) {
             category_query_name = null;
         }
-        return this.util.retrieveAllValues('location/placeIdCategoryId');
+        return this.util.retrieveAllValues('location/placeIdCategoryId', {key: [place_id, category_query_name]});
     };
 
     /**
